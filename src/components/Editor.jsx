@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useCallback } from "react";
-import { GitBranch, Link2, Plus, Trash2, Check, Edit3, FolderPlus, ChevronRight, MessageSquare, X, ChevronDown, ChevronUp, StickyNote, Unlink, RotateCcw, MousePointer, List, FileText } from "lucide-react";
+import { GitBranch, Link2, Plus, Trash2, Check, Edit3, FolderPlus, ChevronRight, MessageSquare, X, ChevronDown, ChevronUp, StickyNote, Unlink, RotateCcw, MousePointer, List, FileText, BookOpen } from "lucide-react";
 import { PALETTE as P, STATUS, SPINE_ROLES, STATUS_VALUES, SPINE_ROLE_VALUES } from "../data/constants.js";
 import { NOTE_CATEGORIES } from "../data/notes.js";
 import { renderTermLinks } from "./TermHighlight.jsx";
@@ -994,6 +994,153 @@ function ZenNavRail({ project, activeSectionId, onSelectSection, onAddChildSecti
   );
 }
 
+// ── Expanded View Component ────────────────────────────────
+
+function ExpandedSection({
+  section, depth, projectId, linkedTerms, onTermClick,
+  selectedPara, onSelectPara, onUpdateText, onUpdateMeta, onUpdateSection,
+  onAddParagraph, onDeleteParagraph, onAddNote, sectionNotes, onAddChildSection,
+  setConfirmAction,
+}) {
+  const headingSize = Math.max(16, 32 - depth * 5);
+  const st = STATUS[section.status] || STATUS.drafting;
+  const topLevel = depth === 0;
+
+  return (
+    <div style={{ marginBottom: topLevel ? 48 : 32 }}>
+      {/* Section divider for non-root sections */}
+      {depth > 0 && (
+        <div style={{
+          borderTop: depth === 1 ? `1px solid ${P.bd}` : "none",
+          paddingTop: depth === 1 ? 32 : 16,
+          marginTop: depth === 1 ? 16 : 8,
+        }} />
+      )}
+
+      {/* Section heading */}
+      <div style={{ marginBottom: 16 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }}>
+          <h2 style={{
+            fontFamily: "'Cormorant Garamond', serif",
+            fontSize: headingSize, fontWeight: depth === 0 ? 300 : 400,
+            color: P.tx, margin: 0, lineHeight: 1.2, letterSpacing: depth === 0 ? -0.5 : 0,
+          }}>
+            {section.title}
+          </h2>
+          <span style={{
+            fontSize: 7, fontFamily: "'IBM Plex Mono', monospace", padding: "1px 6px",
+            borderRadius: 3, background: st.bg, color: st.text,
+            border: `1px solid ${st.bd}`, letterSpacing: 1, textTransform: "uppercase",
+            fontWeight: 600, flexShrink: 0, alignSelf: "center",
+          }}>
+            {st.l}
+          </span>
+        </div>
+
+        {/* Spine */}
+        {section.spine && (
+          <div style={{
+            padding: "8px 14px", background: `${P.ac}06`,
+            borderLeft: `3px solid ${P.ac}`, borderRadius: "0 4px 4px 0",
+            marginBottom: 8,
+          }}>
+            <div style={{
+              fontSize: 13.5, color: P.tm, fontStyle: "italic", lineHeight: 1.55,
+              fontFamily: "'Spectral', serif",
+            }}>
+              {section.spine}
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Paragraphs */}
+      {section.paragraphs?.map((para, i) => {
+        const role = SPINE_ROLES[para.spineRole];
+        const isSel = selectedPara === para.id;
+        return (
+          <div
+            key={para.id}
+            onClick={() => onSelectPara(isSel ? null : para.id)}
+            style={{
+              position: "relative", padding: "10px 16px 10px 36px", marginBottom: 2,
+              borderRadius: 4, cursor: "pointer", transition: "all 0.2s",
+              background: isSel ? P.sf : "transparent",
+              border: isSel ? `1px solid ${P.bd}` : "1px solid transparent",
+            }}
+            onMouseOver={(e) => { if (!isSel) e.currentTarget.style.background = `${P.sf}80`; }}
+            onMouseOut={(e) => { if (!isSel) e.currentTarget.style.background = isSel ? P.sf : "transparent"; }}
+          >
+            {/* Role indicator */}
+            <div style={{ position: "absolute", left: 10, top: 12, width: 16, textAlign: "center", fontFamily: "serif", fontSize: 12, color: role?.c || P.tf }}>
+              {role?.i}
+            </div>
+
+            {isSel ? (
+              <div onClick={(e) => e.stopPropagation()}>
+                <ParagraphEditor
+                  content={para.text}
+                  onChange={(text) => onUpdateText(projectId, section.id, para.id, text)}
+                  placeholder="Write..."
+                />
+                <div style={{ display: "flex", gap: 4, marginTop: 6, flexWrap: "wrap", alignItems: "center" }}>
+                  <StatusSelect value={para.status} onChange={(s) => onUpdateMeta(projectId, section.id, para.id, { status: s })} />
+                  <RoleSelect value={para.spineRole} onChange={(r) => onUpdateMeta(projectId, section.id, para.id, { spineRole: r })} />
+                  <div style={{ flex: 1 }} />
+                  <button onClick={(e) => { e.stopPropagation(); onAddParagraph(projectId, section.id, para.id); }}
+                    title="Add paragraph below"
+                    style={{ background: "none", border: `1px solid ${P.bd}`, borderRadius: 3, padding: "3px 6px", cursor: "pointer", color: P.tm, display: "flex", alignItems: "center", gap: 3, fontSize: 9, fontFamily: "'IBM Plex Mono', monospace" }}>
+                    <Plus size={10} /> Add
+                  </button>
+                  {section.paragraphs.length > 1 && (
+                    <button onClick={(e) => { e.stopPropagation(); setConfirmAction({ title: "Delete paragraph?", message: "This will remove the paragraph and its content.", danger: true, confirmLabel: "Delete", onConfirm: () => { onDeleteParagraph(projectId, section.id, para.id); setConfirmAction(null); } }); }}
+                      title="Delete paragraph"
+                      style={{ background: "none", border: `1px solid #E8B4B4`, borderRadius: 3, padding: "3px 6px", cursor: "pointer", color: "#943D3D", display: "flex", alignItems: "center" }}>
+                      <Trash2 size={10} />
+                    </button>
+                  )}
+                </div>
+              </div>
+            ) : (
+              <div style={{
+                fontSize: 16, lineHeight: 1.75, color: P.tx,
+                fontFamily: "'Spectral', serif",
+              }}>
+                {para.text
+                  ? renderTermLinks(para.text, para.linkedTerms, linkedTerms, onTermClick)
+                  : <span style={{ color: P.tf, fontStyle: "italic" }}>Empty paragraph</span>}
+              </div>
+            )}
+          </div>
+        );
+      })}
+
+      {/* Recurse into children */}
+      {section.children?.map((child) => (
+        <ExpandedSection
+          key={child.id}
+          section={child}
+          depth={depth + 1}
+          projectId={projectId}
+          linkedTerms={linkedTerms}
+          onTermClick={onTermClick}
+          selectedPara={selectedPara}
+          onSelectPara={onSelectPara}
+          onUpdateText={onUpdateText}
+          onUpdateMeta={onUpdateMeta}
+          onUpdateSection={onUpdateSection}
+          onAddParagraph={onAddParagraph}
+          onDeleteParagraph={onDeleteParagraph}
+          onAddNote={onAddNote}
+          sectionNotes={sectionNotes}
+          onAddChildSection={onAddChildSection}
+          setConfirmAction={setConfirmAction}
+        />
+      ))}
+    </div>
+  );
+}
+
 // ── Outline View Component ─────────────────────────────────
 
 function OutlineRow({ section, depth, projectId, onSelectSection, setEditorMode, expanded, onToggle }) {
@@ -1205,7 +1352,7 @@ export default function Editor({
   const [editingTitle, setEditingTitle] = useState(false);
   const [titleText, setTitleText] = useState("");
   const [notesCollapsed, setNotesCollapsed] = useState(false);
-  const [editorMode, setEditorMode] = useState("draft"); // "draft" | "outline"
+  const [editorMode, setEditorMode] = useState("draft"); // "draft" | "outline" | "expanded"
   const [confirmAction, setConfirmAction] = useState(null); // { title, message, danger, onConfirm }
 
   // Count notes per paragraph for gutter indicators
@@ -1360,6 +1507,7 @@ export default function Editor({
               <div style={{ marginLeft: "auto", display: "flex", gap: 0, border: `1px solid ${P.bd}`, borderRadius: 4, overflow: "hidden" }}>
                 {[
                   { key: "draft", icon: FileText, label: "Draft" },
+                  { key: "expanded", icon: BookOpen, label: "Expanded" },
                   { key: "outline", icon: List, label: "Outline" },
                 ].map(({ key, icon: Icon, label }) => (
                   <button
@@ -1496,6 +1644,25 @@ export default function Editor({
               onSelectSection={onSelectSection}
               setEditorMode={setEditorMode}
               onAddChildSection={onAddChildSection}
+            />
+          ) : editorMode === "expanded" ? (
+            <ExpandedSection
+              section={section}
+              depth={0}
+              projectId={project.id}
+              linkedTerms={linkedTerms}
+              onTermClick={onTermClick}
+              selectedPara={selectedPara}
+              onSelectPara={onSelectPara}
+              onUpdateText={onUpdateText}
+              onUpdateMeta={onUpdateMeta}
+              onUpdateSection={onUpdateSection}
+              onAddParagraph={onAddParagraph}
+              onDeleteParagraph={onDeleteParagraph}
+              onAddNote={onAddNote}
+              sectionNotes={sectionNotes}
+              onAddChildSection={onAddChildSection}
+              setConfirmAction={setConfirmAction}
             />
           ) : (
           <>
