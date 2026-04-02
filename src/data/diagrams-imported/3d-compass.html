@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3D Compass - Learning Opportunity Axes</title>
+<style>
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+
+body {
+font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+background: transparent;
+overflow: hidden;
+width: 100vw;
+height: 100vh;
+}
+
+#compass-canvas {
+width: 100%;
+height: 100%;
+display: block;
+}
+</style>
+</head>
+<body>
+<canvas id="compass-canvas"></canvas>
+
+<script type="importmap">
+{
+"imports": {
+"three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+"three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+}
+}
+</script>
+
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
+import { FontLoader } from 'three/addons/loaders/FontLoader.js';
+
+const canvas = document.getElementById('compass-canvas');
+
+// Scene setup
+const scene = new THREE.Scene();
+scene.background = null; // Transparent
+
+// Camera
+const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 100);
+camera.position.set(6, 5, 6);
+camera.lookAt(0, 0, 0);
+
+// Controls
+const controls = new OrbitControls(camera, canvas);
+controls.enableDamping = true;
+controls.dampingFactor = 0.05;
+controls.minDistance = 4;
+controls.maxDistance = 12;
+controls.autoRotate = true;
+controls.autoRotateSpeed = 1.5;
+controls.enablePan = false;
+
+// Renderer
+const renderer = new THREE.WebGLRenderer({
+canvas: canvas,
+antialias: true,
+alpha: true,
+});
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+
+// Lighting
+const ambientLight = new THREE.AmbientLight(0xFFFFFF, 0.6);
+scene.add(ambientLight);
+
+const directionalLight1 = new THREE.DirectionalLight(0xFFFFFF, 0.8);
+directionalLight1.position.set(5, 5, 5);
+scene.add(directionalLight1);
+
+const directionalLight2 = new THREE.DirectionalLight(0xFFFFFF, 0.4);
+directionalLight2.position.set(-5, -5, -5);
+scene.add(directionalLight2);
+
+// Axis configuration
+const axisLength = 3;
+
+// Color scheme for the 8 octants (different colors for each)
+const octantColors = [
+0x3498db, // +X, +Y, +Z (Independence, Theoretical, Flexible)
+0x9b59b6, // +X, +Y, -Z (Independence, Theoretical, Structured)
+0xe74c3c, // +X, -Y, +Z (Independence, Practical, Flexible)
+0xe67e22, // +X, -Y, -Z (Independence, Practical, Structured)
+0x2ecc71, // -X, +Y, +Z (Collaboration, Theoretical, Flexible)
+0x1abc9c, // -X, +Y, -Z (Collaboration, Theoretical, Structured)
+0xf39c12, // -X, -Y, +Z (Collaboration, Practical, Flexible)
+0x95a5a6, // -X, -Y, -Z (Collaboration, Practical, Structured)
+];
+
+// Create the 8 octants as semi-transparent cubes
+function createOctants() {
+const octantSize = axisLength;
+const positions = [
+[1, 1, 1],   // +X, +Y, +Z
+[1, 1, -1],  // +X, +Y, -Z
+[1, -1, 1],  // +X, -Y, +Z
+[1, -1, -1], // +X, -Y, -Z
+[-1, 1, 1],  // -X, +Y, +Z
+[-1, 1, -1], // -X, +Y, -Z
+[-1, -1, 1], // -X, -Y, +Z
+[-1, -1, -1],// -X, -Y, -Z
+];
+
+positions.forEach((pos, i) => {
+const geometry = new THREE.BoxGeometry(octantSize, octantSize, octantSize);
+const material = new THREE.MeshStandardMaterial({
+color: octantColors[i],
+transparent: true,
+opacity: 0.25,
+side: THREE.DoubleSide,
+});
+const cube = new THREE.Mesh(geometry, material);
+cube.position.set(
+pos[0] * octantSize / 2,
+pos[1] * octantSize / 2,
+pos[2] * octantSize / 2
+);
+scene.add(cube);
+
+// Add edges for clarity
+const edges = new THREE.EdgesGeometry(geometry);
+const edgeMaterial = new THREE.LineBasicMaterial({
+color: octantColors[i],
+transparent: true,
+opacity: 0.6,
+linewidth: 2,
+});
+const edgeLines = new THREE.LineSegments(edges, edgeMaterial);
+edgeLines.position.copy(cube.position);
+scene.add(edgeLines);
+});
+}
+
+createOctants();
+
+// Create axis arrows with labels
+function createAxis(direction, color, posLabel, negLabel) {
+const arrowLength = axisLength + 0.5;
+const headLength = 0.4;
+const headWidth = 0.25;
+
+// Positive direction
+const posArrow = new THREE.ArrowHelper(
+direction,
+new THREE.Vector3(0, 0, 0),
+arrowLength,
+color,
+headLength,
+headWidth
+);
+scene.add(posArrow);
+
+// Negative direction
+const negArrow = new THREE.ArrowHelper(
+direction.clone().negate(),
+new THREE.Vector3(0, 0, 0),
+arrowLength,
+color,
+headLength,
+headWidth
+);
+scene.add(negArrow);
+
+// Create text sprites for labels
+createTextSprite(posLabel, direction.clone().multiplyScalar(arrowLength + 0.3), color);
+createTextSprite(negLabel, direction.clone().negate().multiplyScalar(arrowLength + 0.3), color);
+}
+
+// Create text sprite labels
+function createTextSprite(text, position, color) {
+const canvas = document.createElement('canvas');
+const context = canvas.getContext('2d');
+canvas.width = 512;
+canvas.height = 128;
+
+context.fillStyle = `#${color.toString(16).padStart(6, '0')}`;
+context.font = 'bold 60px Arial';
+context.textAlign = 'center';
+context.textBaseline = 'middle';
+context.fillText(text, 256, 64);
+
+const texture = new THREE.CanvasTexture(canvas);
+const material = new THREE.SpriteMaterial({
+map: texture,
+transparent: true,
+});
+const sprite = new THREE.Sprite(material);
+sprite.position.copy(position);
+sprite.scale.set(2, 0.5, 1);
+scene.add(sprite);
+}
+
+// Create the three axes with labels
+// X-axis: Independence <-> Collaboration
+createAxis(
+new THREE.Vector3(1, 0, 0),
+0xe74c3c,
+'Independence',
+'Collaboration'
+);
+
+// Y-axis: Practical <-> Theoretical
+createAxis(
+new THREE.Vector3(0, 1, 0),
+0x3498db,
+'Theoretical',
+'Practical'
+);
+
+// Z-axis: Structured <-> Flexible
+createAxis(
+new THREE.Vector3(0, 0, 1),
+0x2ecc71,
+'Flexible',
+'Structured'
+);
+
+// Add central origin sphere
+const originGeometry = new THREE.SphereGeometry(0.15, 32, 32);
+const originMaterial = new THREE.MeshStandardMaterial({
+color: 0xffffff,
+emissive: 0xffffff,
+emissiveIntensity: 0.5,
+metalness: 0.8,
+roughness: 0.2,
+});
+const originSphere = new THREE.Mesh(originGeometry, originMaterial);
+scene.add(originSphere);
+
+// Animation loop
+function animate() {
+controls.update();
+renderer.render(scene, camera);
+requestAnimationFrame(animate);
+}
+
+animate();
+
+// Resize handler
+function handleResize() {
+camera.aspect = window.innerWidth / window.innerHeight;
+camera.updateProjectionMatrix();
+renderer.setSize(window.innerWidth, window.innerHeight);
+}
+
+window.addEventListener('resize', handleResize);
+</script>
+</body>
+</html>

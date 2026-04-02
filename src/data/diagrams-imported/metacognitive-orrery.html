@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3D Compass Orrery - Metacognitive Physics</title>
+<style>
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+ 
+body {
+font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+background: linear-gradient(135deg, #f8fafc 0%, #eff6ff 100%);
+min-height: 100vh;
+display: flex;
+flex-direction: column;
+}
+ 
+.header {
+padding: 1rem;
+border-bottom: 1px solid #bfdbfe;
+background: rgba(255, 255, 255, 0.8);
+backdrop-filter: blur(8px);
+}
+ 
+.header h2 {
+font-size: 1.25rem;
+font-weight: bold;
+color: #1e3a8a;
+display: flex;
+align-items: center;
+gap: 0.5rem;
+}
+ 
+.header p {
+font-size: 0.875rem;
+color: #64748b;
+margin-top: 0.25rem;
+}
+ 
+.canvas-container {
+flex: 1;
+position: relative;
+min-height: 500px;
+padding: 1rem;
+}
+ 
+#orrery-canvas {
+width: 100%;
+height: 100%;
+border-radius: 0.75rem;
+box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+ 
+.controls {
+padding: 1rem;
+border-top: 1px solid #bfdbfe;
+background: rgba(255, 255, 255, 0.8);
+backdrop-filter: blur(8px);
+}
+ 
+.controls-section {
+margin-bottom: 0.75rem;
+}
+ 
+.controls-label {
+font-size: 0.75rem;
+font-weight: 600;
+color: #475569;
+display: block;
+margin-bottom: 0.5rem;
+}
+ 
+.elements-grid {
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+gap: 0.5rem;
+}
+ 
+@media (max-width: 640px) {
+.elements-grid {
+grid-template-columns: repeat(2, 1fr);
+}
+}
+ 
+.element-toggle {
+display: flex;
+align-items: center;
+gap: 0.5rem;
+cursor: pointer;
+background: white;
+padding: 0.5rem;
+border-radius: 0.5rem;
+border: 1px solid #e2e8f0;
+transition: background-color 0.15s;
+}
+ 
+.element-toggle:hover {
+background: #eff6ff;
+}
+ 
+.element-toggle input {
+width: 1rem;
+height: 1rem;
+accent-color: #2563eb;
+}
+ 
+.element-toggle span {
+font-size: 0.75rem;
+font-weight: 500;
+}
+ 
+.text-amber { color: #d97706; }
+.text-green { color: #16a34a; }
+.text-blue { color: #2563eb; }
+.text-purple { color: #9333ea; }
+.text-yellow { color: #ca8a04; }
+.text-orange { color: #ea580c; }
+ 
+.slider {
+width: 100%;
+height: 0.5rem;
+background: #e2e8f0;
+border-radius: 0.5rem;
+appearance: none;
+cursor: pointer;
+}
+ 
+.slider::-webkit-slider-thumb {
+appearance: none;
+width: 1rem;
+height: 1rem;
+background: #2563eb;
+border-radius: 50%;
+cursor: pointer;
+}
+ 
+.slider::-moz-range-thumb {
+width: 1rem;
+height: 1rem;
+background: #2563eb;
+border-radius: 50%;
+cursor: pointer;
+border: none;
+}
+ 
+.speed-value {
+font-size: 0.75rem;
+color: #475569;
+}
+</style>
+</head>
+<body>
+<!-- Header -->
+<div class="header">
+<h2>
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<circle cx="12" cy="12" r="10" />
+<path d="M12 2v20M2 12h20" />
+</svg>
+3D Compass Orrery
+</h2>
+<p>A living ecosystem of metacognitive development</p>
+</div>
+ 
+<!-- Visualization -->
+<div class="canvas-container">
+<canvas id="orrery-canvas"></canvas>
+</div>
+ 
+<!-- Controls -->
+<div class="controls">
+<div class="controls-section">
+<label class="controls-label">Elements</label>
+<div class="elements-grid">
+<label class="element-toggle">
+<input type="checkbox" id="toggle-selfIdentity" checked>
+<span class="text-amber">Self-Identity</span>
+</label>
+<label class="element-toggle">
+<input type="checkbox" id="toggle-exploration" checked>
+<span class="text-green">Exploration</span>
+</label>
+<label class="element-toggle">
+<input type="checkbox" id="toggle-research" checked>
+<span class="text-blue">Research</span>
+</label>
+<label class="element-toggle">
+<input type="checkbox" id="toggle-criticalThinking" checked>
+<span class="text-purple">Critical Thinking</span>
+</label>
+<label class="element-toggle">
+<input type="checkbox" id="toggle-reflection" checked>
+<span class="text-yellow">Reflection</span>
+</label>
+<label class="element-toggle">
+<input type="checkbox" id="toggle-synthesis" checked>
+<span class="text-orange">Synthesis</span>
+</label>
+</div>
+</div>
+ 
+<div class="controls-section">
+<label class="controls-label">
+Animation Speed: <span id="speed-display" class="speed-value">1.0x</span>
+</label>
+<input type="range" id="speed-slider" class="slider" min="0.1" max="3" step="0.1" value="1">
+</div>
+</div>
+ 
+<script type="importmap">
+{
+"imports": {
+"three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+"three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/",
+"cannon-es": "https://cdn.jsdelivr.net/npm/cannon-es@0.20.0/dist/cannon-es.js"
+}
+}
+</script>
+ 
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import * as CANNON from 'cannon-es';
+ 
+// ============================================================================
+// CONFIGURATION
+// ============================================================================
+const enabledElements = {
+selfIdentity: true,
+exploration: true,
+research: true,
+criticalThinking: true,
+reflection: true,
+synthesis: true,
+};
+ 
+let animationSpeed = 1.0;
+ 
+// ============================================================================
+// HELPER FUNCTIONS
+// ============================================================================
+ 
+// Simple 2D noise function
+function createNoise2D() {
+const permutation = [];
+for (let i = 0; i < 256; i++) permutation[i] = i;
+for (let i = 255; i > 0; i--) {
+const j = Math.floor(Math.random() * (i + 1));
+[permutation[i], permutation[j]] = [permutation[j], permutation[i]];
+}
+const p = [...permutation, ...permutation];
+ 
+function fade(t) { return t * t * t * (t * (t * 6 - 15) + 10); }
+function lerp(a, b, t) { return a + t * (b - a); }
+function grad(hash, x, y) {
+const h = hash & 3;
+const u = h < 2 ? x : y;
+const v = h < 2 ? y : x;
+return ((h & 1) ? -u : u) + ((h & 2) ? -v : v);
+}
+ 
+return function(x, y) {
+const X = Math.floor(x) & 255;
+const Y = Math.floor(y) & 255;
+x -= Math.floor(x);
+y -= Math.floor(y);
+const u = fade(x);
+const v = fade(y);
+const A = p[X] + Y, B = p[X + 1] + Y;
+return lerp(
+lerp(grad(p[A], x, y), grad(p[B], x - 1, y), u),
+lerp(grad(p[A + 1], x, y - 1), grad(p[B + 1], x - 1, y - 1), u),
+v
+);
+};
+}
+ 
+function generateLightningBolt(start, end, jaggedness = 0.8) {
+const points = [start.clone()];
+const segmentCount = 20;
+ 
+for (let i = 1; i < segmentCount; i++) {
+const t = i / segmentCount;
+const point = new THREE.Vector3().lerpVectors(start, end, t);
+ 
+const jitterAmount = (1 - t) * jaggedness * Math.sin(t * Math.PI);
+const perpendicular = new THREE.Vector3()
+.crossVectors(
+point,
+new THREE.Vector3(
+Math.random() - 0.5,
+Math.random() - 0.5,
+Math.random() - 0.5
+)
+)
+.normalize()
+.multiplyScalar((Math.random() - 0.5) * jitterAmount);
+ 
+point.add(perpendicular);
+points.push(point);
+}
+ 
+points.push(end.clone());
+ 
+const geometry = new THREE.BufferGeometry().setFromPoints(points);
+const material = new THREE.LineBasicMaterial({
+color: 0xe971ff,
+transparent: true,
+opacity: 1,
+blending: THREE.AdditiveBlending,
+linewidth: 2,
+});
+ 
+return new THREE.Line(geometry, material);
+}
+ 
+function getRandomPointOnSphere(radius) {
+const theta = Math.random() * Math.PI * 2;
+const phi = Math.acos(2 * Math.random() - 1);
+return new THREE.Vector3(
+radius * Math.sin(phi) * Math.cos(theta),
+radius * Math.sin(phi) * Math.sin(theta),
+radius * Math.cos(phi)
+);
+}
+ 
+function findAxisIntersection(origin, direction, axisRadius) {
+return axisRadius - origin.length();
+}
+ 
+function createParticleCanvas() {
+const canvas = document.createElement('canvas');
+canvas.width = 64;
+canvas.height = 64;
+const ctx = canvas.getContext('2d');
+const gradient = ctx.createRadialGradient(32, 32, 0, 32, 32, 32);
+gradient.addColorStop(0, 'rgba(255,255,255,1)');
+gradient.addColorStop(0.2, 'rgba(255,255,255,0.8)');
+gradient.addColorStop(1, 'rgba(255,255,255,0)');
+ctx.fillStyle = gradient;
+ctx.fillRect(0, 0, 64, 64);
+return canvas;
+}
+ 
+// ============================================================================
+// MAIN INITIALIZATION
+// ============================================================================
+ 
+const canvas = document.getElementById('orrery-canvas');
+const container = canvas.parentElement;
+ 
+// Scene setup
+const scene = new THREE.Scene();
+scene.background = new THREE.Color('#F0F4F8');
+scene.fog = new THREE.Fog('#F0F4F8', 8, 20);
+ 
+// Camera
+const camera = new THREE.PerspectiveCamera(50, container.clientWidth / container.clientHeight, 0.1, 100);
+camera.position.set(8, 6, 8);
+camera.lookAt(0, 0, 0);
+ 
+// Controls
+const controls = new OrbitControls(camera, canvas);
+controls.enableDamping = true;
+controls.dampingFactor = 0.05;
+controls.minDistance = 5;
+controls.maxDistance = 15;
+controls.autoRotate = true;
+controls.autoRotateSpeed = 0.5;
+controls.enablePan = false;
+ 
+// Renderer
+const renderer = new THREE.WebGLRenderer({
+canvas: canvas,
+antialias: true,
+powerPreference: 'high-performance',
+alpha: false,
+});
+renderer.setSize(container.clientWidth, container.clientHeight);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+ 
+// ============================================================================
+// LIGHTING
+// ============================================================================
+const ambientLight = new THREE.AmbientLight(0xFFFFFF, 0.4);
+scene.add(ambientLight);
+ 
+const sunLight = new THREE.DirectionalLight(0xFFFFFF, 1.2);
+sunLight.position.set(5, 8, 5);
+scene.add(sunLight);
+ 
+const nucleusLight = new THREE.PointLight(0xFFE6A0, 3, 8);
+nucleusLight.position.set(0, 0, 0);
+scene.add(nucleusLight);
+ 
+const axisRadius = 4.0;
+const axisLightConfigs = [
+{ color: 0x0EA5E9, position: new THREE.Vector3(axisRadius, 0, 0) },
+{ color: 0x0EA5E9, position: new THREE.Vector3(-axisRadius, 0, 0) },
+{ color: 0xEC4899, position: new THREE.Vector3(0, axisRadius, 0) },
+{ color: 0xEC4899, position: new THREE.Vector3(0, -axisRadius, 0) },
+{ color: 0xA855F7, position: new THREE.Vector3(0, 0, axisRadius) },
+{ color: 0xA855F7, position: new THREE.Vector3(0, 0, -axisRadius) },
+];
+ 
+axisLightConfigs.forEach(config => {
+const light = new THREE.PointLight(config.color, 1.0, 6);
+light.position.copy(config.position);
+scene.add(light);
+});
+ 
+// ============================================================================
+// PHYSICS WORLD (using cannon-es)
+// ============================================================================
+const world = new CANNON.World();
+world.gravity.set(0, 0, 0);
+world.broadphase = new CANNON.SAPBroadphase(world);
+ 
+const defaultMaterial = new CANNON.Material('default');
+const defaultContactMaterial = new CANNON.ContactMaterial(
+defaultMaterial,
+defaultMaterial,
+{ friction: 0.0, restitution: 1.0 }
+);
+world.addContactMaterial(defaultContactMaterial);
+world.defaultContactMaterial = defaultContactMaterial;
+ 
+const nucleusRadius = 1.0;
+const outerRadius = axisRadius - 0.1;
+ 
+// ============================================================================
+// 1. SELF-IDENTITY: BREATHING NUCLEUS
+// ============================================================================
+const noise2D = createNoise2D();
+ 
+const nucleusGeometry = new THREE.SphereGeometry(nucleusRadius, 64, 64);
+const nucleusMaterial = new THREE.ShaderMaterial({
+uniforms: {
+time: { value: 0.0 },
+breathIntensity: { value: 1.0 },
+glowColor: { value: new THREE.Color(0xFFE6A0) },
+},
+vertexShader: `
+varying vec3 vNormal;
+varying vec3 vPosition;
+ 
+void main() {
+vNormal = normalize(normalMatrix * normal);
+vPosition = position;
+gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+}
+`,
+fragmentShader: `
+uniform float time;
+uniform float breathIntensity;
+uniform vec3 glowColor;
+ 
+varying vec3 vNormal;
+varying vec3 vPosition;
+ 
+float noise(vec3 p) {
+return fract(sin(dot(p, vec3(12.9898, 78.233, 45.543))) * 43758.5453);
+}
+ 
+void main() {
+vec3 viewDirection = normalize(cameraPosition - vPosition);
+float fresnel = pow(1.0 - dot(vNormal, viewDirection), 3.0);
+float noiseValue = noise(vPosition * 3.0 + time * 0.5) * 0.3;
+float coreGlow = 0.7 + noiseValue;
+vec3 finalColor = glowColor * (coreGlow + fresnel * 0.5) * breathIntensity;
+gl_FragColor = vec4(finalColor, 1.0);
+}
+`,
+side: THREE.DoubleSide,
+});
+ 
+const nucleusSphere = new THREE.Mesh(nucleusGeometry, nucleusMaterial);
+scene.add(nucleusSphere);
+ 
+// ============================================================================
+// 2. GYROSCOPE RINGS (3D COMPASS AXES)
+// ============================================================================
+const ringGroup = new THREE.Group();
+const ringRadius = axisRadius;
+const tubeRadius = 0.04;
+const ringColors = [0x0EA5E9, 0xEC4899, 0xA855F7];
+ 
+for (let i = 0; i < 3; i++) {
+const ringGeometry = new THREE.TorusGeometry(ringRadius, tubeRadius, 16, 128);
+const ringMaterial = new THREE.MeshStandardMaterial({
+color: ringColors[i],
+emissive: ringColors[i],
+emissiveIntensity: 0.4,
+metalness: 0.8,
+roughness: 0.2,
+transparent: true,
+opacity: 0.7,
+});
+const ring = new THREE.Mesh(ringGeometry, ringMaterial);
+ 
+if (i === 0) ring.rotation.y = Math.PI / 2;
+if (i === 1) ring.rotation.x = Math.PI / 2;
+ 
+ringGroup.add(ring);
+}
+scene.add(ringGroup);
+ 
+// ============================================================================
+// 3. EXPLORATION: PARTICLE CLOUD
+// ============================================================================
+const explorationParticles = [];
+const particleCount = 300;
+ 
+const particleTexture = new THREE.CanvasTexture(createParticleCanvas());
+const particleMaterial = new THREE.PointsMaterial({
+color: 0x22C55E,
+size: 0.2,
+map: particleTexture,
+transparent: true,
+blending: THREE.AdditiveBlending,
+depthWrite: false,
+opacity: 0.8,
+});
+ 
+for (let i = 0; i < particleCount; i++) {
+const position = getRandomPointOnSphere(nucleusRadius + 0.5 + Math.random() * 2);
+ 
+const body = new CANNON.Body({
+mass: 0.01,
+shape: new CANNON.Sphere(0.05),
+position: new CANNON.Vec3(position.x, position.y, position.z),
+velocity: new CANNON.Vec3(
+(Math.random() - 0.5) * 1.5,
+(Math.random() - 0.5) * 1.5,
+(Math.random() - 0.5) * 1.5
+),
+material: defaultMaterial,
+});
+world.addBody(body);
+ 
+const particleGeometry = new THREE.BufferGeometry();
+particleGeometry.setAttribute(
+'position',
+new THREE.Float32BufferAttribute([0, 0, 0], 3)
+);
+const mesh = new THREE.Points(particleGeometry, particleMaterial.clone());
+scene.add(mesh);
+ 
+explorationParticles.push({
+body,
+mesh,
+lifetime: 5 + Math.random() * 10,
+age: Math.random() * 5,
+});
+}
+ 
+// ============================================================================
+// 4. RESEARCH: GROWING BEAMS
+// ============================================================================
+const researchBeams = [];
+const MAX_RESEARCH_BEAMS = 8;
+ 
+function createResearchBeam() {
+const direction = getRandomPointOnSphere(1).normalize();
+const maxLength = findAxisIntersection(new THREE.Vector3(), direction, axisRadius);
+ 
+const geometry = new THREE.CylinderGeometry(0.03, 0.03, 1, 16);
+const material = new THREE.MeshStandardMaterial({
+color: 0x3B82F6,
+emissive: 0x3B82F6,
+emissiveIntensity: 0.8,
+metalness: 0.7,
+roughness: 0.2,
+transparent: true,
+opacity: 0.8,
+});
+const mesh = new THREE.Mesh(geometry, material);
+scene.add(mesh);
+ 
+return {
+mesh,
+direction,
+length: 0,
+maxLength,
+growing: true,
+opacity: 0.8,
+};
+}
+ 
+// ============================================================================
+// 5. CRITICAL THINKING & REFLECTION: LIGHTNING
+// ============================================================================
+const lightningBolts = [];
+const MAX_LIGHTNING = 4;
+ 
+function createCriticalThinkingLightning() {
+const axisPoint = getRandomPointOnSphere(axisRadius);
+const nucleusPoint = getRandomPointOnSphere(nucleusRadius * 0.3);
+const lightning = generateLightningBolt(axisPoint, nucleusPoint);
+scene.add(lightning);
+lightningBolts.push({
+line: lightning,
+createdAt: Date.now(),
+lifetime: 0.3 + Math.random() * 0.3,
+});
+ 
+nucleusLight.intensity = 5;
+setTimeout(() => (nucleusLight.intensity = 3), 50);
+}
+ 
+function createReflectionLightning() {
+const nucleusPoint = getRandomPointOnSphere(nucleusRadius);
+const axisPoint = getRandomPointOnSphere(axisRadius);
+const lightning = generateLightningBolt(nucleusPoint, axisPoint, 0.6);
+lightning.material.color.setHex(0xFACC15);
+scene.add(lightning);
+lightningBolts.push({
+line: lightning,
+createdAt: Date.now(),
+lifetime: 0.3 + Math.random() * 0.3,
+});
+}
+ 
+// ============================================================================
+// 6. SYNTHESIS: GOLDEN SNAKE
+// ============================================================================
+function generateSnakePath() {
+const points = [];
+const segments = 40;
+const baseRadius = 2.5;
+ 
+for (let i = 0; i < segments; i++) {
+const angle = (i / segments) * Math.PI * 4;
+const radius = baseRadius + Math.sin(angle * 3) * 0.5;
+const height = Math.cos(angle * 2) * 1.5;
+ 
+points.push(
+new THREE.Vector3(
+Math.cos(angle) * radius,
+height,
+Math.sin(angle) * radius
+)
+);
+}
+ 
+return points;
+}
+ 
+const synthesisSnake = {
+curve: null,
+mesh: null,
+t: 0,
+pathPoints: generateSnakePath(),
+};
+ 
+synthesisSnake.curve = new THREE.CatmullRomCurve3(synthesisSnake.pathPoints, true);
+ 
+const snakeGeometry = new THREE.TubeGeometry(synthesisSnake.curve, 150, 0.08, 16, true);
+const snakeMaterial = new THREE.MeshStandardMaterial({
+color: 0xFAB005,
+emissive: 0xFAB005,
+emissiveIntensity: 1.0,
+metalness: 0.3,
+roughness: 0.4,
+});
+synthesisSnake.mesh = new THREE.Mesh(snakeGeometry, snakeMaterial);
+scene.add(synthesisSnake.mesh);
+ 
+// ============================================================================
+// ANIMATION LOOP
+// ============================================================================
+const clock = new THREE.Clock();
+let researchBeamTimer = 0;
+let criticalThinkingTimer = 0;
+let reflectionTimer = 0;
+ 
+function animate() {
+const deltaTime = clock.getDelta() * animationSpeed;
+const elapsedTime = clock.getElapsedTime();
+ 
+// Update physics world
+world.step(1 / 60, deltaTime, 3);
+ 
+// 1. Self-Identity breathing animation
+if (enabledElements.selfIdentity && nucleusSphere.visible) {
+const breathIntensity = 0.8 + noise2D(elapsedTime * 0.5, 0) * 0.4;
+nucleusMaterial.uniforms.time.value = elapsedTime;
+nucleusMaterial.uniforms.breathIntensity.value = breathIntensity;
+nucleusLight.intensity = 2.5 + breathIntensity * 0.5;
+}
+ 
+// 2. Exploration particles
+if (enabledElements.exploration) {
+explorationParticles.forEach((particle) => {
+particle.age += deltaTime;
+ 
+const fadeIn = Math.min(particle.age / 1, 1);
+const fadeOut = Math.max(1 - (particle.age - particle.lifetime + 1), 0);
+particle.mesh.material.opacity = Math.min(fadeIn, fadeOut) * 0.8;
+ 
+if (particle.age > particle.lifetime) {
+particle.age = 0;
+const newPos = getRandomPointOnSphere(nucleusRadius + 0.5 + Math.random() * 2);
+particle.body.position.set(newPos.x, newPos.y, newPos.z);
+particle.body.velocity.set(
+(Math.random() - 0.5) * 1.5,
+(Math.random() - 0.5) * 1.5,
+(Math.random() - 0.5) * 1.5
+);
+}
+ 
+particle.mesh.position.copy(particle.body.position);
+ 
+const distFromCenter = particle.body.position.length();
+if (distFromCenter < nucleusRadius + 0.3) {
+const pushOut = particle.body.position.unit().scale(0.02);
+particle.body.velocity.vadd(pushOut, particle.body.velocity);
+}
+if (distFromCenter > outerRadius - 0.3) {
+const pushIn = particle.body.position.unit().scale(-0.02);
+particle.body.velocity.vadd(pushIn, particle.body.velocity);
+}
+});
+}
+ 
+// 3. Research beams
+if (enabledElements.research) {
+researchBeamTimer += deltaTime;
+ 
+if (researchBeamTimer > 2 && researchBeams.length < MAX_RESEARCH_BEAMS) {
+researchBeams.push(createResearchBeam());
+researchBeamTimer = 0;
+}
+ 
+for (let i = researchBeams.length - 1; i >= 0; i--) {
+const beam = researchBeams[i];
+ 
+if (beam.growing) {
+beam.length += deltaTime * 1.5;
+ 
+if (beam.length >= beam.maxLength) {
+beam.growing = false;
+}
+ 
+beam.mesh.scale.set(1, beam.length, 1);
+const midpoint = beam.direction.clone().multiplyScalar(nucleusRadius + beam.length / 2);
+beam.mesh.position.copy(midpoint);
+beam.mesh.lookAt(beam.direction.clone().multiplyScalar(10));
+beam.mesh.rotateX(Math.PI / 2);
+} else {
+beam.opacity -= deltaTime * 2;
+beam.mesh.material.opacity = Math.max(beam.opacity, 0);
+ 
+if (beam.opacity <= 0) {
+scene.remove(beam.mesh);
+beam.mesh.geometry.dispose();
+beam.mesh.material.dispose();
+researchBeams.splice(i, 1);
+}
+}
+}
+}
+ 
+// 4. Critical Thinking lightning
+if (enabledElements.criticalThinking) {
+criticalThinkingTimer += deltaTime;
+ 
+if (criticalThinkingTimer > 0.8 && lightningBolts.length < MAX_LIGHTNING) {
+createCriticalThinkingLightning();
+criticalThinkingTimer = 0;
+}
+}
+ 
+// 5. Reflection lightning
+if (enabledElements.reflection) {
+reflectionTimer += deltaTime;
+ 
+if (reflectionTimer > 1.2 && lightningBolts.length < MAX_LIGHTNING) {
+createReflectionLightning();
+reflectionTimer = 0;
+}
+}
+ 
+// Update and remove old lightning
+const now = Date.now();
+for (let i = lightningBolts.length - 1; i >= 0; i--) {
+const bolt = lightningBolts[i];
+const age = (now - bolt.createdAt) / 1000;
+ 
+if (age > bolt.lifetime) {
+scene.remove(bolt.line);
+bolt.line.geometry.dispose();
+bolt.line.material.dispose();
+lightningBolts.splice(i, 1);
+} else {
+const fadeOut = 1 - age / bolt.lifetime;
+bolt.line.material.opacity = fadeOut;
+}
+}
+ 
+// 6. Synthesis snake
+if (enabledElements.synthesis && synthesisSnake.mesh && synthesisSnake.curve) {
+synthesisSnake.t += deltaTime * 0.05;
+if (synthesisSnake.t > 1) synthesisSnake.t -= 1;
+}
+ 
+// Animate rings
+ringGroup.children[0].rotation.y += deltaTime * 0.2;
+ringGroup.children[1].rotation.x -= deltaTime * 0.25;
+ringGroup.children[2].rotation.z += deltaTime * 0.15;
+ 
+// Update visibility
+nucleusSphere.visible = enabledElements.selfIdentity;
+explorationParticles.forEach(p => (p.mesh.visible = enabledElements.exploration));
+researchBeams.forEach(b => (b.mesh.visible = enabledElements.research));
+if (synthesisSnake.mesh) synthesisSnake.mesh.visible = enabledElements.synthesis;
+ 
+controls.update();
+renderer.render(scene, camera);
+requestAnimationFrame(animate);
+}
+ 
+animate();
+ 
+// ============================================================================
+// RESIZE HANDLER
+// ============================================================================
+function handleResize() {
+const newWidth = container.clientWidth;
+const newHeight = container.clientHeight;
+ 
+if (newWidth > 0 && newHeight > 0) {
+camera.aspect = newWidth / newHeight;
+camera.updateProjectionMatrix();
+renderer.setSize(newWidth, newHeight);
+}
+}
+ 
+window.addEventListener('resize', handleResize);
+ 
+// ============================================================================
+// UI EVENT HANDLERS
+// ============================================================================
+document.getElementById('toggle-selfIdentity').addEventListener('change', (e) => {
+enabledElements.selfIdentity = e.target.checked;
+});
+document.getElementById('toggle-exploration').addEventListener('change', (e) => {
+enabledElements.exploration = e.target.checked;
+});
+document.getElementById('toggle-research').addEventListener('change', (e) => {
+enabledElements.research = e.target.checked;
+});
+document.getElementById('toggle-criticalThinking').addEventListener('change', (e) => {
+enabledElements.criticalThinking = e.target.checked;
+});
+document.getElementById('toggle-reflection').addEventListener('change', (e) => {
+enabledElements.reflection = e.target.checked;
+});
+document.getElementById('toggle-synthesis').addEventListener('change', (e) => {
+enabledElements.synthesis = e.target.checked;
+});
+ 
+document.getElementById('speed-slider').addEventListener('input', (e) => {
+animationSpeed = parseFloat(e.target.value);
+document.getElementById('speed-display').textContent = animationSpeed.toFixed(1) + 'x';
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+{
+  "name": "tessera",
+  "version": "0.1.0",
+  "description": "Scholarly writing workspace with cross-project linking and argument mapping",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "import:all": "node scripts/generate-all.cjs",
+    "import:ac": "node scripts/import-axiometric-calculus.cjs",
+    "import:od": "node scripts/import-ontological-dictionary.cjs"
+  },
+  "dependencies": {
+    "@dnd-kit/core": "^6.3.1",
+    "@dnd-kit/sortable": "^10.0.0",
+    "@dnd-kit/utilities": "^3.2.2",
+    "@gsap/react": "^2.1.2",
+    "@react-three/drei": "^9.122.0",
+    "@react-three/fiber": "^8.18.0",
+    "@react-three/postprocessing": "^2.19.1",
+    "@tiptap/extension-character-count": "^3.22.1",
+    "@tiptap/extension-highlight": "^3.21.0",
+    "@tiptap/extension-placeholder": "^3.21.0",
+    "@tiptap/extension-typography": "^3.22.1",
+    "@tiptap/extension-underline": "^3.21.0",
+    "@tiptap/pm": "^3.21.0",
+    "@tiptap/react": "^3.21.0",
+    "@tiptap/starter-kit": "^3.21.0",
+    "@xyflow/react": "^12.10.2",
+    "framer-motion": "^12.38.0",
+    "gsap": "^3.14.2",
+    "idb-keyval": "^6.2.2",
+    "lenis": "^1.3.21",
+    "lucide-react": "^0.383.0",
+    "maath": "^0.10.8",
+    "mammoth": "^1.12.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "three": "^0.183.2"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.1",
+    "cheerio": "^1.2.0",
+    "vite": "^5.4.0"
+  }
+}

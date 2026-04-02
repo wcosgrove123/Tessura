@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Metacognitive Orrery - Embedded</title>
+<style>
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+
+body {
+font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+background: transparent;
+overflow: hidden;
+width: 100vw;
+height: 100vh;
+}
+
+#orrery-canvas {
+width: 100%;
+height: 100%;
+display: block;
+}
+</style>
+</head>
+<body>
+<canvas id="orrery-canvas"></canvas>
+
+<script type="importmap">
+{
+"imports": {
+"three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+"three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/",
+"cannon-es": "https://cdn.jsdelivr.net/npm/cannon-es@0.20.0/dist/cannon-es.js"
+}
+}
+</script>
+
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import * as CANNON from 'cannon-es';
+
+// Configuration - all elements enabled for presentation
+const enabledElements = {
+selfIdentity: true,
+exploration: true,
+research: true,
+criticalThinking: true,
+reflection: true,
+synthesis: true,
+};
+
+let animationSpeed = 1.0;
+
+// Helper Functions
+function createNoise2D() {
+const permutation = [];
+for (let i = 0; i < 256; i++) permutation[i] = i;
+for (let i = 255; i > 0; i--) {
+const j = Math.floor(Math.random() * (i + 1));
+[permutation[i], permutation[j]] = [permutation[j], permutation[i]];
+}
+const p = [...permutation, ...permutation];
+
+function fade(t) { return t * t * t * (t * (t * 6 - 15) + 10); }
+function lerp(a, b, t) { return a + t * (b - a); }
+function grad(hash, x, y) {
+const h = hash & 3;
+const u = h < 2 ? x : y;
+const v = h < 2 ? y : x;
+return ((h & 1) ? -u : u) + ((h & 2) ? -v : v);
+}
+
+return function(x, y) {
+const X = Math.floor(x) & 255;
+const Y = Math.floor(y) & 255;
+x -= Math.floor(x);
+y -= Math.floor(y);
+const u = fade(x);
+const v = fade(y);
+const A = p[X] + Y, B = p[X + 1] + Y;
+return lerp(
+lerp(grad(p[A], x, y), grad(p[B], x - 1, y), u),
+lerp(grad(p[A + 1], x, y - 1), grad(p[B + 1], x - 1, y - 1), u),
+v
+);
+};
+}
+
+function generateLightningBolt(start, end, jaggedness = 0.8) {
+const points = [start.clone()];
+const segmentCount = 20;
+
+for (let i = 1; i < segmentCount; i++) {
+const t = i / segmentCount;
+const point = new THREE.Vector3().lerpVectors(start, end, t);
+
+const jitterAmount = (1 - t) * jaggedness * Math.sin(t * Math.PI);
+const perpendicular = new THREE.Vector3()
+.crossVectors(
+point,
+new THREE.Vector3(
+Math.random() - 0.5,
+Math.random() - 0.5,
+Math.random() - 0.5
+)
+)
+.normalize()
+.multiplyScalar((Math.random() - 0.5) * jitterAmount);
+
+point.add(perpendicular);
+points.push(point);
+}
+
+points.push(end.clone());
+
+const geometry = new THREE.BufferGeometry().setFromPoints(points);
+const material = new THREE.LineBasicMaterial({
+color: 0xe971ff,
+transparent: true,
+opacity: 1,
+blending: THREE.AdditiveBlending,
+linewidth: 2,
+});
+
+return new THREE.Line(geometry, material);
+}
+
+function getRandomPointOnSphere(radius) {
+const theta = Math.random() * Math.PI * 2;
+const phi = Math.acos(2 * Math.random() - 1);
+return new THREE.Vector3(
+radius * Math.sin(phi) * Math.cos(theta),
+radius * Math.sin(phi) * Math.sin(theta),
+radius * Math.cos(phi)
+);
+}
+
+function findAxisIntersection(origin, direction, axisRadius) {
+return axisRadius - origin.length();
+}
+
+function createParticleCanvas() {
+const canvas = document.createElement('canvas');
+canvas.width = 64;
+canvas.height = 64;
+const ctx = canvas.getContext('2d');
+const gradient = ctx.createRadialGradient(32, 32, 0, 32, 32, 32);
+gradient.addColorStop(0, 'rgba(255,255,255,1)');
+gradient.addColorStop(0.2, 'rgba(255,255,255,0.8)');
+gradient.addColorStop(1, 'rgba(255,255,255,0)');
+ctx.fillStyle = gradient;
+ctx.fillRect(0, 0, 64, 64);
+return canvas;
+}
+
+// Main Initialization
+const canvas = document.getElementById('orrery-canvas');
+
+// Scene setup
+const scene = new THREE.Scene();
+scene.background = null; // Transparent for embedding
+
+// Camera
+const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 100);
+camera.position.set(8, 6, 8);
+camera.lookAt(0, 0, 0);
+
+// Controls
+const controls = new OrbitControls(camera, canvas);
+controls.enableDamping = true;
+controls.dampingFactor = 0.05;
+controls.minDistance = 5;
+controls.maxDistance = 15;
+controls.autoRotate = true;
+controls.autoRotateSpeed = 0.5;
+controls.enablePan = false;
+
+// Renderer
+const renderer = new THREE.WebGLRenderer({
+canvas: canvas,
+antialias: true,
+alpha: true, // Transparent background
+powerPreference: 'high-performance',
+});
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+
+// Lighting
+const ambientLight = new THREE.AmbientLight(0xFFFFFF, 0.4);
+scene.add(ambientLight);
+
+const sunLight = new THREE.DirectionalLight(0xFFFFFF, 1.2);
+sunLight.position.set(5, 8, 5);
+scene.add(sunLight);
+
+const nucleusLight = new THREE.PointLight(0xFFE6A0, 3, 8);
+nucleusLight.position.set(0, 0, 0);
+scene.add(nucleusLight);
+
+const axisRadius = 4.0;
+const axisLightConfigs = [
+{ color: 0x0EA5E9, position: new THREE.Vector3(axisRadius, 0, 0) },
+{ color: 0x0EA5E9, position: new THREE.Vector3(-axisRadius, 0, 0) },
+{ color: 0xEC4899, position: new THREE.Vector3(0, axisRadius, 0) },
+{ color: 0xEC4899, position: new THREE.Vector3(0, -axisRadius, 0) },
+{ color: 0xA855F7, position: new THREE.Vector3(0, 0, axisRadius) },
+{ color: 0xA855F7, position: new THREE.Vector3(0, 0, -axisRadius) },
+];
+
+axisLightConfigs.forEach(config => {
+const light = new THREE.PointLight(config.color, 1.0, 6);
+light.position.copy(config.position);
+scene.add(light);
+});
+
+// Physics World
+const world = new CANNON.World();
+world.gravity.set(0, 0, 0);
+world.broadphase = new CANNON.SAPBroadphase(world);
+
+const defaultMaterial = new CANNON.Material('default');
+const defaultContactMaterial = new CANNON.ContactMaterial(
+defaultMaterial,
+defaultMaterial,
+{ friction: 0.0, restitution: 1.0 }
+);
+world.addContactMaterial(defaultContactMaterial);
+world.defaultContactMaterial = defaultContactMaterial;
+
+const nucleusRadius = 1.0;
+const outerRadius = axisRadius - 0.1;
+
+// 1. Self-Identity: Breathing Nucleus
+const noise2D = createNoise2D();
+
+const nucleusGeometry = new THREE.SphereGeometry(nucleusRadius, 64, 64);
+const nucleusMaterial = new THREE.ShaderMaterial({
+uniforms: {
+time: { value: 0.0 },
+breathIntensity: { value: 1.0 },
+glowColor: { value: new THREE.Color(0xFFE6A0) },
+},
+vertexShader: `
+varying vec3 vNormal;
+varying vec3 vPosition;
+
+void main() {
+vNormal = normalize(normalMatrix * normal);
+vPosition = position;
+gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+}
+`,
+fragmentShader: `
+uniform float time;
+uniform float breathIntensity;
+uniform vec3 glowColor;
+
+varying vec3 vNormal;
+varying vec3 vPosition;
+
+float noise(vec3 p) {
+return fract(sin(dot(p, vec3(12.9898, 78.233, 45.543))) * 43758.5453);
+}
+
+void main() {
+vec3 viewDirection = normalize(cameraPosition - vPosition);
+float fresnel = pow(1.0 - dot(vNormal, viewDirection), 3.0);
+float noiseValue = noise(vPosition * 3.0 + time * 0.5) * 0.3;
+float coreGlow = 0.7 + noiseValue;
+vec3 finalColor = glowColor * (coreGlow + fresnel * 0.5) * breathIntensity;
+gl_FragColor = vec4(finalColor, 1.0);
+}
+`,
+side: THREE.DoubleSide,
+});
+
+const nucleusSphere = new THREE.Mesh(nucleusGeometry, nucleusMaterial);
+scene.add(nucleusSphere);
+
+// 2. Gyroscope Rings
+const ringGroup = new THREE.Group();
+const ringRadius = axisRadius;
+const tubeRadius = 0.04;
+const ringColors = [0x0EA5E9, 0xEC4899, 0xA855F7];
+
+// Create three perpendicular rings for X, Y, Z axes
+// Ring 0 (Blue): XY plane - lies flat (Z axis through center)
+const ringXY = new THREE.Mesh(
+new THREE.TorusGeometry(ringRadius, tubeRadius, 16, 128),
+new THREE.MeshStandardMaterial({
+color: ringColors[0],
+emissive: ringColors[0],
+emissiveIntensity: 0.4,
+metalness: 0.8,
+roughness: 0.2,
+transparent: true,
+opacity: 0.7,
+})
+);
+// No rotation needed - already in XY plane
+ringGroup.add(ringXY);
+
+// Ring 1 (Pink): XZ plane - stands vertical front-to-back (Y axis through center)
+const ringXZ = new THREE.Mesh(
+new THREE.TorusGeometry(ringRadius, tubeRadius, 16, 128),
+new THREE.MeshStandardMaterial({
+color: ringColors[1],
+emissive: ringColors[1],
+emissiveIntensity: 0.4,
+metalness: 0.8,
+roughness: 0.2,
+transparent: true,
+opacity: 0.7,
+})
+);
+ringXZ.rotation.x = Math.PI / 2; // Rotate to stand vertical
+ringGroup.add(ringXZ);
+
+// Ring 2 (Purple): YZ plane - stands vertical left-to-right (X axis through center)
+const ringYZ = new THREE.Mesh(
+new THREE.TorusGeometry(ringRadius, tubeRadius, 16, 128),
+new THREE.MeshStandardMaterial({
+color: ringColors[2],
+emissive: ringColors[2],
+emissiveIntensity: 0.4,
+metalness: 0.8,
+roughness: 0.2,
+transparent: true,
+opacity: 0.7,
+})
+);
+ringYZ.rotation.y = Math.PI / 2; // Rotate to stand vertical perpendicular to ring 1
+ringGroup.add(ringYZ);
+scene.add(ringGroup);
+
+// 3. Exploration: Particle Cloud
+const explorationParticles = [];
+const particleCount = 300;
+
+const particleTexture = new THREE.CanvasTexture(createParticleCanvas());
+const particleMaterial = new THREE.PointsMaterial({
+color: 0x22C55E,
+size: 0.2,
+map: particleTexture,
+transparent: true,
+blending: THREE.AdditiveBlending,
+depthWrite: false,
+opacity: 0.8,
+});
+
+for (let i = 0; i < particleCount; i++) {
+const position = getRandomPointOnSphere(nucleusRadius + 0.5 + Math.random() * 2);
+
+const body = new CANNON.Body({
+mass: 0.01,
+shape: new CANNON.Sphere(0.05),
+position: new CANNON.Vec3(position.x, position.y, position.z),
+velocity: new CANNON.Vec3(
+(Math.random() - 0.5) * 1.5,
+(Math.random() - 0.5) * 1.5,
+(Math.random() - 0.5) * 1.5
+),
+material: defaultMaterial,
+});
+world.addBody(body);
+
+const particleGeometry = new THREE.BufferGeometry();
+particleGeometry.setAttribute(
+'position',
+new THREE.Float32BufferAttribute([0, 0, 0], 3)
+);
+const mesh = new THREE.Points(particleGeometry, particleMaterial.clone());
+scene.add(mesh);
+
+explorationParticles.push({
+body,
+mesh,
+lifetime: 5 + Math.random() * 10,
+age: Math.random() * 5,
+});
+}
+
+// 4. Research: Growing Beams
+const researchBeams = [];
+const MAX_RESEARCH_BEAMS = 8;
+
+function createResearchBeam() {
+const direction = getRandomPointOnSphere(1).normalize();
+const maxLength = findAxisIntersection(new THREE.Vector3(), direction, axisRadius);
+
+const geometry = new THREE.CylinderGeometry(0.03, 0.03, 1, 16);
+const material = new THREE.MeshStandardMaterial({
+color: 0x3B82F6,
+emissive: 0x3B82F6,
+emissiveIntensity: 0.8,
+metalness: 0.7,
+roughness: 0.2,
+transparent: true,
+opacity: 0.8,
+});
+const mesh = new THREE.Mesh(geometry, material);
+scene.add(mesh);
+
+return {
+mesh,
+direction,
+length: 0,
+maxLength,
+growing: true,
+opacity: 0.8,
+};
+}
+
+// 5. Critical Thinking & Reflection: Lightning
+const lightningBolts = [];
+const MAX_LIGHTNING = 4;
+
+function createCriticalThinkingLightning() {
+const axisPoint = getRandomPointOnSphere(axisRadius);
+const nucleusPoint = getRandomPointOnSphere(nucleusRadius * 0.3);
+const lightning = generateLightningBolt(axisPoint, nucleusPoint);
+scene.add(lightning);
+lightningBolts.push({
+line: lightning,
+createdAt: Date.now(),
+lifetime: 0.3 + Math.random() * 0.3,
+});
+
+nucleusLight.intensity = 5;
+setTimeout(() => (nucleusLight.intensity = 3), 50);
+}
+
+function createReflectionLightning() {
+const nucleusPoint = getRandomPointOnSphere(nucleusRadius);
+const axisPoint = getRandomPointOnSphere(axisRadius);
+const lightning = generateLightningBolt(nucleusPoint, axisPoint, 0.6);
+lightning.material.color.setHex(0xFACC15);
+scene.add(lightning);
+lightningBolts.push({
+line: lightning,
+createdAt: Date.now(),
+lifetime: 0.3 + Math.random() * 0.3,
+});
+}
+
+// 6. Synthesis: Golden Snake
+function generateSnakePath() {
+const points = [];
+const segments = 40;
+const baseRadius = 2.5;
+
+for (let i = 0; i < segments; i++) {
+const angle = (i / segments) * Math.PI * 4;
+const radius = baseRadius + Math.sin(angle * 3) * 0.5;
+const height = Math.cos(angle * 2) * 1.5;
+
+points.push(
+new THREE.Vector3(
+Math.cos(angle) * radius,
+height,
+Math.sin(angle) * radius
+)
+);
+}
+
+return points;
+}
+
+const synthesisSnake = {
+curve: null,
+mesh: null,
+t: 0,
+pathPoints: generateSnakePath(),
+};
+
+synthesisSnake.curve = new THREE.CatmullRomCurve3(synthesisSnake.pathPoints, true);
+
+const snakeGeometry = new THREE.TubeGeometry(synthesisSnake.curve, 150, 0.08, 16, true);
+const snakeMaterial = new THREE.MeshStandardMaterial({
+color: 0xFAB005,
+emissive: 0xFAB005,
+emissiveIntensity: 1.0,
+metalness: 0.3,
+roughness: 0.4,
+});
+synthesisSnake.mesh = new THREE.Mesh(snakeGeometry, snakeMaterial);
+scene.add(synthesisSnake.mesh);
+
+// Animation Loop
+const clock = new THREE.Clock();
+let researchBeamTimer = 0;
+let criticalThinkingTimer = 0;
+let reflectionTimer = 0;
+
+function animate() {
+const deltaTime = clock.getDelta() * animationSpeed;
+const elapsedTime = clock.getElapsedTime();
+
+world.step(1 / 60, deltaTime, 3);
+
+// Self-Identity breathing
+const breathIntensity = 0.8 + noise2D(elapsedTime * 0.5, 0) * 0.4;
+nucleusMaterial.uniforms.time.value = elapsedTime;
+nucleusMaterial.uniforms.breathIntensity.value = breathIntensity;
+nucleusLight.intensity = 2.5 + breathIntensity * 0.5;
+
+// Exploration particles
+explorationParticles.forEach((particle) => {
+particle.age += deltaTime;
+
+const fadeIn = Math.min(particle.age / 1, 1);
+const fadeOut = Math.max(1 - (particle.age - particle.lifetime + 1), 0);
+particle.mesh.material.opacity = Math.min(fadeIn, fadeOut) * 0.8;
+
+if (particle.age > particle.lifetime) {
+particle.age = 0;
+const newPos = getRandomPointOnSphere(nucleusRadius + 0.5 + Math.random() * 2);
+particle.body.position.set(newPos.x, newPos.y, newPos.z);
+particle.body.velocity.set(
+(Math.random() - 0.5) * 1.5,
+(Math.random() - 0.5) * 1.5,
+(Math.random() - 0.5) * 1.5
+);
+}
+
+particle.mesh.position.copy(particle.body.position);
+
+const distFromCenter = particle.body.position.length();
+if (distFromCenter < nucleusRadius + 0.3) {
+const pushOut = particle.body.position.unit().scale(0.02);
+particle.body.velocity.vadd(pushOut, particle.body.velocity);
+}
+if (distFromCenter > outerRadius - 0.3) {
+const pushIn = particle.body.position.unit().scale(-0.02);
+particle.body.velocity.vadd(pushIn, particle.body.velocity);
+}
+});
+
+// Research beams
+researchBeamTimer += deltaTime;
+
+if (researchBeamTimer > 2 && researchBeams.length < MAX_RESEARCH_BEAMS) {
+researchBeams.push(createResearchBeam());
+researchBeamTimer = 0;
+}
+
+for (let i = researchBeams.length - 1; i >= 0; i--) {
+const beam = researchBeams[i];
+
+if (beam.growing) {
+beam.length += deltaTime * 1.5;
+
+if (beam.length >= beam.maxLength) {
+beam.growing = false;
+}
+
+beam.mesh.scale.set(1, beam.length, 1);
+const midpoint = beam.direction.clone().multiplyScalar(nucleusRadius + beam.length / 2);
+beam.mesh.position.copy(midpoint);
+beam.mesh.lookAt(beam.direction.clone().multiplyScalar(10));
+beam.mesh.rotateX(Math.PI / 2);
+} else {
+beam.opacity -= deltaTime * 2;
+beam.mesh.material.opacity = Math.max(beam.opacity, 0);
+
+if (beam.opacity <= 0) {
+scene.remove(beam.mesh);
+beam.mesh.geometry.dispose();
+beam.mesh.material.dispose();
+researchBeams.splice(i, 1);
+}
+}
+}
+
+// Critical Thinking lightning
+criticalThinkingTimer += deltaTime;
+
+if (criticalThinkingTimer > 0.8 && lightningBolts.length < MAX_LIGHTNING) {
+createCriticalThinkingLightning();
+criticalThinkingTimer = 0;
+}
+
+// Reflection lightning
+reflectionTimer += deltaTime;
+
+if (reflectionTimer > 1.2 && lightningBolts.length < MAX_LIGHTNING) {
+createReflectionLightning();
+reflectionTimer = 0;
+}
+
+// Update and remove old lightning
+const now = Date.now();
+for (let i = lightningBolts.length - 1; i >= 0; i--) {
+const bolt = lightningBolts[i];
+const age = (now - bolt.createdAt) / 1000;
+
+if (age > bolt.lifetime) {
+scene.remove(bolt.line);
+bolt.line.geometry.dispose();
+bolt.line.material.dispose();
+lightningBolts.splice(i, 1);
+} else {
+const fadeOut = 1 - age / bolt.lifetime;
+bolt.line.material.opacity = fadeOut;
+}
+}
+
+// Synthesis snake
+if (synthesisSnake.mesh && synthesisSnake.curve) {
+synthesisSnake.t += deltaTime * 0.05;
+if (synthesisSnake.t > 1) synthesisSnake.t -= 1;
+}
+
+// Animate rings - each rotates around its perpendicular axis
+ringGroup.children[0].rotation.z += deltaTime * 0.2;  // Blue ring (XY plane) rotates around Z
+ringGroup.children[1].rotation.y += deltaTime * 0.25; // Pink ring (XZ plane) rotates around Y
+ringGroup.children[2].rotation.x += deltaTime * 0.15; // Purple ring (YZ plane) rotates around X
+
+controls.update();
+renderer.render(scene, camera);
+requestAnimationFrame(animate);
+}
+
+animate();
+
+// Resize Handler
+function handleResize() {
+camera.aspect = window.innerWidth / window.innerHeight;
+camera.updateProjectionMatrix();
+renderer.setSize(window.innerWidth, window.innerHeight);
+}
+
+window.addEventListener('resize', handleResize);
+</script>
+</body>
+</html>

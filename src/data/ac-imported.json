@@ -1,0 +1,2676 @@
+{
+  "id": "axiometric-calculus",
+  "name": "Axiometric Calculus",
+  "icon": "∑",
+  "color": "#2D6B5A",
+  "parts": [
+    {
+      "id": "ac-part-1",
+      "title": "Part I: GENESIS",
+      "subtitle": "The calculus emerged through the very processes it names — omniperegrination crystallizing into formal notation.",
+      "children": [
+        {
+          "id": "ac-part-1-1-1-how-this-document-emerged",
+          "title": "1.1 How This Document Emerged",
+          "spine": "This document did not begin as a formal system.",
+          "status": "revised",
+          "children": [],
+          "paragraphs": [
+            {
+              "id": "ac-part-1-1-1-how-this-document-emerged-p1",
+              "text": "This document did not begin as a formal system. It began as handwritten pages in a notebook—questions circling questions: Where am I? Where are you? Am I my body? Am I my fingernails? Does any of this matter?",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-1-1-1-how-this-document-emerged-p2",
+              "text": "Those pages were omniperegrination—thought wandering without predetermined destination. Nebulae formed: clusters around identity, around language, around the observer and the observed. Then an axis emerged: We need a new language.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-1-1-1-how-this-document-emerged-p3",
+              "text": "This calculus is the constellation that formed around that axis. But the process of building it changed it. Every decision about notation raised new questions. Should the primitive be noema or schema? What does equality mean when nothing stays still? How do we encode time? And deeper still: why does awareness move through time at all?",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-1-1-1-how-this-document-emerged-p4",
+              "text": "The answers came through dialogue—through exologue crossing Thresholds, through noemata becoming noema-of-noemata, through the lossy transformation of communication. What you hold now is not what was thought. It is your interpretation of symbols that were themselves interpretations.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-1-1-1-how-this-document-emerged-p5",
+              "text": "This matters. The calculus describes itself. It emerged through the processes it names. The meta-story is not separate from the content—it demonstrates the content.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            }
+          ]
+        },
+        {
+          "id": "ac-part-1-1-2-the-first-core-insight",
+          "title": "1.2 The First Core Insight",
+          "spine": "Through the process of building this system, a central insight crystallized:",
+          "status": "revised",
+          "children": [],
+          "paragraphs": [
+            {
+              "id": "ac-part-1-1-2-the-first-core-insight-p6",
+              "text": "Through the process of building this system, a central insight crystallized:",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-1-1-2-the-first-core-insight-p7",
+              "text": "Paradoxes resolve through paradoxes.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-1-1-2-the-first-core-insight-p8",
+              "text": "Classical logic seeks to eliminate paradox. This system requires it. The axioms are mutually constitutive—each one holds only because the others hold. Identity requires difference. Difference requires identity. The claim that A equals itself is tesseractically equivalent to the claim that A equals something else. Remove any piece and the system becomes undefined.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-1-1-2-the-first-core-insight-p9",
+              "text": "This is not circularity in the vicious sense. It is coherence—truth as mutual support rather than correspondence to external reality. There is no external reality to correspond to. There is only what is held within Endospheres, what crosses Thresholds, what traces through the Noemagraph.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            }
+          ]
+        },
+        {
+          "id": "ac-part-1-1-3-the-second-core-insight",
+          "title": "1.3 The Second Core Insight",
+          "spine": "A separate investigation—into instinct, into gravity, into the nature of life itself—produced a second insight that completes the first:",
+          "status": "revised",
+          "children": [],
+          "paragraphs": [
+            {
+              "id": "ac-part-1-1-3-the-second-core-insight-p10",
+              "text": "A separate investigation—into instinct, into gravity, into the nature of life itself—produced a second insight that completes the first:",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-1-1-3-the-second-core-insight-p11",
+              "text": "Awareness moves because instinct compels it.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-1-1-3-the-second-core-insight-p12",
+              "text": "The temporal architecture of this system describes moment-slices and awareness-traces. But description is not explanation. Why does awareness traverse the structure of time rather than simply being the whole structure at once? The answer lies beneath noema, in the causal substrate that produces cognitive movement.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-1-1-3-the-second-core-insight-p13",
+              "text": "Gravity is the fundamental relational force. Instinct is gravity applied to structure. Change is instinct realized. Memory is the marker of change. Thought is instinct combined with memory. Consciousness is thought reflecting on itself. And metacognition—the five habits this system formalizes—is consciousness operating on noema.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-1-1-3-the-second-core-insight-p14",
+              "text": "This causal chain, from fundamental force to metacognitive habit, is woven throughout this document. It answers the question the first version could not: why does the system move at all?",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ac-part-2",
+      "title": "Part II: PRIMITIVES",
+      "subtitle": "Seven foundational claims ground the system: noema as substance, cogito as anchor, schema as truth.",
+      "children": [
+        {
+          "id": "ac-part-2-2-1-the-fundamental-substance-noema",
+          "title": "2.1 The Fundamental Substance: Noema",
+          "spine": "Every formal system requires a primitive—an undefined term from which all else derives.",
+          "status": "revised",
+          "children": [],
+          "paragraphs": [
+            {
+              "id": "ac-part-2-2-1-the-fundamental-substance-noema-p1",
+              "text": "Every formal system requires a primitive—an undefined term from which all else derives. In this system, the primitive is noema (ν).",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-2-2-1-the-fundamental-substance-noema-p2",
+              "text": "P₀ (Substance): All cognitive content is noema.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-2-2-1-the-fundamental-substance-noema-p3",
+              "text": "Definition: Noema (ν) is the fluid, recursive, tesseractic unit of meaning. It cannot be created or destroyed—only transformed. It is invariant (singular = plural). A noema can be as simple as '2+2=4,' as complex as 'the summer I almost drowned,' as abstract as 'trust,' or as experiential as 'the feeling of that conversation.'",
+              "status": "revised",
+              "spineRole": "definition",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-2-2-1-the-fundamental-substance-noema-p4",
+              "text": "Why noema and not schema? Schema (σ) is noema that has been metacognitively accepted as true. But acceptance presupposes something to accept. Noema is ontologically prior. All σ are ν, but not all ν are σ.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            }
+          ]
+        },
+        {
+          "id": "ac-part-2-2-2-the-cartesian-anchor-cogito",
+          "title": "2.2 The Cartesian Anchor: Cogito",
+          "spine": "Noema are 'not real' in the sense that they have no external verification, no stable referent, no view from nowhere.",
+          "status": "revised",
+          "children": [],
+          "paragraphs": [
+            {
+              "id": "ac-part-2-2-2-the-cartesian-anchor-cogito-p5",
+              "text": "Noema are 'not real' in the sense that they have no external verification, no stable referent, no view from nowhere. A =* A precisely because A is not real in the classical sense.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-2-2-2-the-cartesian-anchor-cogito-p6",
+              "text": "But. Noema includes the cogito. 'I think, therefore I am' is itself a noema—and it is the one noema whose existence cannot be doubted from within. The act of doubting it proves it.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-2-2-2-the-cartesian-anchor-cogito-p7",
+              "text": "P₁ (Cogito): ∃E such that E cannot doubt E.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-2-2-2-the-cartesian-anchor-cogito-p8",
+              "text": "The Endosphere (E) is the Cartesian anchor. It is the self—the 'who' behind all cognition. Its existence is proven by the attempt to deny it. This is the one piece of solid ground in a system of fluid paradoxes.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-2-2-2-the-cartesian-anchor-cogito-p9",
+              "text": "The paradox holds: Noema are both not-real (no external verification, tesseractic equality) AND real (the cogito proves existence). This is not a contradiction to resolve—it is the structure of cognitive reality.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            }
+          ]
+        },
+        {
+          "id": "ac-part-2-2-3-the-source-of-truth-schema",
+          "title": "2.3 The Source of Truth: Schema",
+          "spine": "If noema is the substance, what is the source of truth?",
+          "status": "revised",
+          "children": [],
+          "paragraphs": [
+            {
+              "id": "ac-part-2-2-3-the-source-of-truth-schema-p10",
+              "text": "If noema is the substance, what is the source of truth? What makes something 'true' rather than merely present?",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-2-2-3-the-source-of-truth-schema-p11",
+              "text": "P₂ (Truth): σ ≝ ν held-as-true in E through cogniscence.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-2-2-3-the-source-of-truth-schema-p12",
+              "text": "Schema (σ) is the source of truth. Not external correspondence, not universal validity, but what you have cognisced as true within your Endosphere. This is the only truth available. There is no view from nowhere.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-2-2-3-the-source-of-truth-schema-p13",
+              "text": "The relationship: ν is the substance (what everything is made of). σ is the truth-bearer (what makes claims valid). E is the anchor (what cannot be doubted). Together: σ = ν held in E.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            }
+          ]
+        },
+        {
+          "id": "ac-part-2-2-4-the-perifield-rule",
+          "title": "2.4 The Perifield Rule",
+          "spine": "P₃ (Perifield): ∀ν ∈ P, ν is cognisced.",
+          "status": "revised",
+          "children": [],
+          "paragraphs": [
+            {
+              "id": "ac-part-2-2-4-the-perifield-rule-p14",
+              "text": "P₃ (Perifield): ∀ν ∈ P, ν is cognisced.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-2-2-4-the-perifield-rule-p15",
+              "text": "Any noema in the Perifield (P) is already cognisced. This is definitional—it's what makes P different from E. The Endosphere contains dormant noema (passive, unattended). The Perifield is where metacognitive work happens, where noema have been intentionally pulled through the Outer Lens for examination. If it's in P, you're already aware of it.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            }
+          ]
+        },
+        {
+          "id": "ac-part-2-2-5-the-causal-substrate-gravity-and-ins",
+          "title": "2.5 The Causal Substrate: Gravity and Instinct",
+          "spine": "The primitives above describe cognitive architecture.",
+          "status": "revised",
+          "children": [],
+          "paragraphs": [
+            {
+              "id": "ac-part-2-2-5-the-causal-substrate-gravity-and-ins-p16",
+              "text": "The primitives above describe cognitive architecture. But architecture does not explain movement. Why does anything happen? Why does awareness traverse moment-slices rather than remain static?",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-2-2-5-the-causal-substrate-gravity-and-ins-p17",
+              "text": "The answer lies in two primitives that exist beneath noema—not as more fundamental substances, but as the forces that cause noematic structure to be traversed.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-2-2-5-the-causal-substrate-gravity-and-ins-p18",
+              "text": "P₄ (Gravity): g is the fundamental relational force. It is why mass relates to mass across distance, why anything connects to anything else.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-2-2-5-the-causal-substrate-gravity-and-ins-p19",
+              "text": "P₅ (Instinct): i ≝ g applied to ν. Instinct is the reason for movement between moments. It is action that follows necessarily from prior configuration.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-2-2-5-the-causal-substrate-gravity-and-ins-p20",
+              "text": "Gravity causes relation. Instinct causes movement. Without these, the temporal architecture would exist as static structure—a loaf of bread with no one eating it. Instinct is what makes awareness trace through the loaf.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            }
+          ]
+        },
+        {
+          "id": "ac-part-2-2-6-the-cognitive-ladder-from-instinct-t",
+          "title": "2.6 The Cognitive Ladder: From Instinct to Consciousness",
+          "spine": "Between raw instinct and full metacognition lies a hierarchy of cognitive capacities.",
+          "status": "revised",
+          "children": [],
+          "paragraphs": [
+            {
+              "id": "ac-part-2-2-6-the-cognitive-ladder-from-instinct-t-p21",
+              "text": "Between raw instinct and full metacognition lies a hierarchy of cognitive capacities. Each level requires the ones below it.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-2-2-6-the-cognitive-ladder-from-instinct-t-t22",
+              "text": "Symbol: M | Name: Memory | Definition: Physical marker of change. Exists in non-life (craters) and life (DNA). M → Δ (memory implies change occurred).",
+              "status": "revised",
+              "spineRole": "definition",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-2-2-6-the-cognitive-ladder-from-instinct-t-t23",
+              "text": "Symbol: P | Name: Perception | Definition: Sensory interface. The channel through which ν enters awareness. Required for life.",
+              "status": "revised",
+              "spineRole": "definition",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-2-2-6-the-cognitive-ladder-from-instinct-t-t24",
+              "text": "Symbol: θ | Name: Thought | Definition: Semi-intentional collection of instincts enabling memory. θ ≝ i ∧ M. Allows perception through senses. Present in all life.",
+              "status": "revised",
+              "spineRole": "definition",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-2-2-6-the-cognitive-ladder-from-instinct-t-t25",
+              "text": "Symbol: Em | Name: Emotion | Definition: Experiential coloring of thought. Em → θ but ¬(Em → κ). Embedded in thought, not consciousness.",
+              "status": "revised",
+              "spineRole": "definition",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-2-2-6-the-cognitive-ladder-from-instinct-t-t26",
+              "text": "Symbol: κ | Name: Consciousness | Definition: Intentional decision-making. κ ≝ θ ∧ endo(θ). The capacity to choose rather than merely react.",
+              "status": "revised",
+              "spineRole": "definition",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-2-2-6-the-cognitive-ladder-from-instinct-t-p27",
+              "text": "The crucial distinction: Thought (θ) is not consciousness (κ). A venus fly trap has thought—it 'knows' to snap based on accumulated instinct and memory. An elephant has emotion—it grieves at the grave of its dead. But neither demonstrates consciousness: the reflexive capacity to think about thinking, to choose not to act on compulsion.",
+              "status": "revised",
+              "spineRole": "evidence",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-2-2-6-the-cognitive-ladder-from-instinct-t-p28",
+              "text": "Consciousness emerges when thought applies the endospective habit to itself. This is what allows a human visiting a grandmother's grave to do more than grieve—to intend connection, to reflect on mortality, to choose how to remember.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            }
+          ]
+        },
+        {
+          "id": "ac-part-2-2-7-existence-and-structure",
+          "title": "2.7 Existence and Structure",
+          "spine": "One final primitive grounds the Endosphere in physical reality:",
+          "status": "revised",
+          "children": [],
+          "paragraphs": [
+            {
+              "id": "ac-part-2-2-7-existence-and-structure-p29",
+              "text": "One final primitive grounds the Endosphere in physical reality:",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-2-2-7-existence-and-structure-p30",
+              "text": "P₆ (Existence-Structure): E(obj) ↔ S(obj)",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-2-2-7-existence-and-structure-p31",
+              "text": "To exist is to have structure. To have structure is to exist. There is no existence without configuration, no configuration without existence. The Endosphere that cannot doubt itself is the structure that persists.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-2-2-7-existence-and-structure-p32",
+              "text": "P₇ (Drive): E(obj) → Drive(obj, S(obj))",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-2-2-7-existence-and-structure-p33",
+              "text": "If something exists, it has a fundamental drive to maintain its structure. This is not teleology—it is definitional. What persists is what maintains persistence. This drive underlies all life, all evolution, all attempts to continue existing.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ac-part-3",
+      "title": "Part III: TEMPORAL AND CAUSAL ARCHITECTURE",
+      "subtitle": "Time is not a river but a structure we slice through — awareness moves because instinct compels it.",
+      "children": [
+        {
+          "id": "ac-part-3-3-1-the-moment-slice-model",
+          "title": "3.1 The Moment-Slice Model",
+          "spine": "Time is not a river we float down.",
+          "status": "revised",
+          "children": [],
+          "paragraphs": [
+            {
+              "id": "ac-part-3-3-1-the-moment-slice-model-p1",
+              "text": "Time is not a river we float down. It is a structure we slice through.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-3-3-1-the-moment-slice-model-p2",
+              "text": "Consider: a cube can be made of infinitely many 2D squares stacked together. If a basketball passes through a 2D plane, the plane 'sees' different circles at different moments—first a point, then expanding circles, then contracting, then a point again. The basketball doesn't change. The plane's intersection with it changes.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-3-3-1-the-moment-slice-model-p3",
+              "text": "This is how we travel through time. All moments from birth to death exist as a structure—like a loaf of bread, already baked. What we call 'experience' is awareness passing through successive slices. Each slice is frozen, complete, static. The sense of flow is memory stitching slices together through pattern recognition.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-3-3-1-the-moment-slice-model-p4",
+              "text": "T₀ (Moment): μ is a frozen cross-section of noematic structure.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-3-3-1-the-moment-slice-model-p5",
+              "text": "T₁ (Awareness): ω is the trace of awareness through moment-slices.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-3-3-1-the-moment-slice-model-p6",
+              "text": "T₂ (Continuity): The experience of continuity is ω stitching {μ} via pattern recognition.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            }
+          ]
+        },
+        {
+          "id": "ac-part-3-3-2-why-awareness-moves-the-causal-answe",
+          "title": "3.2 Why Awareness Moves: The Causal Answer",
+          "spine": "The temporal axioms describe structure.",
+          "status": "revised",
+          "children": [],
+          "paragraphs": [
+            {
+              "id": "ac-part-3-3-2-why-awareness-moves-the-causal-answe-p7",
+              "text": "The temporal axioms describe structure. But structure does not explain motion. Why does ω trace through {μ} at all? Why not be the whole loaf?",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-3-3-2-why-awareness-moves-the-causal-answe-p8",
+              "text": "T₃ (Instinct-Movement): i → ω(μₙ → μₙ₊₁)",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-3-3-2-why-awareness-moves-the-causal-answe-p9",
+              "text": "Instinct causes awareness to move between moment-slices. This is the answer to the open question. The loaf exists as static structure, but awareness traverses it because instinct—the applied force of relation derived from gravity itself—compels movement. Without instinct, awareness would be frozen in a single slice, and there would be no experience of time.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-3-3-2-why-awareness-moves-the-causal-answe-p10",
+              "text": "T₄ (Instinct-Change): i ↔ Δ",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-3-3-2-why-awareness-moves-the-causal-answe-p11",
+              "text": "Instinct and change are logically equivalent. Instinct is the cause; change is the result. But they are the same event viewed from different frames. To say 'instinct acted' is to say 'change occurred.'",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            }
+          ]
+        },
+        {
+          "id": "ac-part-3-3-3-memory-as-marker-of-change",
+          "title": "3.3 Memory as Marker of Change",
+          "spine": "T₅ (Memory-Change): M → Δ",
+          "status": "revised",
+          "children": [],
+          "paragraphs": [
+            {
+              "id": "ac-part-3-3-3-memory-as-marker-of-change-p12",
+              "text": "T₅ (Memory-Change): M → Δ",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-3-3-3-memory-as-marker-of-change-p13",
+              "text": "If memory exists, then change has occurred. Memory does not cause change—memory proves it. Craters on the moon are physical memory: evidence that structure was different before impact. DNA is biological memory: evidence that structures have been tried, tested, preserved. The arrow is implicative, not causal.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-3-3-3-memory-as-marker-of-change-p14",
+              "text": "This connects the causal chain to the cognitive ladder. Memory (M) enables thought (θ), which combined with reflexive endospection produces consciousness (κ), which enables the metacognitive habits this system formalizes.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            }
+          ]
+        },
+        {
+          "id": "ac-part-3-3-4-implications-for-identity",
+          "title": "3.4 Implications for Identity",
+          "spine": "The moment-slice model reframes what A =* A means:",
+          "status": "revised",
+          "children": [],
+          "paragraphs": [
+            {
+              "id": "ac-part-3-3-4-implications-for-identity-p15",
+              "text": "The moment-slice model reframes what A =* A means:",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-3-3-4-implications-for-identity-p16",
+              "text": "Within any moment-slice:",
+              "status": "revised",
+              "spineRole": "setup",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-3-3-4-implications-for-identity-p17",
+              "text": "ν@μ = ν@μ (classical identity holds)",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-3-3-4-implications-for-identity-p18",
+              "text": "Across moment-slices stitched by awareness:",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-3-3-4-implications-for-identity-p19",
+              "text": "ν@μ₁ =* ν@μ₂ (tesseractic identity)",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-3-3-4-implications-for-identity-p20",
+              "text": "(same pattern, different slice)",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-3-3-4-implications-for-identity-p21",
+              "text": "The paradox of identity isn't in the noema—it's in awareness. Within any single frozen moment, A simply is A. But awareness never stays in one slice. It's always moving (because instinct compels it), always stitching. From the perspective of awareness, A appears to differ from itself because awareness has moved between slices where A's configuration differs.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            }
+          ]
+        },
+        {
+          "id": "ac-part-3-3-5-reframing-fluxion",
+          "title": "3.5 Reframing Fluxion",
+          "spine": "What we call 'fluxion' (↝) is not transformation.",
+          "status": "revised",
+          "children": [],
+          "paragraphs": [
+            {
+              "id": "ac-part-3-3-5-reframing-fluxion-p22",
+              "text": "What we call 'fluxion' (↝) is not transformation. Noema don't change—they exist in their configurations across the structure. What changes is which slice awareness occupies.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-3-3-5-reframing-fluxion-p23",
+              "text": "Old interpretation:",
+              "status": "revised",
+              "spineRole": "setup",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-3-3-5-reframing-fluxion-p24",
+              "text": "ν₁ ↝ ν₂ ('ν₁ transforms into ν₂')",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-3-3-5-reframing-fluxion-p25",
+              "text": "New interpretation:",
+              "status": "revised",
+              "spineRole": "setup",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-3-3-5-reframing-fluxion-p26",
+              "text": "ω(μ₁) → ω(μ₂) (awareness moves from slice to slice)",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-3-3-5-reframing-fluxion-p27",
+              "text": "ν@μ₁ ≠ ν@μ₂ (ν's configuration differs between slices)",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-3-3-5-reframing-fluxion-p28",
+              "text": "ν₁ ↝ ν₂ ≝ ω experiencing ν@μ₁ then ν@μ₂",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-3-3-5-reframing-fluxion-p29",
+              "text": "'Passive fluxion' (noema changing without attention) is simply the structure of the loaf—how moment-slices are arranged independent of where awareness currently sits. 'Active fluxion' (noema changing during cogniscence) is awareness moving through slices while attending to the movement.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ac-part-4",
+      "title": "Part IV: THE AXIOMS",
+      "subtitle": "The axioms are mutually constitutive — each holds because the others hold. Remove any one and the system becomes undefined.",
+      "children": [
+        {
+          "id": "ac-part-4-intro",
+          "title": "Introduction",
+          "spine": "The Core Principle: These axioms are mutually constitutive.",
+          "status": "revised",
+          "children": [],
+          "paragraphs": [
+            {
+              "id": "ac-part-4-intro-p1",
+              "text": "The Core Principle: These axioms are mutually constitutive. Each holds because the others hold. Remove any one and the system becomes undefined. This is not a flaw—it is the structure of noematic reality.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-4-intro-p2",
+              "text": "The axioms fall into two interwoven sets: the Noematic Axioms (concerning identity, difference, and expression) and the Causal Axioms (concerning movement, change, and emergence). Neither set is prior. They constitute each other.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-4-intro-p3",
+              "text": "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            }
+          ]
+        },
+        {
+          "id": "ac-part-4-a0-grounding-a",
+          "title": "A₀ (Grounding): A ≝ ν",
+          "spine": "All variables are noema.",
+          "status": "revised",
+          "children": [],
+          "paragraphs": [
+            {
+              "id": "ac-part-4-a0-grounding-a-p4",
+              "text": "All variables are noema. There is no variable outside the substance of meaning.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-4-a0-grounding-a-p5",
+              "text": "Rationale: We considered grounding in schema (σ) instead—what is held as true. But schema presupposes noema (you can't hold something as true unless there's something to hold). Noema is ontologically prior. The primitive must be the most fundamental substance.",
+              "status": "revised",
+              "spineRole": "evidence",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-4-a0-grounding-a-p6",
+              "text": "Dependencies: Requires P₁ (Cogito) to anchor the existence of ν in something undoubtable. Requires A₁ (Identity) to establish that ν can refer to itself.",
+              "status": "revised",
+              "spineRole": "evidence",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-4-a0-grounding-a-p7",
+              "text": "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            }
+          ]
+        },
+        {
+          "id": "ac-part-4-a1-identity-paradox-a-a",
+          "title": "A₁ (Identity Paradox): A =* A",
+          "spine": "Any unit of meaning is tesseractically equal to itself.",
+          "status": "revised",
+          "children": [],
+          "paragraphs": [
+            {
+              "id": "ac-part-4-a1-identity-paradox-a-a-p8",
+              "text": "Any unit of meaning is tesseractically equal to itself. Equal because the pattern persists. Not-equal because awareness has moved between moment-slices. Both truths hold.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-4-a1-identity-paradox-a-a-p9",
+              "text": "Rationale: A =* A because A is 'not real' in the classical sense—no external verification, no stable referent. The tesseractic equality captures this: both equal (the label refers, the pattern persists) and not-equal (the noema has fluxed, awareness has moved). The paradox is the structure, not a problem to solve.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-4-a1-identity-paradox-a-a-p10",
+              "text": "Dependencies: Requires A₀ (Grounding) because identity requires something to be identical. Requires A₃ (Difference) because identity is only meaningful against difference. Requires A₄ (Meta-Paradox) because the claim 'A =* A' is itself subject to the paradox. Requires T₀–T₃ because the 'not-equal' aspect arises from instinct-driven awareness moving through slices.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-4-a1-identity-paradox-a-a-p11",
+              "text": "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            }
+          ]
+        },
+        {
+          "id": "ac-part-4-a1-5-expression-paradox-a-b-a-b",
+          "title": "A₁.₅ (Expression Paradox): {/A/:B} =* {/A/:B}",
+          "spine": "Any expression is tesseractically equal to itself.",
+          "status": "revised",
+          "children": [],
+          "paragraphs": [
+            {
+              "id": "ac-part-4-a1-5-expression-paradox-a-b-a-b-p12",
+              "text": "Any expression is tesseractically equal to itself. The syntax persists; the meaning has shifted in writing and reading.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-4-a1-5-expression-paradox-a-b-a-b-p13",
+              "text": "Rationale: If A =* A, then any expression built from A inherits the paradox. The expression you wrote is not the expression I received—noemata crossed the Threshold, lossy transformation occurred. Yet the symbols persist. Both truths.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-4-a1-5-expression-paradox-a-b-a-b-p14",
+              "text": "Dependencies: Requires A₁ (Identity) because expression-identity inherits from term-identity. Requires A₂ (Derivation) because this axiom is derived from A₁.",
+              "status": "revised",
+              "spineRole": "evidence",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-4-a1-5-expression-paradox-a-b-a-b-p15",
+              "text": "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            }
+          ]
+        },
+        {
+          "id": "ac-part-4-a2-derivation-a-a-a-b-a-b",
+          "title": "A₂ (Derivation): (A =* A) ∴* ({/A/:B} =* {/A/:B})",
+          "spine": "'Because of' the identity paradox, the expression paradox holds.",
+          "status": "revised",
+          "children": [],
+          "paragraphs": [
+            {
+              "id": "ac-part-4-a2-derivation-a-a-a-b-a-b-p16",
+              "text": "'Because of' the identity paradox, the expression paradox holds. But ∴* is tesseractic: the derivation runs both ways. Neither is prior.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-4-a2-derivation-a-a-a-b-a-b-p17",
+              "text": "Rationale: Classical derivation (→) is unidirectional: P implies Q. But in this system, derivations are mutually constitutive. Expressions ground identity as much as identity grounds expressions. You can't have one without the other. The ∴* operator captures this bidirectionality.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-4-a2-derivation-a-a-a-b-a-b-p18",
+              "text": "Dependencies: Requires A₁ and A₁.₅ to have terms to connect. Requires A₄ (Meta-Paradox) because derivation itself is subject to the paradox.",
+              "status": "revised",
+              "spineRole": "evidence",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-4-a2-derivation-a-a-a-b-a-b-p19",
+              "text": "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            }
+          ]
+        },
+        {
+          "id": "ac-part-4-a3-difference-paradox-a-b",
+          "title": "A₃ (Difference Paradox): A =* B",
+          "spine": "Any two noema are tesseractically equal.",
+          "status": "revised",
+          "children": [],
+          "paragraphs": [
+            {
+              "id": "ac-part-4-a3-difference-paradox-a-b-p20",
+              "text": "Any two noema are tesseractically equal. All ν trace to all other ν. Difference is real; so is underlying unity. Both truths hold.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-4-a3-difference-paradox-a-b-p21",
+              "text": "Rationale: By P₄ (Universal Trace), all noema are connected. There is no noema isolated from all others. In some sense—through traces, through the Noemagraph, through the tesseractic containment where A can contain B while B contains A—any two noema are 'the same.' Yet they are also obviously different. The =* captures both.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-4-a3-difference-paradox-a-b-p22",
+              "text": "Dependencies: Requires A₀ (Grounding) because A and B must be ν to be comparable. Requires A₁ (Identity) because difference presupposes identity.",
+              "status": "revised",
+              "spineRole": "evidence",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-4-a3-difference-paradox-a-b-p23",
+              "text": "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            }
+          ]
+        },
+        {
+          "id": "ac-part-4-a4-meta-paradox-a-a-a-b",
+          "title": "A₄ (Meta-Paradox): (A =* A) =* (A =* B)",
+          "spine": "The claim of identity is tesseractically equal to the claim of difference.",
+          "status": "revised",
+          "children": [],
+          "paragraphs": [
+            {
+              "id": "ac-part-4-a4-meta-paradox-a-a-a-b-p24",
+              "text": "The claim of identity is tesseractically equal to the claim of difference. Neither is more fundamental. This closes the loop.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-4-a4-meta-paradox-a-a-a-b-p25",
+              "text": "Rationale: This is the keystone. Without A₄, the system would have a hierarchy—identity would be 'more basic' than difference, or vice versa. A₄ collapses that hierarchy. The claim 'A is itself' is paradoxically equivalent to 'A is something else.' Neither grounds the other. They mutually constitute.",
+              "status": "revised",
+              "spineRole": "evidence",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-4-a4-meta-paradox-a-a-a-b-p26",
+              "text": "Dependencies: Requires A₁ (Identity) for the left side. Requires A₃ (Difference) for the right side. IS REQUIRED BY A₁, A₂, A₃ to ground their paradoxical structure.",
+              "status": "revised",
+              "spineRole": "evidence",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-4-a4-meta-paradox-a-a-a-b-p27",
+              "text": "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            }
+          ]
+        },
+        {
+          "id": "ac-part-4-c0-gravity-instinct-g-i",
+          "title": "C₀ (Gravity-Instinct): g → i",
+          "spine": "If gravity exists, then instinct exists.",
+          "status": "revised",
+          "children": [],
+          "paragraphs": [
+            {
+              "id": "ac-part-4-c0-gravity-instinct-g-i-p28",
+              "text": "If gravity exists, then instinct exists.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-4-c0-gravity-instinct-g-i-p29",
+              "text": "Rationale: Gravity is the fundamental relational force between masses. Instinct is this force as applied to noematic structure—the 'pull' that causes one configuration to succeed another. Without gravity (broadly construed as fundamental relation), there would be no reason for anything to relate to anything else, no 'next' moment to move toward.",
+              "status": "revised",
+              "spineRole": "evidence",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-4-c0-gravity-instinct-g-i-p30",
+              "text": "Dependencies: Requires T₀ (Moment) to establish that there are slices to move between. Grounds T₃ (Instinct-Movement).",
+              "status": "revised",
+              "spineRole": "evidence",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-4-c0-gravity-instinct-g-i-p31",
+              "text": "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            }
+          ]
+        },
+        {
+          "id": "ac-part-4-c1-existence-structure-e-obj-s-obj",
+          "title": "C₁ (Existence-Structure): E(obj) ↔ S(obj)",
+          "spine": "An object exists if and only if it has structure.",
+          "status": "revised",
+          "children": [],
+          "paragraphs": [
+            {
+              "id": "ac-part-4-c1-existence-structure-e-obj-s-obj-p32",
+              "text": "An object exists if and only if it has structure.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-4-c1-existence-structure-e-obj-s-obj-p33",
+              "text": "Rationale: To exist is to have structure. To have structure is to exist. There is no existence without configuration, no configuration without existence. This grounds the Endosphere (E) in something physical—the E that cannot doubt itself is the structure that persists.",
+              "status": "revised",
+              "spineRole": "evidence",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-4-c1-existence-structure-e-obj-s-obj-p34",
+              "text": "Dependencies: Parallels P₁ (Cogito). Provides physical grounding for E. Enables C₂ (Drive).",
+              "status": "revised",
+              "spineRole": "evidence",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-4-c1-existence-structure-e-obj-s-obj-p35",
+              "text": "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            }
+          ]
+        },
+        {
+          "id": "ac-part-4-c2-drive-e-obj-drive-obj-s-obj",
+          "title": "C₂ (Drive): E(obj) → Drive(obj, S(obj))",
+          "spine": "If something exists, it has a fundamental drive to maintain its structure.",
+          "status": "revised",
+          "children": [],
+          "paragraphs": [
+            {
+              "id": "ac-part-4-c2-drive-e-obj-drive-obj-s-obj-p36",
+              "text": "If something exists, it has a fundamental drive to maintain its structure.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-4-c2-drive-e-obj-drive-obj-s-obj-p37",
+              "text": "Rationale: This is the 'why' behind life, behind evolution, behind every attempt to persist. Existence seeks to continue existing. Structure seeks to maintain structure. This is not teleology—it is the definition of what it means to be a structure across time.",
+              "status": "revised",
+              "spineRole": "evidence",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-4-c2-drive-e-obj-drive-obj-s-obj-p38",
+              "text": "Dependencies: Requires C₁ (Existence-Structure). Provides motivation for all life-processes.",
+              "status": "revised",
+              "spineRole": "evidence",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-4-c2-drive-e-obj-drive-obj-s-obj-p39",
+              "text": "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            }
+          ]
+        },
+        {
+          "id": "ac-part-4-4-2-the-dependency-structure",
+          "title": "4.2 The Dependency Structure",
+          "spine": "The axioms form a closed loop with the primitives, now including the causal chain:",
+          "status": "revised",
+          "children": [],
+          "paragraphs": [
+            {
+              "id": "ac-part-4-4-2-the-dependency-structure-p40",
+              "text": "The axioms form a closed loop with the primitives, now including the causal chain:",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-4-4-2-the-dependency-structure-p41",
+              "text": "g (Gravity)",
+              "status": "revised",
+              "spineRole": "setup",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-4-4-2-the-dependency-structure-p42",
+              "text": "↓",
+              "status": "revised",
+              "spineRole": "setup",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-4-4-2-the-dependency-structure-p43",
+              "text": "i (Instinct) ←→ Δ (Change)",
+              "status": "revised",
+              "spineRole": "setup",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-4-4-2-the-dependency-structure-p44",
+              "text": "↓",
+              "status": "revised",
+              "spineRole": "setup",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-4-4-2-the-dependency-structure-p45",
+              "text": "T₀–T₅ (Temporal Architecture)",
+              "status": "revised",
+              "spineRole": "setup",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-4-4-2-the-dependency-structure-p46",
+              "text": "↓",
+              "status": "revised",
+              "spineRole": "setup",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-4-4-2-the-dependency-structure-p47",
+              "text": "P₀ (ν) ←→ P₁ (E) ←→ P₂ (σ)",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-4-4-2-the-dependency-structure-p48",
+              "text": "↓",
+              "status": "revised",
+              "spineRole": "setup",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-4-4-2-the-dependency-structure-p49",
+              "text": "A₀ (Grounding)",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-4-4-2-the-dependency-structure-p50",
+              "text": "↓",
+              "status": "revised",
+              "spineRole": "setup",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-4-4-2-the-dependency-structure-p51",
+              "text": "A₁ ←—∴*—→ A₃",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-4-4-2-the-dependency-structure-p52",
+              "text": "↘ ↙",
+              "status": "revised",
+              "spineRole": "setup",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-4-4-2-the-dependency-structure-p53",
+              "text": "A₄ (Meta)",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-4-4-2-the-dependency-structure-p54",
+              "text": "↙ ↘",
+              "status": "revised",
+              "spineRole": "setup",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-4-4-2-the-dependency-structure-p55",
+              "text": "A₁.₅ ←— A₂ —→",
+              "status": "revised",
+              "spineRole": "setup",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-4-4-2-the-dependency-structure-p56",
+              "text": "↓",
+              "status": "revised",
+              "spineRole": "setup",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-4-4-2-the-dependency-structure-p57",
+              "text": "θ → L → κ → Metacognition",
+              "status": "revised",
+              "spineRole": "setup",
+              "linkedTerms": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ac-part-5",
+      "title": "Part V: OPERATORS",
+      "subtitle": "A complete operator set for equality, derivation, framing, and causation within noematic reality.",
+      "children": [
+        {
+          "id": "ac-part-5-5-1-equality-operators",
+          "title": "5.1 Equality Operators",
+          "spine": "Symbol: = | Name: classical equality | Meaning: Holds only within a single moment-slice: ν@μ = ν@μ.",
+          "status": "revised",
+          "children": [],
+          "paragraphs": [
+            {
+              "id": "ac-part-5-5-1-equality-operators-t1",
+              "text": "Symbol: = | Name: classical equality | Meaning: Holds only within a single moment-slice: ν@μ = ν@μ. Undefined across slices.",
+              "status": "revised",
+              "spineRole": "definition",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-5-5-1-equality-operators-t2",
+              "text": "Symbol: =* | Name: tesseractic equality | Meaning: Both equal and not-equal. The primary equality for noema. Context-dependent foregrounding.",
+              "status": "revised",
+              "spineRole": "definition",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-5-5-1-equality-operators-t3",
+              "text": "Symbol: ≈ | Name: approximate equality | Meaning: 'Close enough in current contexture.' Pragmatic, not ontological.",
+              "status": "revised",
+              "spineRole": "definition",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-5-5-1-equality-operators-t4",
+              "text": "Symbol: ≡ | Name: trace equality | Meaning: 'Connected in the Noemagraph.' Trivially universal (all ν trace to all ν).",
+              "status": "revised",
+              "spineRole": "definition",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-5-5-1-equality-operators-t5",
+              "text": "Symbol: =_σ | Name: schema equality | Meaning: 'Held as equivalent in my Endosphere.' Personal, cognisced.",
+              "status": "revised",
+              "spineRole": "definition",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-5-5-1-equality-operators-t6",
+              "text": "Symbol: ≡* | Name: paradox equivalence | Meaning: 'The same paradoxical structure.' Two expressions with identical =* behavior.",
+              "status": "revised",
+              "spineRole": "definition",
+              "linkedTerms": []
+            }
+          ]
+        },
+        {
+          "id": "ac-part-5-5-2-derivation-operators",
+          "title": "5.2 Derivation Operators",
+          "spine": "Symbol: → | Name: classical implication | Meaning: Unidirectional.",
+          "status": "revised",
+          "children": [],
+          "paragraphs": [
+            {
+              "id": "ac-part-5-5-2-derivation-operators-t7",
+              "text": "Symbol: → | Name: classical implication | Meaning: Unidirectional. P → Q means P entails Q. Limited use in this system.",
+              "status": "revised",
+              "spineRole": "definition",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-5-5-2-derivation-operators-t8",
+              "text": "Symbol: ∴* | Name: tesseractic derivation | Meaning: 'Because of' / 'therefore' running both directions. Mutual constitution.",
+              "status": "revised",
+              "spineRole": "definition",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-5-5-2-derivation-operators-t9",
+              "text": "Symbol: ⊢* | Name: tesseractic entailment | Meaning: 'Holds given' in paradoxical dependence. P ⊢* Q only because Q ⊢* P.",
+              "status": "revised",
+              "spineRole": "definition",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-5-5-2-derivation-operators-t10",
+              "text": "Symbol: ↝ | Name: experienced flux | Meaning: Awareness moving between moment-slices. ν₁ ↝ ν₂ means ω experiencing ν@μ₁ then ν@μ₂.",
+              "status": "revised",
+              "spineRole": "definition",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-5-5-2-derivation-operators-t11",
+              "text": "Symbol: ⇒* | Name: threshold crossing | Meaning: ν ⇒* ν* means noema crosses Threshold to become noemata. Lossy.",
+              "status": "revised",
+              "spineRole": "definition",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-5-5-2-derivation-operators-t12",
+              "text": "Symbol: ↔ | Name: logical equivalence | Meaning: If and only if. A ↔ B means A is true iff B is true. Used in causal axioms.",
+              "status": "revised",
+              "spineRole": "definition",
+              "linkedTerms": []
+            }
+          ]
+        },
+        {
+          "id": "ac-part-5-5-3-frame-operators",
+          "title": "5.3 Frame Operators",
+          "spine": "Symbol: { } | Name: cognitive frame | Meaning: General cognitive act.",
+          "status": "revised",
+          "children": [],
+          "paragraphs": [
+            {
+              "id": "ac-part-5-5-3-frame-operators-t13",
+              "text": "Symbol: { } | Name: cognitive frame | Meaning: General cognitive act. Contents are ν under operation.",
+              "status": "revised",
+              "spineRole": "definition",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-5-5-3-frame-operators-t14",
+              "text": "Symbol: [ ] | Name: endospheric frame | Meaning: Internal context. Operation occurs within E. Endologue.",
+              "status": "revised",
+              "spineRole": "definition",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-5-5-3-frame-operators-t15",
+              "text": "Symbol: ⟨ ⟩ | Name: exospheric frame | Meaning: External context. Engages Ξ or crosses T. Exologue.",
+              "status": "revised",
+              "spineRole": "definition",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-5-5-3-frame-operators-t16",
+              "text": "Symbol: / / | Name: lens marker | Meaning: Enclosed term is perspective. {/A/:B} means A is lens through which B is viewed.",
+              "status": "revised",
+              "spineRole": "definition",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-5-5-3-frame-operators-t17",
+              "text": "Symbol: ~ ~ | Name: exospective invitation | Meaning: Invites receiver to exospect the communicator's intended meaning.",
+              "status": "revised",
+              "spineRole": "definition",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-5-5-3-frame-operators-t18",
+              "text": "Symbol: | | | Name: universal marker | Meaning: Universally agreed measurement/concept. Still ν, but distributed consensus.",
+              "status": "revised",
+              "spineRole": "definition",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-5-5-3-frame-operators-t19",
+              "text": "Symbol: @ | Name: moment-slice locator | Meaning: ν@μ means 'noema as it exists in this moment-slice.'",
+              "status": "revised",
+              "spineRole": "definition",
+              "linkedTerms": []
+            }
+          ]
+        },
+        {
+          "id": "ac-part-5-5-4-substance-markers",
+          "title": "5.4 Substance Markers",
+          "spine": "Symbol: ν | Name: noema | Meaning: The primitive.",
+          "status": "revised",
+          "children": [],
+          "paragraphs": [
+            {
+              "id": "ac-part-5-5-4-substance-markers-t20",
+              "text": "Symbol: ν | Name: noema | Meaning: The primitive. Fluid, recursive unit of meaning. Cannot be created or destroyed.",
+              "status": "revised",
+              "spineRole": "definition",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-5-5-4-substance-markers-t21",
+              "text": "Symbol: σ | Name: schema | Meaning: ν held-as-true in E through cogniscence. Source of truth.",
+              "status": "revised",
+              "spineRole": "definition",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-5-5-4-substance-markers-t22",
+              "text": "Symbol: ν* | Name: noemata | Meaning: Communicated ν in the Exofield. Paradoxical: inaccessible directly.",
+              "status": "revised",
+              "spineRole": "definition",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-5-5-4-substance-markers-t23",
+              "text": "Symbol: σ* | Name: schemata | Meaning: σ in the Exofield. Knowledge without personal 'why.' Dictionaries, shared facts.",
+              "status": "revised",
+              "spineRole": "definition",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-5-5-4-substance-markers-t24",
+              "text": "Symbol: |ξ| | Name: universal | Meaning: σ* agreed upon through measurement/sensory consensus. Abstract but structurally necessary.",
+              "status": "revised",
+              "spineRole": "definition",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-5-5-4-substance-markers-t25",
+              "text": "Symbol: ~ξ~ | Name: exospective | Meaning: Marker inviting receiver to exospect the intended meaning.",
+              "status": "revised",
+              "spineRole": "definition",
+              "linkedTerms": []
+            }
+          ]
+        },
+        {
+          "id": "ac-part-5-5-5-causal-markers",
+          "title": "5.5 Causal Markers",
+          "spine": "Symbol: g | Name: gravity | Meaning: Fundamental relational force.",
+          "status": "revised",
+          "children": [],
+          "paragraphs": [
+            {
+              "id": "ac-part-5-5-5-causal-markers-t26",
+              "text": "Symbol: g | Name: gravity | Meaning: Fundamental relational force. The reason for instinct.",
+              "status": "revised",
+              "spineRole": "definition",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-5-5-5-causal-markers-t27",
+              "text": "Symbol: i | Name: instinct | Meaning: g applied to ν. The reason for movement between moments.",
+              "status": "revised",
+              "spineRole": "definition",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-5-5-5-causal-markers-t28",
+              "text": "Symbol: Δ | Name: change | Meaning: Difference between moment-slices. i ↔ Δ.",
+              "status": "revised",
+              "spineRole": "definition",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-5-5-5-causal-markers-t29",
+              "text": "Symbol: M | Name: memory | Meaning: Physical marker of change. M → Δ.",
+              "status": "revised",
+              "spineRole": "definition",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-5-5-5-causal-markers-t30",
+              "text": "Symbol: θ | Name: thought | Meaning: Semi-intentional processing. θ ≝ i ∧ M.",
+              "status": "revised",
+              "spineRole": "definition",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-5-5-5-causal-markers-t31",
+              "text": "Symbol: κ | Name: consciousness | Meaning: Intentional choice. κ ≝ θ ∧ endo(θ).",
+              "status": "revised",
+              "spineRole": "definition",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-5-5-5-causal-markers-t32",
+              "text": "Symbol: Em | Name: emotion | Meaning: Embedded in θ, not κ. Em → θ ∧ ¬(Em → κ).",
+              "status": "revised",
+              "spineRole": "definition",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-5-5-5-causal-markers-t33",
+              "text": "Symbol: L | Name: life | Meaning: L ↔ (θ ∧ A ∧ P). Thought + Awareness + Perception.",
+              "status": "revised",
+              "spineRole": "definition",
+              "linkedTerms": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ac-part-6",
+      "title": "Part VI: SPATIAL ARCHITECTURE",
+      "subtitle": "The topology within which cognition occurs: Noemascape, Endosphere, Perifield, Exofield, and boundaries between them.",
+      "children": [
+        {
+          "id": "ac-part-6-intro",
+          "title": "Introduction",
+          "spine": "The topology within which cognition occurs.",
+          "status": "revised",
+          "children": [],
+          "paragraphs": [
+            {
+              "id": "ac-part-6-intro-p1",
+              "text": "The topology within which cognition occurs. All spatial terms are themselves ν—subject to A₁–A₄.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-6-intro-t2",
+              "text": "Symbol: N | Name: Noemascape | Definition: Total metacognitive space. Self-contained, tesseractic. Nothing exists outside it from within.",
+              "status": "revised",
+              "spineRole": "definition",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-6-intro-t3",
+              "text": "Symbol: E | Name: Endosphere | Definition: The self. Cartesian anchor (P₁). Where dormant ν exist and σ is held. Always E_i for individual i.",
+              "status": "revised",
+              "spineRole": "definition",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-6-intro-t4",
+              "text": "Symbol: P | Name: Perifield | Definition: Space outside E but within N where cogniscence occurs. All ν in P are cognisced (P₃).",
+              "status": "revised",
+              "spineRole": "definition",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-6-intro-t5",
+              "text": "Symbol: X | Name: Exofield | Definition: Paradoxical 'outside' of N. Where ν* and σ* 'exist.' Real-through-effect only.",
+              "status": "revised",
+              "spineRole": "definition",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-6-intro-t6",
+              "text": "Symbol: G | Name: Noemagraph | Definition: Network of traces in P. Pre-exists; navigated, not produced. All ν connected to all ν.",
+              "status": "revised",
+              "spineRole": "definition",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-6-intro-t7",
+              "text": "Symbol: L | Name: Outer Lens | Definition: Boundary E ↔ P. Configuration of perspective that bends all transitioning ν.",
+              "status": "revised",
+              "spineRole": "definition",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-6-intro-t8",
+              "text": "Symbol: T | Name: Threshold | Definition: Boundary N ↔ X. Where ν ⇒* ν* (externalization) and ν* ⇒* ν' (internalization).",
+              "status": "revised",
+              "spineRole": "definition",
+              "linkedTerms": []
+            }
+          ]
+        },
+        {
+          "id": "ac-part-6-6-1-relational-structures",
+          "title": "6.1 Relational Structures",
+          "spine": "Symbol: τ | Name: trace | Definition: Connection between ν.",
+          "status": "revised",
+          "children": [],
+          "paragraphs": [
+            {
+              "id": "ac-part-6-6-1-relational-structures-t9",
+              "text": "Symbol: τ | Name: trace | Definition: Connection between ν. τ⁻ = passive (latent in E). τ⁺ = active (engaged in P).",
+              "status": "revised",
+              "spineRole": "definition",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-6-6-1-relational-structures-t10",
+              "text": "Symbol: β | Name: bond | Definition: τ⁺ solidified through cogniscent identification. Named, deliberately held.",
+              "status": "revised",
+              "spineRole": "definition",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-6-6-1-relational-structures-t11",
+              "text": "Symbol: α | Name: axis | Definition: Guiding 'so what?' question. Provides gravity in P, pulling ν into orbit.",
+              "status": "revised",
+              "spineRole": "definition",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-6-6-1-relational-structures-t12",
+              "text": "Symbol: Ω | Name: constellation | Definition: Organized pattern of ν bonded around α. Product of constellaration.",
+              "status": "revised",
+              "spineRole": "definition",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-6-6-1-relational-structures-t13",
+              "text": "Symbol: Ξ | Name: exosphere | Definition: ν in P modeling an external reality. Your interpretation of another's existence.",
+              "status": "revised",
+              "spineRole": "definition",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-6-6-1-relational-structures-t14",
+              "text": "Symbol: ρ | Name: refractal | Definition: Insight about how L shapes cognition. Product of refraction.",
+              "status": "revised",
+              "spineRole": "definition",
+              "linkedTerms": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ac-part-7",
+      "title": "Part VII: COGNITIVE EMERGENCE",
+      "subtitle": "From gravity to metacognition — a causal hierarchy where each level emerges from and requires the one below.",
+      "children": [
+        {
+          "id": "ac-part-7-intro",
+          "title": "Introduction",
+          "spine": "The Causal Axioms establish a hierarchy from gravity to metacognition.",
+          "status": "revised",
+          "children": [],
+          "paragraphs": [
+            {
+              "id": "ac-part-7-intro-p1",
+              "text": "The Causal Axioms establish a hierarchy from gravity to metacognition. This section formalizes the emergence of cognitive capacities along that hierarchy.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            }
+          ]
+        },
+        {
+          "id": "ac-part-7-7-1-the-hierarchy-of-mind",
+          "title": "7.1 The Hierarchy of Mind",
+          "spine": "Each level emerges from the one below and enables the one above.",
+          "status": "revised",
+          "children": [],
+          "paragraphs": [
+            {
+              "id": "ac-part-7-7-1-the-hierarchy-of-mind-p2",
+              "text": "Each level emerges from the one below and enables the one above. The hierarchy is not merely descriptive—it is causal. Remove any level and everything above it collapses.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-7-7-1-the-hierarchy-of-mind-p3",
+              "text": "g (gravity) — fundamental relation",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-7-7-1-the-hierarchy-of-mind-p4",
+              "text": "↓",
+              "status": "revised",
+              "spineRole": "setup",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-7-7-1-the-hierarchy-of-mind-p5",
+              "text": "i (instinct) ↔ Δ (change) — movement between moments",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-7-7-1-the-hierarchy-of-mind-p6",
+              "text": "↓",
+              "status": "revised",
+              "spineRole": "setup",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-7-7-1-the-hierarchy-of-mind-p7",
+              "text": "M (memory) — marker of Δ across {μ}",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-7-7-1-the-hierarchy-of-mind-p8",
+              "text": "↓",
+              "status": "revised",
+              "spineRole": "setup",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-7-7-1-the-hierarchy-of-mind-p9",
+              "text": "θ (thought) = i ∧ M — semi-intentional processing",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-7-7-1-the-hierarchy-of-mind-p10",
+              "text": "↓",
+              "status": "revised",
+              "spineRole": "setup",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-7-7-1-the-hierarchy-of-mind-p11",
+              "text": "L (life) = θ ∧ A ∧ P — thought + awareness + perception",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-7-7-1-the-hierarchy-of-mind-p12",
+              "text": "↓",
+              "status": "revised",
+              "spineRole": "setup",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-7-7-1-the-hierarchy-of-mind-p13",
+              "text": "Em (emotion) → θ — experiential coloring of thought",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-7-7-1-the-hierarchy-of-mind-p14",
+              "text": "↓",
+              "status": "revised",
+              "spineRole": "setup",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-7-7-1-the-hierarchy-of-mind-p15",
+              "text": "κ (consciousness) = θ ∧ endo(θ) — reflexive thought",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-7-7-1-the-hierarchy-of-mind-p16",
+              "text": "↓",
+              "status": "revised",
+              "spineRole": "setup",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-7-7-1-the-hierarchy-of-mind-p17",
+              "text": "Metacognition — the five habits operating on ν",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            }
+          ]
+        },
+        {
+          "id": "ac-part-7-7-2-thought",
+          "title": "7.2 Thought (θ)",
+          "spine": "Definition: θ ≝ i ∧ M",
+          "status": "revised",
+          "children": [],
+          "paragraphs": [
+            {
+              "id": "ac-part-7-7-2-thought-p18",
+              "text": "Definition: θ ≝ i ∧ M",
+              "status": "revised",
+              "spineRole": "definition",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-7-7-2-thought-p19",
+              "text": "Thought is instinct combined with memory. It is the capacity for semi-intentional processing—action informed by accumulated experience rather than pure reflex alone.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-7-7-2-thought-p20",
+              "text": "Examples:",
+              "status": "revised",
+              "spineRole": "evidence",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-7-7-2-thought-p21",
+              "text": "• A venus fly trap snapping on a fly: instinct (i) shaped by evolutionary memory (M) of what works.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-7-7-2-thought-p22",
+              "text": "• A dog anticipating a walk when its owner picks up a leash: instinct shaped by personal memory.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-7-7-2-thought-p23",
+              "text": "• A child reaching for a hot stove and pulling back: instinct shaped by prior experience of heat.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-7-7-2-thought-p24",
+              "text": "Thought does not require consciousness. Many living things think without reflecting on their thoughts.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            }
+          ]
+        },
+        {
+          "id": "ac-part-7-7-3-life-l",
+          "title": "7.3 Life (L)",
+          "spine": "Definition: L ↔ (θ ∧ A ∧ P)",
+          "status": "revised",
+          "children": [],
+          "paragraphs": [
+            {
+              "id": "ac-part-7-7-3-life-l-p25",
+              "text": "Definition: L ↔ (θ ∧ A ∧ P)",
+              "status": "revised",
+              "spineRole": "definition",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-7-7-3-life-l-p26",
+              "text": "Life is the conjunction of thought, awareness, and perception. Remove any one and the entity may exist, but is not 'alive' in the full sense.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-7-7-3-life-l-p27",
+              "text": "The components:",
+              "status": "revised",
+              "spineRole": "setup",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-7-7-3-life-l-p28",
+              "text": "• θ (thought): capacity for experience-informed processing",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-7-7-3-life-l-p29",
+              "text": "• A (awareness): ω stitching {μ} via pattern recognition—the experience of temporal continuity",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-7-7-3-life-l-p30",
+              "text": "• P (perception): sensory interface through which ν enters awareness",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-7-7-3-life-l-p31",
+              "text": "A rock has structure but no perception. A thermostat has perception but no awareness. A virus has neither thought nor awareness in the full sense. Life requires all three.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            }
+          ]
+        },
+        {
+          "id": "ac-part-7-7-4-emotion-em",
+          "title": "7.4 Emotion (Em)",
+          "spine": "Definition: Em → θ ∧ ¬(Em → κ)",
+          "status": "revised",
+          "children": [],
+          "paragraphs": [
+            {
+              "id": "ac-part-7-7-4-emotion-em-p32",
+              "text": "Definition: Em → θ ∧ ¬(Em → κ)",
+              "status": "revised",
+              "spineRole": "definition",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-7-7-4-emotion-em-p33",
+              "text": "Emotion implies thought but does not imply consciousness. This is the crucial distinction.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-7-7-4-emotion-em-p34",
+              "text": "The grieving elephant: Elephants return to the graves of their dead. They experience loss, longing—emotion. But this does not prove consciousness. The elephant may not reflect on its grief, may not choose how to grieve, may not understand the concept of mortality. It feels; it does not necessarily know that it feels.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-7-7-4-emotion-em-p35",
+              "text": "The human at the grave: A human visiting a grandmother's grave may experience the same emotion—loss, longing. But the human adds consciousness: the intention to connect with memory, the reflection on mortality, the choice of how to remember. The emotion is shared; the consciousness is not.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            }
+          ]
+        },
+        {
+          "id": "ac-part-7-7-5-consciousness",
+          "title": "7.5 Consciousness (κ)",
+          "spine": "Definition: κ ≝ θ ∧ endo(θ)",
+          "status": "revised",
+          "children": [],
+          "paragraphs": [
+            {
+              "id": "ac-part-7-7-5-consciousness-p36",
+              "text": "Definition: κ ≝ θ ∧ endo(θ)",
+              "status": "revised",
+              "spineRole": "definition",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-7-7-5-consciousness-p37",
+              "text": "Consciousness emerges when thought applies the endospective habit to itself. It is thinking about thinking—the reflexive capacity that allows intentional choice rather than mere reaction.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-7-7-5-consciousness-p38",
+              "text": "The formal structure: The endo() operator from the habit set, applied to θ itself, produces κ. This is not a metaphor; it is the definition. Consciousness is endospection of thought.",
+              "status": "revised",
+              "spineRole": "evidence",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-7-7-5-consciousness-p39",
+              "text": "Implications:",
+              "status": "revised",
+              "spineRole": "evidence",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-7-7-5-consciousness-p40",
+              "text": "• Consciousness requires thought (you cannot reflect on nothing)",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-7-7-5-consciousness-p41",
+              "text": "• Consciousness enables metacognition (once you can think about thinking, you can examine how you think)",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-7-7-5-consciousness-p42",
+              "text": "• Consciousness is what makes the five habits possible",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            }
+          ]
+        },
+        {
+          "id": "ac-part-7-7-6-the-habit-operators",
+          "title": "7.6 The Habit Operators",
+          "spine": "The five metacognitive habits are formalized as operators on ν.",
+          "status": "revised",
+          "children": [],
+          "paragraphs": [
+            {
+              "id": "ac-part-7-7-6-the-habit-operators-p43",
+              "text": "The five metacognitive habits are formalized as operators on ν. Each requires consciousness (κ) to execute.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-7-7-6-the-habit-operators-t44",
+              "text": "Operator: endo(ν) | Habit + Core Question: Endospecture: 'Who am I?' | Transformation: ν → [ν'] : Examines ν in relation to E; adjusts L",
+              "status": "revised",
+              "spineRole": "definition",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-7-7-6-the-habit-operators-t45",
+              "text": "Operator: omni(ν) | Habit + Core Question: Omnipere: 'Where can thought go?' | Transformation: ν → G : Navigates traces; activates τ⁻ → τ⁺",
+              "status": "revised",
+              "spineRole": "definition",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-7-7-6-the-habit-operators-t46",
+              "text": "Operator: const(ν, α) | Habit + Core Question: Constellare: 'So what?' | Transformation: {ν} × α → Ω : Organizes ν around axis",
+              "status": "revised",
+              "spineRole": "definition",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-7-7-6-the-habit-operators-t47",
+              "text": "Operator: refr(ν) | Habit + Core Question: Refracture: 'How does identity shape me?' | Transformation: ν → L → ρ : Examines how L bent ν",
+              "status": "revised",
+              "spineRole": "definition",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-7-7-6-the-habit-operators-t48",
+              "text": "Operator: exo(ν) | Habit + Core Question: Exospecture: 'What do I do with this?' | Transformation: ν → ⟨Ξ⟩ : Models external reality; attends to T",
+              "status": "revised",
+              "spineRole": "definition",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-7-7-6-the-habit-operators-p49",
+              "text": "The connection to consciousness: Each habit operator requires κ because each involves reflecting on ν—which is itself a form of thinking about thinking. Without κ, the habits cannot execute. This is why the cognitive hierarchy matters: it shows that metacognition is not primitive but emergent, arising from the causal chain that begins with gravity itself.",
+              "status": "revised",
+              "spineRole": "evidence",
+              "linkedTerms": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ac-part-8",
+      "title": "Part VIII: COMPOSITION RULES",
+      "subtitle": "Rules governing how operators combine: lens composition, frame dominance, tesseractic containment, temporal identity.",
+      "children": [
+        {
+          "id": "ac-part-8-8-1-the-lens-rule",
+          "title": "8.1 The Lens Rule",
+          "spine": "In {/A/:B}, the slashed term A is the lens through which B is viewed:",
+          "status": "revised",
+          "children": [],
+          "paragraphs": [
+            {
+              "id": "ac-part-8-8-1-the-lens-rule-p1",
+              "text": "In {/A/:B}, the slashed term A is the lens through which B is viewed:",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-8-8-1-the-lens-rule-p2",
+              "text": "1. Asymmetry: {/A/:B} ≠* {/B/:A}",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-8-8-1-the-lens-rule-p3",
+              "text": "2. Composition: {/A/:{/B/:C}} ≡* {/A∘B/:C}",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-8-8-1-the-lens-rule-p4",
+              "text": "3. Reflexivity: {/A/:A} =* [endo(A)]",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-8-8-1-the-lens-rule-p5",
+              "text": "4. Paradox: {/A/:B} =* {/A/:B} by A₁.₅",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            }
+          ]
+        },
+        {
+          "id": "ac-part-8-8-2-frame-rules",
+          "title": "8.2 Frame Rules",
+          "spine": "5.",
+          "status": "revised",
+          "children": [],
+          "paragraphs": [
+            {
+              "id": "ac-part-8-8-2-frame-rules-p6",
+              "text": "5. Dominance: Outermost bracket determines primary space.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-8-8-2-frame-rules-p7",
+              "text": "6. Threshold: Moving [ ] ↔ ⟨ ⟩ requires ⇒* (lossy transformation).",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-8-8-2-frame-rules-p8",
+              "text": "7. Binding: endo() → [ ], exo() → ⟨ ⟩, const() → { }",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            }
+          ]
+        },
+        {
+          "id": "ac-part-8-8-3-tesseractic-rules",
+          "title": "8.3 Tesseractic Rules",
+          "spine": "8.",
+          "status": "revised",
+          "children": [],
+          "paragraphs": [
+            {
+              "id": "ac-part-8-8-3-tesseractic-rules-p9",
+              "text": "8. Mutual Containment: (ν₁ ∋ ν₂) =* (ν₂ ∋ ν₁)",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-8-8-3-tesseractic-rules-p10",
+              "text": "9. Trace Recursion: If τ(ν₁, ν₂) → ν_τ, then τ(ν₁, ν_τ) and τ(ν₂, ν_τ) exist.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-8-8-3-tesseractic-rules-p11",
+              "text": "10. Flux Non-Destruction: ν₁ ↝ ν₂ does not destroy ν₁. Both exist across moment-slices.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            }
+          ]
+        },
+        {
+          "id": "ac-part-8-8-4-temporal-rules",
+          "title": "8.4 Temporal Rules",
+          "spine": "11.",
+          "status": "revised",
+          "children": [],
+          "paragraphs": [
+            {
+              "id": "ac-part-8-8-4-temporal-rules-p12",
+              "text": "11. Slice Identity: ν@μ = ν@μ (classical identity within a moment)",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-8-8-4-temporal-rules-p13",
+              "text": "12. Cross-Slice Paradox: ν@μ₁ =* ν@μ₂ (tesseractic across moments)",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-8-8-4-temporal-rules-p14",
+              "text": "13. Awareness Path: ω: μ₁ → μ₂ → ... → μₙ (trace through slices, creating experienced continuity)",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            }
+          ]
+        },
+        {
+          "id": "ac-part-8-8-5-causal-rules",
+          "title": "8.5 Causal Rules",
+          "spine": "14.",
+          "status": "revised",
+          "children": [],
+          "paragraphs": [
+            {
+              "id": "ac-part-8-8-5-causal-rules-p15",
+              "text": "14. Gravity Precedence: g is causally prior to all ν-operations.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-8-8-5-causal-rules-p16",
+              "text": "15. Instinct-Movement: i causes ω to traverse {μ}; without i, ω is static.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-8-8-5-causal-rules-p17",
+              "text": "16. Memory Implication: M → Δ (memory implies change occurred, not vice versa).",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-8-8-5-causal-rules-p18",
+              "text": "17. Consciousness Requirement: All habit operators require κ; κ requires θ ∧ endo(θ).",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ac-part-9",
+      "title": "Part IX: COMPLETE SYMBOL REFERENCE",
+      "subtitle": "A comprehensive reference of all symbols organized by category: primitives, axioms, operators, spaces, relations.",
+      "children": [
+        {
+          "id": "ac-part-9-9-1-primitives-p",
+          "title": "9.1 Primitives (P)",
+          "spine": "P₀ Substance: All cognitive content is ν",
+          "status": "revised",
+          "children": [],
+          "paragraphs": [
+            {
+              "id": "ac-part-9-9-1-primitives-p-p1",
+              "text": "P₀ Substance: All cognitive content is ν",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-9-9-1-primitives-p-p2",
+              "text": "P₁ Cogito: ∃E such that E cannot doubt E",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-9-9-1-primitives-p-p3",
+              "text": "P₂ Truth: σ ≝ ν held-as-true in E",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-9-9-1-primitives-p-p4",
+              "text": "P₃ Perifield: ∀ν ∈ P, ν is cognisced",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-9-9-1-primitives-p-p5",
+              "text": "P₄ Gravity: g is the fundamental relational force",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-9-9-1-primitives-p-p6",
+              "text": "P₅ Instinct: i ≝ g applied to ν",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-9-9-1-primitives-p-p7",
+              "text": "P₆ Existence-Structure: E(obj) ↔ S(obj)",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-9-9-1-primitives-p-p8",
+              "text": "P₇ Drive: E(obj) → Drive(obj, S(obj))",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            }
+          ]
+        },
+        {
+          "id": "ac-part-9-9-2-temporal-axioms-t",
+          "title": "9.2 Temporal Axioms (T)",
+          "spine": "T₀ Moment: μ is a frozen cross-section of noematic structure",
+          "status": "revised",
+          "children": [],
+          "paragraphs": [
+            {
+              "id": "ac-part-9-9-2-temporal-axioms-t-p9",
+              "text": "T₀ Moment: μ is a frozen cross-section of noematic structure",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-9-9-2-temporal-axioms-t-p10",
+              "text": "T₁ Awareness: ω is the trace of awareness through {μ}",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-9-9-2-temporal-axioms-t-p11",
+              "text": "T₂ Continuity: Experience = ω stitching {μ} via pattern recognition",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-9-9-2-temporal-axioms-t-p12",
+              "text": "T₃ Instinct-Movement: i → ω(μₙ → μₙ₊₁)",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-9-9-2-temporal-axioms-t-p13",
+              "text": "T₄ Instinct-Change: i ↔ Δ",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-9-9-2-temporal-axioms-t-p14",
+              "text": "T₅ Memory-Change: M → Δ",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            }
+          ]
+        },
+        {
+          "id": "ac-part-9-9-3-noematic-axioms-a",
+          "title": "9.3 Noematic Axioms (A)",
+          "spine": "A₀ Grounding: A ≝ ν",
+          "status": "revised",
+          "children": [],
+          "paragraphs": [
+            {
+              "id": "ac-part-9-9-3-noematic-axioms-a-p15",
+              "text": "A₀ Grounding: A ≝ ν",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-9-9-3-noematic-axioms-a-p16",
+              "text": "A₁ Identity: A =* A",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-9-9-3-noematic-axioms-a-p17",
+              "text": "A₁.₅ Expression: {/A/:B} =* {/A/:B}",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-9-9-3-noematic-axioms-a-p18",
+              "text": "A₂ Derivation: (A =* A) ∴* ({/A/:B} =* {/A/:B})",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-9-9-3-noematic-axioms-a-p19",
+              "text": "A₃ Difference: A =* B",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-9-9-3-noematic-axioms-a-p20",
+              "text": "A₄ Meta-Paradox: (A =* A) =* (A =* B)",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            }
+          ]
+        },
+        {
+          "id": "ac-part-9-9-4-causal-axioms-c",
+          "title": "9.4 Causal Axioms (C)",
+          "spine": "C₀ Gravity-Instinct: g → i",
+          "status": "revised",
+          "children": [],
+          "paragraphs": [
+            {
+              "id": "ac-part-9-9-4-causal-axioms-c-p21",
+              "text": "C₀ Gravity-Instinct: g → i",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-9-9-4-causal-axioms-c-p22",
+              "text": "C₁ Existence-Structure: E(obj) ↔ S(obj)",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-9-9-4-causal-axioms-c-p23",
+              "text": "C₂ Drive: E(obj) → Drive(obj, S(obj))",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            }
+          ]
+        },
+        {
+          "id": "ac-part-9-9-5-cognitive-definitions",
+          "title": "9.5 Cognitive Definitions",
+          "spine": "θ (Thought): θ ≝ i ∧ M",
+          "status": "revised",
+          "children": [],
+          "paragraphs": [
+            {
+              "id": "ac-part-9-9-5-cognitive-definitions-p24",
+              "text": "θ (Thought): θ ≝ i ∧ M",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-9-9-5-cognitive-definitions-p25",
+              "text": "L (Life): L ↔ (θ ∧ A ∧ P)",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-9-9-5-cognitive-definitions-p26",
+              "text": "Em (Emotion): Em → θ ∧ ¬(Em → κ)",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-9-9-5-cognitive-definitions-p27",
+              "text": "κ (Consciousness): κ ≝ θ ∧ endo(θ)",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            }
+          ]
+        },
+        {
+          "id": "ac-part-9-9-6-all-operators",
+          "title": "9.6 All Operators",
+          "spine": "EQUALITY: = =* ≈ ≡ =_σ ≡*",
+          "status": "revised",
+          "children": [],
+          "paragraphs": [
+            {
+              "id": "ac-part-9-9-6-all-operators-p28",
+              "text": "EQUALITY: = =* ≈ ≡ =_σ ≡*",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-9-9-6-all-operators-p29",
+              "text": "DERIVATION: → ↔ ∴* ⊢* ↝ ⇒*",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-9-9-6-all-operators-p30",
+              "text": "FRAMES: { } [ ] ⟨ ⟩ / / ~ ~ | | @",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-9-9-6-all-operators-p31",
+              "text": "SUBSTANCES: ν σ ν* σ* |ξ| ~ξ~",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-9-9-6-all-operators-p32",
+              "text": "SPACES: N E P X G L T",
+              "status": "revised",
+              "spineRole": "setup",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-9-9-6-all-operators-p33",
+              "text": "RELATIONS: τ τ⁻ τ⁺ β α Ω Ξ ρ",
+              "status": "revised",
+              "spineRole": "setup",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-9-9-6-all-operators-p34",
+              "text": "TEMPORAL: μ ω",
+              "status": "revised",
+              "spineRole": "setup",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-9-9-6-all-operators-p35",
+              "text": "CAUSAL: g i Δ M θ κ Em L",
+              "status": "revised",
+              "spineRole": "setup",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-9-9-6-all-operators-p36",
+              "text": "HABITS: endo() omni() const() refr() exo()",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ac-part-10",
+      "title": "Part X: OPEN QUESTIONS",
+      "subtitle": "Negation, quantification, proof, computation, the origin of gravity, the boundary of consciousness — questions the system raises.",
+      "children": [
+        {
+          "id": "ac-part-10-intro",
+          "title": "Introduction",
+          "spine": "Version 3.",
+          "status": "revised",
+          "children": [],
+          "paragraphs": [
+            {
+              "id": "ac-part-10-intro-p1",
+              "text": "Version 3.0 asked: Why does awareness move at all? Version 4.0 answers: because instinct compels it.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-10-intro-p2",
+              "text": "But new questions emerge:",
+              "status": "revised",
+              "spineRole": "setup",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-10-intro-p3",
+              "text": "Negation: What does ¬ν mean? Is there ¬* where ¬*ν =* ν?",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-10-intro-p4",
+              "text": "Quantification: Can we count ν or measure τ strength? Is all quantification ≈?",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-10-intro-p5",
+              "text": "Proof: What does proof mean when axioms are mutually constitutive?",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-10-intro-p6",
+              "text": "Computation: Is this system computable, or purely descriptive?",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-10-intro-p7",
+              "text": "The origin of gravity: The causal chain begins with g. But why does g exist? This system takes g as given—the 'unmoved mover.' Is there something beneath gravity?",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-10-intro-p8",
+              "text": "The boundary of consciousness: κ ≝ θ ∧ endo(θ). But how much endo(θ) is required? Is there a spectrum of consciousness, or is it binary?",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-10-intro-p9",
+              "text": "Artificial consciousness: If κ requires θ requires i requires g, can a system without physical gravity develop consciousness? Or does 'gravity' generalize to any fundamental relational force?",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            }
+          ]
+        },
+        {
+          "id": "ac-part-10-10-1-the-self-reference",
+          "title": "10.1 The Self-Reference",
+          "spine": "This document uses the system to describe the system.",
+          "status": "revised",
+          "children": [],
+          "paragraphs": [
+            {
+              "id": "ac-part-10-10-1-the-self-reference-p10",
+              "text": "This document uses the system to describe the system. The axioms are stated using operators that presuppose the axioms. What you hold now is noemata (ν*) that crossed the Threshold. It becomes σ only if you cognisce it.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-10-10-1-the-self-reference-p11",
+              "text": "The bootstrap is not vicious—it is demonstrative. The system enacts its own principles. It emerged through omniperegrination, constellated around an axis, crossed Thresholds through exologue. The meta-story is the content.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-10-10-1-the-self-reference-p12",
+              "text": "And now the causal chain completes the circle: the gravity that binds atoms caused instinct in biological systems. That instinct, combined with memory, produced thought. Thought, combined with awareness, produced life. Consciousness emerged when thought reflected on itself. And consciousness, exercising the five habits, produced this document—which now describes the process that produced it.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-10-10-1-the-self-reference-p13",
+              "text": "─────────────────────────────────────",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-10-10-1-the-self-reference-p14",
+              "text": "It's the questions, not the answers.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-10-10-1-the-self-reference-p15",
+              "text": "Paradoxes resolve through paradoxes.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-10-10-1-the-self-reference-p16",
+              "text": "Each axiom holds because the others hold.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-10-10-1-the-self-reference-p17",
+              "text": "g causes i. i causes ω. ω experiences ν. ν reflects on ν.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-10-10-1-the-self-reference-p18",
+              "text": "ν is the substance. σ is the truth. E is the anchor.",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-10-10-1-the-self-reference-p19",
+              "text": "A =* A",
+              "status": "revised",
+              "spineRole": "claim",
+              "linkedTerms": []
+            },
+            {
+              "id": "ac-part-10-10-1-the-self-reference-p20",
+              "text": "And that is enough.",
+              "status": "revised",
+              "spineRole": "setup",
+              "linkedTerms": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
