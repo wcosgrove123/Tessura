@@ -1,7 +1,9 @@
 # Tessera — Future Features
 
 ## Next Up
-- [ ] Diagram builder — beautiful, easy visual diagram tool. Consider Mermaid, D2, or a React-based solution. Pretext (chenglou/pretext) is a text measurement lib, not a diagram tool, but could enhance custom rendering.
+- [x] Diagram builder — React Flow-based, 14 thesis-driven templates in 5 categories, inline rendering, dagre + d3-force layout
+- [ ] Diagram builder Phase 2 — live d3-force physics simulation for Knowledge Graph, 3D templates (Endosphere, Noemascape, 3D Compass) via Three.js
+- [ ] Build remaining ~40 diagrams from thesis inventory (see docs/issues.md and memory/project_diagram_inventory.md)
 - [ ] Fill in the Axiometric Calculus — import from `docs/writings/Purpose of School/Axiometric Calculus/` (.docx files), structure the formal notation, primitives, axioms, versors, and operators
 - [ ] Fill in the Ontological Dictionary — import from `docs/writings/Purpose of School/Ontological Dictionary/` (.docx and .xlsx files), build relational definitions
 - [ ] Figure out how Calculus and Dictionary integrate into the main project — they're the same idea in different registers; the tool should make cross-project connections visible and navigable
@@ -31,3 +33,6 @@
 (Added by Wil)
 - improve import functionality
 - improve export functionality
+- add a backup of all the text from the entire "project of schools" doc in markdown format in a few places that are updated everytime it's saved (maybe some cloud storage - google docs?)
+- make it editable across devices
+- ~~add diagrams/diagram builder~~ DONE (v0.4)

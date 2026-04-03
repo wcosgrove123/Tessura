@@ -1,10 +1,10 @@
 import React, { useMemo } from "react";
-import { Search, AlignLeft, Network, Hash, GitBranch, Upload, Lightbulb, BookOpen, Waypoints, StickyNote, Check, Loader, AlertCircle, Maximize2 } from "lucide-react";
+import { Search, AlignLeft, Network, Hash, GitBranch, Upload, Lightbulb, BookOpen, Waypoints, StickyNote, Check, Loader, AlertCircle, Maximize2, Eye, Shapes } from "lucide-react";
 import { PALETTE as P } from "../data/constants.js";
 import { flattenSections } from "../hooks/useWorkspaceState.js";
 import { NOTE_CATEGORIES } from "../data/notes.js";
 
-export default function TopBar({ searchQuery, setSearchQuery, view, setView, projects, linkedTerms, notes = [], onTermClick, onSelectDoc, onImport, saveStatus = "saved", onZenMode }) {
+export default function TopBar({ searchQuery, setSearchQuery, view, setView, projects, linkedTerms, notes = [], sources = [], onTermClick, onSelectDoc, onImport, onPreview, saveStatus = "saved", onZenMode }) {
   const searchResults = useMemo(() => {
     if (!searchQuery || searchQuery.length < 2) return [];
     const q = searchQuery.toLowerCase();
@@ -27,20 +27,26 @@ export default function TopBar({ searchQuery, setSearchQuery, view, setView, pro
         res.push({ isNote: true, note: n });
       }
     }
-    return res.slice(0, 12);
-  }, [searchQuery, projects, linkedTerms, notes]);
+    for (const s of sources) {
+      if (s.title?.toLowerCase().includes(q) || s.citationKey?.toLowerCase().includes(q) ||
+          s.authors?.some((a) => a.family?.toLowerCase().includes(q))) {
+        res.push({ isSource: true, source: s });
+      }
+    }
+    return res.slice(0, 14);
+  }, [searchQuery, projects, linkedTerms, notes, sources]);
 
   return (
     <div style={{ height: 50, display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 20px", borderBottom: `1px solid ${P.bd}`, background: P.tb, flexShrink: 0 }}>
       <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
         <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 22, color: "#F5F0E8", fontWeight: 300, letterSpacing: 3, fontStyle: "italic" }}>Tessera</div>
-        <span style={{ fontSize: 9, color: "#8A7E6E", fontFamily: "'IBM Plex Mono', monospace", letterSpacing: 2, textTransform: "uppercase", marginTop: 2 }}>scholarly workspace</span>
+        <span style={{ fontSize: 10, color: "#A89E90", fontFamily: "'IBM Plex Mono', monospace", letterSpacing: 2, textTransform: "uppercase", marginTop: 2 }}>scholarly workspace</span>
         <div style={{ display: "flex", alignItems: "center", gap: 4, marginLeft: 4, opacity: saveStatus === "saved" ? 0.5 : 1, transition: "opacity 0.3s" }}>
           {saveStatus === "saved" && <Check size={10} style={{ color: "#7C9A6B" }} />}
           {saveStatus === "saving" && <Loader size={10} style={{ color: "#C9A84C", animation: "spin 1s linear infinite" }} />}
           {saveStatus === "error" && <AlertCircle size={10} style={{ color: "#C45B4A" }} />}
           <span style={{
-            fontSize: 8, fontFamily: "'IBM Plex Mono', monospace", letterSpacing: 1.5, textTransform: "uppercase",
+            fontSize: 10, fontFamily: "'IBM Plex Mono', monospace", letterSpacing: 1.5, textTransform: "uppercase",
             color: saveStatus === "error" ? "#C45B4A" : saveStatus === "saving" ? "#C9A84C" : "#7C9A6B",
           }}>
             {saveStatus === "saved" ? "Saved" : saveStatus === "saving" ? "Saving..." : "Save failed"}
@@ -49,7 +55,7 @@ export default function TopBar({ searchQuery, setSearchQuery, view, setView, pro
       </div>
 
       <div style={{ position: "relative", width: 340 }}>
-        <Search size={13} style={{ position: "absolute", left: 11, top: 9, color: "#8A7E6E" }} />
+        <Search size={13} style={{ position: "absolute", left: 11, top: 9, color: "#A89E90" }} />
         <input
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
@@ -59,7 +65,7 @@ export default function TopBar({ searchQuery, setSearchQuery, view, setView, pro
           onBlur={(e) => (e.target.style.borderColor = "#50473A")}
         />
         {searchResults.length > 0 && searchQuery.length >= 2 && (
-          <div style={{ position: "absolute", top: 38, left: 0, right: 0, background: P.bg, border: `1px solid ${P.bd}`, borderRadius: 6, maxHeight: 360, overflowY: "auto", zIndex: 1000, boxShadow: "0 12px 40px rgba(44,36,24,0.15)" }}>
+          <div style={{ position: "absolute", top: 38, left: 0, right: 0, background: P.bg, border: `1px solid ${P.bd}`, borderRadius: 6, maxHeight: "min(360px, 60vh)", overflowY: "auto", zIndex: 1000, boxShadow: "0 12px 40px rgba(44,36,24,0.15)", animation: "fadeSlideIn 180ms ease-out" }}>
             {searchResults.map((r, i) => (
               <div
                 key={i}
@@ -76,7 +82,14 @@ export default function TopBar({ searchQuery, setSearchQuery, view, setView, pro
                 onMouseOver={(e) => (e.currentTarget.style.background = P.sh)}
                 onMouseOut={(e) => (e.currentTarget.style.background = "transparent")}
               >
-                {r.isNote ? (
+                {r.isSource ? (
+                  <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                    <BookOpen size={11} style={{ color: P.ac }} />
+                    <span style={{ fontSize: 10, color: P.ac, fontFamily: "'IBM Plex Mono', monospace" }}>SOURCE</span>
+                    <span style={{ fontSize: 12, color: P.tx, fontWeight: 500 }}>{r.source.title?.slice(0, 50)}{r.source.title?.length > 50 ? "..." : ""}</span>
+                    <span style={{ fontSize: 10, color: P.tf }}>{r.source.authors?.[0]?.family} ({r.source.year || "n.d."})</span>
+                  </div>
+                ) : r.isNote ? (
                   <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
                     <StickyNote size={11} style={{ color: (NOTE_CATEGORIES[r.note.category] || NOTE_CATEGORIES.idea).color }} />
                     <span style={{ fontSize: 10, color: (NOTE_CATEGORIES[r.note.category] || NOTE_CATEGORIES.idea).color, fontFamily: "'IBM Plex Mono', monospace" }}>
@@ -119,6 +132,7 @@ export default function TopBar({ searchQuery, setSearchQuery, view, setView, pro
             ["editor", AlignLeft, "Editor"],
             ["brainstorm", Lightbulb, "Notes"],
             ["argmap", Network, "Arg Map"],
+            ["diagrams", Shapes, "Diagrams"],
             ["calculus", BookOpen, "Calculus"],
             ["dictionary", Waypoints, "Dictionary"],
           ].map(([v, Icon, label]) => (
@@ -128,7 +142,7 @@ export default function TopBar({ searchQuery, setSearchQuery, view, setView, pro
               style={{
                 display: "flex", alignItems: "center", gap: 5, padding: "5px 12px",
                 background: view === v ? "#50473A" : "transparent",
-                border: "none", borderRadius: 3, color: view === v ? "#F5F0E8" : "#8A7E6E",
+                border: "none", borderRadius: 3, color: view === v ? "#F5F0E8" : "#A89E90",
                 cursor: "pointer", fontSize: 10, fontFamily: "'IBM Plex Mono', monospace",
               }}
             >
@@ -142,12 +156,29 @@ export default function TopBar({ searchQuery, setSearchQuery, view, setView, pro
             style={{
               display: "flex", alignItems: "center", gap: 5, padding: "5px 12px",
               background: "#3D3428", border: "1px solid #50473A", borderRadius: 4,
-              color: "#8A7E6E", cursor: "pointer", fontSize: 10,
+              color: "#A89E90", cursor: "pointer", fontSize: 10,
               fontFamily: "'IBM Plex Mono', monospace",
             }}
             title="Import .docx file"
           >
             <Upload size={11} />Import
+          </button>
+        )}
+        {onPreview && (
+          <button
+            onClick={onPreview}
+            style={{
+              display: "flex", alignItems: "center", gap: 5, padding: "5px 10px",
+              background: "#3D3428", border: "1px solid #50473A", borderRadius: 4,
+              color: "#C4B9A8", cursor: "pointer", fontSize: 10,
+              fontFamily: "'IBM Plex Mono', monospace", letterSpacing: 1.5, textTransform: "uppercase",
+              transition: "all 0.15s",
+            }}
+            onMouseOver={(e) => { e.currentTarget.style.background = "#4A3F32"; e.currentTarget.style.color = "#E8DFD0"; }}
+            onMouseOut={(e) => { e.currentTarget.style.background = "#3D3428"; e.currentTarget.style.color = "#C4B9A8"; }}
+            title="Preview full document"
+          >
+            <Eye size={11} />Preview
           </button>
         )}
         {onZenMode && (
@@ -156,12 +187,13 @@ export default function TopBar({ searchQuery, setSearchQuery, view, setView, pro
             style={{
               display: "flex", alignItems: "center", gap: 5, padding: "5px 10px",
               background: "#3D3428", border: "1px solid #50473A", borderRadius: 4,
-              color: "#8A7E6E", cursor: "pointer", fontSize: 10,
+              color: "#A89E90", cursor: "pointer", fontSize: 10,
               fontFamily: "'IBM Plex Mono', monospace",
             }}
             title="Zen mode (Ctrl+Shift+F)"
           >
             <Maximize2 size={11} />
+            <span style={{ fontSize: 9, opacity: 0.6, letterSpacing: 0.5 }}>Ctrl+Shift+F</span>
           </button>
         )}
       </div>

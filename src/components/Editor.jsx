@@ -1,10 +1,13 @@
-import React, { useState, useMemo, useCallback } from "react";
+import React, { useState, useMemo, useCallback, useEffect } from "react";
 import { GitBranch, Link2, Plus, Trash2, Check, Edit3, FolderPlus, ChevronRight, MessageSquare, X, ChevronDown, ChevronUp, StickyNote, Unlink, RotateCcw, MousePointer, List, FileText, BookOpen } from "lucide-react";
 import { PALETTE as P, STATUS, SPINE_ROLES, STATUS_VALUES, SPINE_ROLE_VALUES } from "../data/constants.js";
 import { NOTE_CATEGORIES } from "../data/notes.js";
 import { renderTermLinks } from "./TermHighlight.jsx";
 import ParagraphEditor from "./ParagraphEditor.jsx";
+import CitationPopover from "./CitationPopover.jsx";
 import ConfirmModal from "./ConfirmModal.jsx";
+import DiagramInline from "./DiagramInline.jsx";
+import { loadZoteroSettings, searchLibrary as zoteroSearchLibrary } from "../lib/zoteroClient.js";
 import { collectParagraphs, findSection } from "../hooks/useWorkspaceState.js";
 
 function findSiblings(children, parentId) {
@@ -37,7 +40,7 @@ function StatusSelect({ value, onChange }) {
       onChange={(e) => onChange(e.target.value)}
       onClick={(e) => e.stopPropagation()}
       style={{
-        fontSize: 9, fontFamily: "'IBM Plex Mono', monospace", padding: "3px 8px",
+        fontSize: 10, fontFamily: "'IBM Plex Mono', monospace", padding: "3px 8px",
         borderRadius: 3, background: STATUS[value]?.bg, color: STATUS[value]?.text,
         border: `1px solid ${STATUS[value]?.bd}`, letterSpacing: 1, textTransform: "uppercase",
         cursor: "pointer", outline: "none",
@@ -56,7 +59,7 @@ function RoleSelect({ value, onChange }) {
       onChange={(e) => onChange(e.target.value)}
       onClick={(e) => e.stopPropagation()}
       style={{
-        fontSize: 9, fontFamily: "'IBM Plex Mono', monospace", padding: "3px 8px",
+        fontSize: 10, fontFamily: "'IBM Plex Mono', monospace", padding: "3px 8px",
         borderRadius: 3, background: `${role?.c || "#999"}0C`, color: role?.c || "#999",
         border: `1px solid ${role?.c || "#999"}25`, letterSpacing: 1, textTransform: "uppercase",
         cursor: "pointer", outline: "none",
@@ -85,7 +88,7 @@ function MiniNoteCard({ note, onEdit, onDelete, onSave, onCancel, isEditing }) {
           {Object.entries(NOTE_CATEGORIES).filter(([k]) => k !== "comment").map(([key, c]) => (
             <button key={key} onClick={() => setEditCategory(key)}
               style={{
-                fontSize: 8, fontFamily: "'IBM Plex Mono', monospace", padding: "2px 6px",
+                fontSize: 10, fontFamily: "'IBM Plex Mono', monospace", padding: "2px 6px",
                 borderRadius: 3, cursor: "pointer", border: `1px solid ${c.color}30`,
                 background: editCategory === key ? `${c.color}20` : "transparent",
                 color: c.color, fontWeight: editCategory === key ? 600 : 400,
@@ -104,17 +107,17 @@ function MiniNoteCard({ note, onEdit, onDelete, onSave, onCancel, isEditing }) {
         <input value={editTags} onChange={(e) => setEditTags(e.target.value)}
           placeholder="Tags (comma-separated)"
           style={{
-            width: "100%", marginTop: 4, fontSize: 9, fontFamily: "'IBM Plex Mono', monospace",
+            width: "100%", marginTop: 4, fontSize: 10, fontFamily: "'IBM Plex Mono', monospace",
             color: P.tm, background: P.sf, border: `1px solid ${P.bd}`, borderRadius: 3,
             padding: "4px 8px", outline: "none",
           }} />
         <div style={{ display: "flex", gap: 4, marginTop: 6 }}>
           <button onClick={() => onSave(note.id, { text: editText, category: editCategory, tags: editTags.split(",").map(t => t.trim()).filter(Boolean) })}
-            style={{ fontSize: 9, fontFamily: "'IBM Plex Mono', monospace", padding: "3px 10px", background: P.ac, color: "#fff", border: "none", borderRadius: 3, cursor: "pointer" }}>
+            style={{ fontSize: 10, fontFamily: "'IBM Plex Mono', monospace", padding: "3px 10px", background: P.ac, color: "#fff", border: "none", borderRadius: 3, cursor: "pointer" }}>
             Save
           </button>
           <button onClick={onCancel}
-            style={{ fontSize: 9, fontFamily: "'IBM Plex Mono', monospace", padding: "3px 10px", background: P.sf, color: P.tm, border: `1px solid ${P.bd}`, borderRadius: 3, cursor: "pointer" }}>
+            style={{ fontSize: 10, fontFamily: "'IBM Plex Mono', monospace", padding: "3px 10px", background: P.sf, color: P.tm, border: `1px solid ${P.bd}`, borderRadius: 3, cursor: "pointer" }}>
             Cancel
           </button>
         </div>
@@ -126,25 +129,29 @@ function MiniNoteCard({ note, onEdit, onDelete, onSave, onCancel, isEditing }) {
     <div style={{
       padding: "8px 10px", borderRadius: 6, background: P.bg,
       border: `1px solid ${P.bl}`, borderLeft: `2px solid ${cat.color}`,
-      transition: "all 0.15s",
+      transition: "transform 0.18s ease, box-shadow 0.18s ease",
     }}
-      onMouseOver={(e) => (e.currentTarget.style.boxShadow = "0 1px 4px rgba(44,36,24,0.06)")}
-      onMouseOut={(e) => (e.currentTarget.style.boxShadow = "none")}
+      onMouseOver={(e) => { e.currentTarget.style.boxShadow = "0 3px 10px rgba(44,36,24,0.07)"; e.currentTarget.style.transform = "translateY(-1px)"; }}
+      onMouseOut={(e) => { e.currentTarget.style.boxShadow = "none"; e.currentTarget.style.transform = "translateY(0)"; }}
     >
       <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", marginBottom: 4 }}>
         <span style={{
-          fontSize: 7, fontFamily: "'IBM Plex Mono', monospace", padding: "1px 5px",
+          fontSize: 10, fontFamily: "'IBM Plex Mono', monospace", padding: "1px 5px",
           borderRadius: 2, background: `${cat.color}12`, color: cat.color,
           letterSpacing: 1, textTransform: "uppercase", fontWeight: 600,
         }}>
           {cat.icon} {cat.label}
         </span>
-        <div style={{ display: "flex", gap: 3 }}>
-          <button onClick={() => onEdit(note.id)} style={{ background: "none", border: "none", cursor: "pointer", color: P.tf, padding: 1 }}>
-            <Edit3 size={9} />
+        <div style={{ display: "flex", gap: 2 }}>
+          <button onClick={() => onEdit(note.id)} style={{ background: "none", border: "none", cursor: "pointer", color: P.tf, padding: 6, borderRadius: 4, display: "flex", alignItems: "center", justifyContent: "center" }}
+            onMouseOver={(e) => (e.currentTarget.style.background = `${P.ac}10`)}
+            onMouseOut={(e) => (e.currentTarget.style.background = "none")}>
+            <Edit3 size={11} />
           </button>
-          <button onClick={() => onDelete(note.id)} style={{ background: "none", border: "none", cursor: "pointer", color: "#943D3D", padding: 1 }}>
-            <Trash2 size={9} />
+          <button onClick={() => onDelete(note.id)} style={{ background: "none", border: "none", cursor: "pointer", color: "#943D3D", padding: 6, borderRadius: 4, display: "flex", alignItems: "center", justifyContent: "center" }}
+            onMouseOver={(e) => (e.currentTarget.style.background = "#943D3D10")}
+            onMouseOut={(e) => (e.currentTarget.style.background = "none")}>
+            <Trash2 size={11} />
           </button>
         </div>
       </div>
@@ -152,7 +159,7 @@ function MiniNoteCard({ note, onEdit, onDelete, onSave, onCancel, isEditing }) {
         {note.text.length > 150 ? note.text.slice(0, 150) + "..." : note.text}
       </div>
       {note.linkedParagraphId && (
-        <div style={{ fontSize: 8, color: P.tf, fontFamily: "'IBM Plex Mono', monospace", marginTop: 4 }}>
+        <div style={{ fontSize: 10, color: P.tf, fontFamily: "'IBM Plex Mono', monospace", marginTop: 4 }}>
           linked to paragraph
         </div>
       )}
@@ -160,7 +167,7 @@ function MiniNoteCard({ note, onEdit, onDelete, onSave, onCancel, isEditing }) {
         <div style={{ display: "flex", gap: 3, flexWrap: "wrap", marginTop: 4 }}>
           {note.tags.slice(0, 3).map((tag) => (
             <span key={tag} style={{
-              fontSize: 8, fontFamily: "'IBM Plex Mono', monospace", padding: "0px 4px",
+              fontSize: 10, fontFamily: "'IBM Plex Mono', monospace", padding: "0px 4px",
               borderRadius: 8, background: `${cat.color}08`, color: cat.color,
               border: `1px solid ${cat.color}15`,
             }}>
@@ -168,7 +175,7 @@ function MiniNoteCard({ note, onEdit, onDelete, onSave, onCancel, isEditing }) {
             </span>
           ))}
           {note.tags.length > 3 && (
-            <span style={{ fontSize: 8, color: P.tf }}>+{note.tags.length - 3}</span>
+            <span style={{ fontSize: 10, color: P.tf }}>+{note.tags.length - 3}</span>
           )}
         </div>
       )}
@@ -231,7 +238,7 @@ function EditorNotesPanel({
         <StickyNote size={14} style={{ color: P.tm }} />
         {sectionNotes.length > 0 && (
           <span style={{
-            fontSize: 9, fontFamily: "'IBM Plex Mono', monospace", color: P.ac,
+            fontSize: 10, fontFamily: "'IBM Plex Mono', monospace", color: P.ac,
             fontWeight: 600,
           }}>
             {sectionNotes.filter(n => n.category !== "comment").length}
@@ -252,27 +259,27 @@ function EditorNotesPanel({
         display: "flex", alignItems: "center", justifyContent: "space-between",
       }}>
         <span style={{
-          fontFamily: "'IBM Plex Mono', monospace", fontSize: 9, letterSpacing: 2,
+          fontFamily: "'IBM Plex Mono', monospace", fontSize: 10, letterSpacing: 2,
           textTransform: "uppercase", color: P.tm, display: "flex", alignItems: "center", gap: 5,
         }}>
           <StickyNote size={10} /> Notes
           {sectionNotes.filter(n => n.category !== "comment").length > 0 && (
             <span style={{
               background: `${P.ac}15`, color: P.ac, padding: "1px 5px",
-              borderRadius: 8, fontSize: 9, fontWeight: 600,
+              borderRadius: 8, fontSize: 10, fontWeight: 600,
             }}>
               {sectionNotes.filter(n => n.category !== "comment").length}
             </span>
           )}
         </span>
-        <div style={{ display: "flex", gap: 4 }}>
+        <div style={{ display: "flex", gap: 2 }}>
           <button onClick={() => handleQuickAdd(null)} title="Add section note"
-            style={{ background: "none", border: "none", cursor: "pointer", color: P.ac, padding: 2 }}>
-            <Plus size={12} />
+            style={{ background: "none", border: "none", cursor: "pointer", color: P.ac, padding: 6, borderRadius: 4, display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <Plus size={13} />
           </button>
           <button onClick={onToggle} title="Collapse notes"
-            style={{ background: "none", border: "none", cursor: "pointer", color: P.tf, padding: 2 }}>
-            <X size={12} />
+            style={{ background: "none", border: "none", cursor: "pointer", color: P.tf, padding: 6, borderRadius: 4, display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <X size={13} />
           </button>
         </div>
       </div>
@@ -283,7 +290,7 @@ function EditorNotesPanel({
         {sectionLevel.length > 0 && (
           <div style={{ marginBottom: 12 }}>
             <div style={{
-              fontFamily: "'IBM Plex Mono', monospace", fontSize: 8, letterSpacing: 1.5,
+              fontFamily: "'IBM Plex Mono', monospace", fontSize: 10, letterSpacing: 1.5,
               textTransform: "uppercase", color: P.tf, marginBottom: 6,
             }}>
               Section Notes ({sectionLevel.length})
@@ -308,7 +315,7 @@ function EditorNotesPanel({
         {paraGroupEntries.length > 0 && (
           <div style={{ marginBottom: 12 }}>
             <div style={{
-              fontFamily: "'IBM Plex Mono', monospace", fontSize: 8, letterSpacing: 1.5,
+              fontFamily: "'IBM Plex Mono', monospace", fontSize: 10, letterSpacing: 1.5,
               textTransform: "uppercase", color: P.tf, marginBottom: 6,
             }}>
               Paragraph Notes
@@ -317,7 +324,7 @@ function EditorNotesPanel({
               {paraGroupEntries.map(([paraId, notes]) => (
                 <div key={paraId}>
                   <div style={{
-                    fontFamily: "'IBM Plex Mono', monospace", fontSize: 7, color: P.tf,
+                    fontFamily: "'IBM Plex Mono', monospace", fontSize: 10, color: P.tf,
                     marginBottom: 4, letterSpacing: 1,
                   }}>
                     paragraph {paraId.slice(-4)}
@@ -362,7 +369,7 @@ function EditorNotesPanel({
           <div
             onClick={() => setShowLoose(!showLoose)}
             style={{
-              fontFamily: "'IBM Plex Mono', monospace", fontSize: 8, letterSpacing: 1.5,
+              fontFamily: "'IBM Plex Mono', monospace", fontSize: 10, letterSpacing: 1.5,
               textTransform: "uppercase", color: P.tf, cursor: "pointer",
               display: "flex", alignItems: "center", gap: 4, marginBottom: showLoose ? 6 : 0,
             }}
@@ -384,7 +391,7 @@ function EditorNotesPanel({
                 />
               ))}
               {looseNotes.filter(n => n.category !== "comment").length > 10 && (
-                <div style={{ fontSize: 9, color: P.tf, textAlign: "center", fontFamily: "'IBM Plex Mono', monospace" }}>
+                <div style={{ fontSize: 10, color: P.tf, textAlign: "center", fontFamily: "'IBM Plex Mono', monospace" }}>
                   +{looseNotes.filter(n => n.category !== "comment").length - 10} more in Brainstorm tab
                 </div>
               )}
@@ -407,7 +414,7 @@ function SpineNode({ data }) {
       textAlign: "center",
     }}>
       <div style={{
-        fontFamily: "'IBM Plex Mono', monospace", fontSize: 8, letterSpacing: 2,
+        fontFamily: "'IBM Plex Mono', monospace", fontSize: 10, letterSpacing: 2,
         textTransform: "uppercase", color: P.ac, marginBottom: 6,
       }}>
         <GitBranch size={10} style={{ verticalAlign: -2, marginRight: 3 }} /> Spine
@@ -435,14 +442,14 @@ function SubsectionMindNode({ data }) {
         {data.label}
       </div>
       <span style={{
-        fontSize: 7, fontFamily: "'IBM Plex Mono', monospace",
+        fontSize: 10, fontFamily: "'IBM Plex Mono', monospace",
         padding: "1px 5px", borderRadius: 2, background: st?.bg,
         color: st?.text, letterSpacing: 1, textTransform: "uppercase",
       }}>
         {st?.l}
       </span>
       {data.paraCount > 0 && (
-        <span style={{ fontSize: 8, color: P.tf, fontFamily: "'IBM Plex Mono', monospace", marginLeft: 6 }}>
+        <span style={{ fontSize: 10, color: P.tf, fontFamily: "'IBM Plex Mono', monospace", marginLeft: 6 }}>
           {data.paraCount}¶
         </span>
       )}
@@ -459,7 +466,7 @@ function NoteMindNode({ data }) {
       boxShadow: "0 2px 8px rgba(44,36,24,0.04)",
     }}>
       <div style={{
-        fontSize: 7, fontFamily: "'IBM Plex Mono', monospace",
+        fontSize: 10, fontFamily: "'IBM Plex Mono', monospace",
         padding: "1px 4px", borderRadius: 2, background: `${cat.color}12`,
         color: cat.color, letterSpacing: 1, textTransform: "uppercase",
         fontWeight: 600, display: "inline-block", marginBottom: 4,
@@ -494,11 +501,11 @@ function IdeaInputNode({ data }) {
       />
       <div style={{ display: "flex", gap: 4, marginTop: 4 }}>
         <button onClick={() => { if (text.trim()) data.onSave(text.trim()); }}
-          style={{ fontSize: 8, fontFamily: "'IBM Plex Mono', monospace", padding: "2px 8px", background: P.ac, color: "#fff", border: "none", borderRadius: 3, cursor: "pointer" }}>
+          style={{ fontSize: 10, fontFamily: "'IBM Plex Mono', monospace", padding: "2px 8px", background: P.ac, color: "#fff", border: "none", borderRadius: 3, cursor: "pointer" }}>
           Save
         </button>
         <button onClick={data.onCancel}
-          style={{ fontSize: 8, fontFamily: "'IBM Plex Mono', monospace", padding: "2px 8px", background: P.sf, color: P.tm, border: `1px solid ${P.bd}`, borderRadius: 3, cursor: "pointer" }}>
+          style={{ fontSize: 10, fontFamily: "'IBM Plex Mono', monospace", padding: "2px 8px", background: P.sf, color: P.tm, border: `1px solid ${P.bd}`, borderRadius: 3, cursor: "pointer" }}>
           Cancel
         </button>
       </div>
@@ -725,7 +732,7 @@ function BrainstormMindMapInner({ section, project, sectionNotes, onSelectSectio
       {/* Hint */}
       <div style={{
         position: "absolute", bottom: 12, left: "50%", transform: "translateX(-50%)",
-        fontSize: 9, fontFamily: "'IBM Plex Mono', monospace", color: P.tf,
+        fontSize: 10, fontFamily: "'IBM Plex Mono', monospace", color: P.tf,
         background: `${P.bg}E0`, padding: "4px 12px", borderRadius: 10,
         display: "flex", alignItems: "center", gap: 5,
       }}>
@@ -745,7 +752,7 @@ function BrainstormMindMap(props) {
 
 // ── Revised Content (clean read-through) ───────────────────
 
-function RevisedContent({ section, linkedTerms, onTermClick, sectionNotes }) {
+function RevisedContent({ section, linkedTerms, onTermClick, sectionNotes, sectionDiagrams = [], onEditDiagram }) {
   // Group notes by paragraph for margin indicators
   const notesByPara = useMemo(() => {
     const map = {};
@@ -765,7 +772,8 @@ function RevisedContent({ section, linkedTerms, onTermClick, sectionNotes }) {
       {section.paragraphs?.map((para, i) => {
         const paraNotes = notesByPara[para.id] || [];
         return (
-          <div key={para.id} style={{ position: "relative", marginBottom: 4 }}>
+          <React.Fragment key={para.id}>
+          <div style={{ position: "relative", marginBottom: 4 }}>
             {/* Margin note indicator */}
             {paraNotes.length > 0 && (
               <div
@@ -792,7 +800,7 @@ function RevisedContent({ section, linkedTerms, onTermClick, sectionNotes }) {
                   return (
                     <div key={n.id} style={{ fontSize: 10, lineHeight: 1.4, color: P.tx }}>
                       <span style={{
-                        fontSize: 7, fontFamily: "'IBM Plex Mono', monospace",
+                        fontSize: 10, fontFamily: "'IBM Plex Mono', monospace",
                         color: cat.color, textTransform: "uppercase", letterSpacing: 1,
                       }}>
                         {cat.icon} {cat.label}
@@ -814,6 +822,10 @@ function RevisedContent({ section, linkedTerms, onTermClick, sectionNotes }) {
                 : <span style={{ color: P.tf, fontStyle: "italic" }}>Empty paragraph</span>}
             </div>
           </div>
+          {sectionDiagrams.filter((d) => d.sectionId === section.id && d.afterParagraphId === para.id).map((diag, di) => (
+            <DiagramInline key={diag.id} diagram={diag} figureIndex={di + 1} onEdit={onEditDiagram} readOnly />
+          ))}
+          </React.Fragment>
         );
       })}
     </div>
@@ -822,18 +834,23 @@ function RevisedContent({ section, linkedTerms, onTermClick, sectionNotes }) {
 
 // ── Done Content (polished presentation) ───────────────────
 
-function DoneContent({ section, linkedTerms, onTermClick }) {
+function DoneContent({ section, linkedTerms, onTermClick, sectionDiagrams = [], onEditDiagram }) {
   return (
     <div>
       {section.paragraphs?.map((para) => (
-        <div key={para.id} style={{
-          fontSize: 17, lineHeight: 1.9, color: P.tx, fontFamily: "'Spectral', serif",
-          marginBottom: 18, textIndent: "1.5em",
-        }}>
-          {para.text
-            ? renderTermLinks(para.text, para.linkedTerms, linkedTerms, onTermClick)
-            : null}
-        </div>
+        <React.Fragment key={para.id}>
+          <div style={{
+            fontSize: 17, lineHeight: 1.9, color: P.tx, fontFamily: "'Spectral', serif",
+            marginBottom: 18, textIndent: "1.5em",
+          }}>
+            {para.text
+              ? renderTermLinks(para.text, para.linkedTerms, linkedTerms, onTermClick)
+              : null}
+          </div>
+          {sectionDiagrams.filter((d) => d.sectionId === section.id && d.afterParagraphId === para.id).map((diag, di) => (
+            <DiagramInline key={diag.id} diagram={diag} figureIndex={di + 1} onEdit={onEditDiagram} readOnly />
+          ))}
+        </React.Fragment>
       ))}
     </div>
   );
@@ -897,7 +914,7 @@ function ZenNavRail({ project, activeSectionId, onSelectSection, onAddChildSecti
           </div>
           {/* Status dot */}
           <span style={{
-            fontSize: 7, fontFamily: "'IBM Plex Mono', monospace", color: st.text,
+            fontSize: 10, fontFamily: "'IBM Plex Mono', monospace", color: st.text,
             flexShrink: 0, marginLeft: 4,
           }}>
             {st.l.charAt(0)}
@@ -948,7 +965,7 @@ function ZenNavRail({ project, activeSectionId, onSelectSection, onAddChildSecti
       >
         {/* Project header */}
         <div style={{ padding: "6px 14px 10px", borderBottom: `1px solid ${P.bd}`, marginBottom: 4, flexShrink: 0 }}>
-          <div style={{ fontSize: 9, fontFamily: "'IBM Plex Mono', monospace", letterSpacing: 2, textTransform: "uppercase", color: project.color, fontWeight: 500 }}>
+          <div style={{ fontSize: 10, fontFamily: "'IBM Plex Mono', monospace", letterSpacing: 2, textTransform: "uppercase", color: project.color, fontWeight: 500 }}>
             {project.name}
           </div>
         </div>
@@ -959,7 +976,7 @@ function ZenNavRail({ project, activeSectionId, onSelectSection, onAddChildSecti
               <div
                 onClick={() => setCollapsed((prev) => ({ ...prev, [part.id]: !prev[part.id] }))}
                 style={{
-                  padding: "8px 12px 4px", fontSize: 8, fontFamily: "'IBM Plex Mono', monospace",
+                  padding: "8px 12px 4px", fontSize: 10, fontFamily: "'IBM Plex Mono', monospace",
                   letterSpacing: 2, textTransform: "uppercase", color: P.tf, fontWeight: 500,
                   cursor: "pointer", display: "flex", alignItems: "center", gap: 4,
                 }}
@@ -979,7 +996,7 @@ function ZenNavRail({ project, activeSectionId, onSelectSection, onAddChildSecti
               style={{
                 display: "flex", alignItems: "center", justifyContent: "center", gap: 5,
                 padding: "6px", borderRadius: 4, cursor: "pointer",
-                border: `1.5px dashed ${P.bd}`, color: P.tf, fontSize: 9,
+                border: `1.5px dashed ${P.bd}`, color: P.tf, fontSize: 10,
                 fontFamily: "'IBM Plex Mono', monospace", transition: "all 0.2s",
               }}
               onMouseOver={(e) => { e.currentTarget.style.borderColor = P.ac; e.currentTarget.style.color = P.ac; }}
@@ -994,15 +1011,236 @@ function ZenNavRail({ project, activeSectionId, onSelectSection, onAddChildSecti
   );
 }
 
+// ── Full Text View (Word-like document) ────────────────────
+
+function FullTextSection({
+  section, depth, projectId, linkedTerms, onTermClick,
+  selectedPara, onSelectPara, onUpdateText, onUpdateMeta, onUpdateSection,
+  onAddParagraph, onDeleteParagraph, onAddNote, sectionNotes,
+  onAddChildSection, setConfirmAction, onSetRightPanel, onSetShowRightPanel,
+  collapsedSections, toggleCollapse, notesByPara,
+  sectionDiagrams = [], onEditDiagram, onRemoveDiagram,
+}) {
+  const headingSizes = [30, 24, 19, 16, 15];
+  const headingSize = headingSizes[Math.min(depth, headingSizes.length - 1)];
+  const isCollapsed = collapsedSections[section.id] || false;
+  const hasContent = (section.paragraphs?.length > 0) || (section.children?.length > 0);
+  const headingWeights = [700, 600, 600, 500, 500];
+
+  return (
+    <div style={{ marginBottom: depth === 0 ? 24 : 16 }}>
+      {/* Section divider for depth-1 sections (like Word chapter breaks) */}
+      {depth === 1 && (
+        <div style={{ borderTop: `1px solid ${P.bd}`, marginTop: 40, marginBottom: 32 }} />
+      )}
+
+      {/* Section heading — clickable to collapse */}
+      {(depth > 0 || section.title) && (
+        <div
+          className={`fulltext-heading ${isCollapsed ? "fulltext-collapsed" : ""}`}
+          onClick={() => toggleCollapse(section.id)}
+          style={{
+            marginBottom: isCollapsed ? 4 : depth === 0 ? 20 : 10,
+            marginTop: depth > 1 ? 20 : 0,
+          }}
+        >
+          {hasContent && depth > 0 && (
+            <ChevronDown size={Math.max(11, headingSize * 0.45)} className="fulltext-chevron" style={{ color: P.tf }} />
+          )}
+          <h2 style={{
+            fontFamily: "'Cormorant Garamond', serif",
+            fontSize: headingSize,
+            fontWeight: headingWeights[Math.min(depth, headingWeights.length - 1)],
+            color: P.tx, margin: 0, lineHeight: 1.3,
+            letterSpacing: depth === 0 ? -0.5 : 0,
+            textTransform: depth <= 1 ? "none" : "none",
+          }}>
+            {section.title}
+          </h2>
+        </div>
+      )}
+
+      {/* Collapsible body */}
+      <div className={`fulltext-body ${isCollapsed ? "collapsed" : ""}`} style={{ maxHeight: isCollapsed ? 0 : "none" }}>
+        {/* Paragraphs */}
+        {section.paragraphs?.map((para, i) => {
+          const isSel = selectedPara === para.id;
+          const paraNoteCt = notesByPara?.[para.id] || 0;
+          return (
+            <React.Fragment key={para.id}>
+            <div
+              data-para-id={para.id}
+              onClick={() => onSelectPara(isSel ? null : para.id)}
+              style={{
+                position: "relative",
+                padding: isSel ? "12px 16px" : "0",
+                marginBottom: isSel ? 12 : 4,
+                borderRadius: isSel ? 5 : 0,
+                cursor: "pointer",
+                transition: "background 0.2s, border-color 0.2s",
+                background: isSel ? `${P.sf}` : "transparent",
+                border: isSel ? `1px solid ${P.bd}` : "1px solid transparent",
+              }}
+              onMouseOver={(e) => { if (!isSel) e.currentTarget.style.background = `${P.ac}06`; }}
+              onMouseOut={(e) => { if (!isSel) e.currentTarget.style.background = "transparent"; }}
+            >
+              {/* Note indicator */}
+              {paraNoteCt > 0 && !isSel && (
+                <div
+                  title={`${paraNoteCt} note${paraNoteCt > 1 ? "s" : ""}`}
+                  onClick={(e) => { e.stopPropagation(); onSelectPara(para.id); if (onSetRightPanel) onSetRightPanel("notes"); if (onSetShowRightPanel) onSetShowRightPanel(true); }}
+                  style={{
+                    position: "absolute", right: -24, top: 6,
+                    width: 6, height: 6, borderRadius: "50%", background: P.ac, opacity: 0.5,
+                    cursor: "pointer", transition: "opacity 0.2s, transform 0.2s",
+                  }}
+                  onMouseOver={(e) => { e.currentTarget.style.opacity = "1"; e.currentTarget.style.transform = "scale(1.5)"; }}
+                  onMouseOut={(e) => { e.currentTarget.style.opacity = "0.5"; e.currentTarget.style.transform = "scale(1)"; }}
+                />
+              )}
+
+              {isSel ? (
+                <div onClick={(e) => e.stopPropagation()}>
+                  <ParagraphEditor
+                    content={para.text}
+                    onChange={(text) => onUpdateText(projectId, section.id, para.id, text)}
+                    placeholder="Write..."
+                  />
+                  <div style={{ display: "flex", gap: 4, marginTop: 6, flexWrap: "wrap", alignItems: "center" }}>
+                    <StatusSelect value={para.status} onChange={(s) => onUpdateMeta(projectId, section.id, para.id, { status: s })} />
+                    <RoleSelect value={para.spineRole} onChange={(r) => onUpdateMeta(projectId, section.id, para.id, { spineRole: r })} />
+                    <div style={{ flex: 1 }} />
+                    <button onClick={(e) => { e.stopPropagation(); onAddParagraph(projectId, section.id, para.id); }}
+                      title="Add paragraph below"
+                      style={{ background: "none", border: `1px solid ${P.bd}`, borderRadius: 3, padding: "3px 6px", cursor: "pointer", color: P.tm, display: "flex", alignItems: "center", gap: 3, fontSize: 10, fontFamily: "'IBM Plex Mono', monospace" }}>
+                      <Plus size={10} /> Add
+                    </button>
+                    {section.paragraphs.length > 1 && (
+                      <button onClick={(e) => { e.stopPropagation(); setConfirmAction({ title: "Delete paragraph?", message: "This will remove the paragraph and its content.", danger: true, confirmLabel: "Delete", onConfirm: () => { onDeleteParagraph(projectId, section.id, para.id); setConfirmAction(null); } }); }}
+                        title="Delete paragraph"
+                        style={{ background: "none", border: `1px solid #E8B4B4`, borderRadius: 3, padding: "3px 6px", cursor: "pointer", color: "#943D3D", display: "flex", alignItems: "center" }}>
+                        <Trash2 size={10} />
+                      </button>
+                    )}
+                  </div>
+                </div>
+              ) : (
+                <div style={{
+                  fontSize: 16.5, lineHeight: 1.85, color: P.tx,
+                  fontFamily: "'Spectral', serif",
+                  textIndent: i > 0 ? "2em" : 0,
+                }}>
+                  {para.text
+                    ? renderTermLinks(para.text, para.linkedTerms, linkedTerms, onTermClick)
+                    : <span style={{ color: P.tf, fontStyle: "italic" }}>Empty paragraph</span>}
+                </div>
+              )}
+            </div>
+            {/* Inline diagrams after this paragraph */}
+            {sectionDiagrams.filter((d) => d.sectionId === section.id && d.afterParagraphId === para.id).map((diag, di) => (
+              <DiagramInline key={diag.id} diagram={diag} figureIndex={di + 1} onEdit={onEditDiagram} onRemove={onRemoveDiagram} />
+            ))}
+          </React.Fragment>
+          );
+        })}
+
+        {/* Recurse into children */}
+        {section.children?.map((child) => (
+          <FullTextSection
+            key={child.id}
+            section={child}
+            depth={depth + 1}
+            projectId={projectId}
+            linkedTerms={linkedTerms}
+            onTermClick={onTermClick}
+            selectedPara={selectedPara}
+            onSelectPara={onSelectPara}
+            onUpdateText={onUpdateText}
+            onUpdateMeta={onUpdateMeta}
+            onUpdateSection={onUpdateSection}
+            onAddParagraph={onAddParagraph}
+            onDeleteParagraph={onDeleteParagraph}
+            onAddNote={onAddNote}
+            sectionNotes={sectionNotes}
+            onAddChildSection={onAddChildSection}
+            setConfirmAction={setConfirmAction}
+            onSetRightPanel={onSetRightPanel}
+            onSetShowRightPanel={onSetShowRightPanel}
+            collapsedSections={collapsedSections}
+            toggleCollapse={toggleCollapse}
+            notesByPara={notesByPara}
+            sectionDiagrams={sectionDiagrams}
+            onEditDiagram={onEditDiagram}
+            onRemoveDiagram={onRemoveDiagram}
+          />
+        ))}
+
+        {/* Add subsection button (subtle) */}
+        {depth < 3 && section.children?.length > 0 && (
+          <div style={{ marginTop: 8, marginBottom: 16 }}>
+            <button
+              onClick={(e) => { e.stopPropagation(); onAddChildSection(projectId, section.id); }}
+              style={{
+                background: "none", border: `1px dashed ${P.bd}`, borderRadius: 4,
+                padding: "4px 10px", cursor: "pointer", color: P.tf, fontSize: 10,
+                fontFamily: "'IBM Plex Mono', monospace", display: "flex", alignItems: "center", gap: 4,
+                transition: "color 0.15s, border-color 0.15s",
+              }}
+              onMouseOver={(e) => { e.currentTarget.style.color = P.ac; e.currentTarget.style.borderColor = P.ac; }}
+              onMouseOut={(e) => { e.currentTarget.style.color = P.tf; e.currentTarget.style.borderColor = P.bd; }}
+            >
+              <Plus size={10} /> Add subsection
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function FullTextView({
+  section, project, projectId, linkedTerms, onTermClick,
+  selectedPara, onSelectPara, onUpdateText, onUpdateMeta, onUpdateSection,
+  onAddParagraph, onDeleteParagraph, onAddNote, sectionNotes,
+  onAddChildSection, setConfirmAction, onSetRightPanel, onSetShowRightPanel,
+  notesByPara,
+  sectionDiagrams = [], onEditDiagram, onRemoveDiagram,
+}) {
+  const [collapsedSections, setCollapsedSections] = useState({});
+  const toggleCollapse = useCallback((id) => {
+    setCollapsedSections((prev) => ({ ...prev, [id]: !prev[id] }));
+  }, []);
+
+  const sharedProps = {
+    projectId, linkedTerms, onTermClick,
+    selectedPara, onSelectPara, onUpdateText, onUpdateMeta, onUpdateSection,
+    onAddParagraph, onDeleteParagraph, onAddNote, sectionNotes,
+    onAddChildSection, setConfirmAction, onSetRightPanel, onSetShowRightPanel,
+    collapsedSections, toggleCollapse, notesByPara,
+    sectionDiagrams, onEditDiagram, onRemoveDiagram,
+  };
+
+  return (
+    <div style={{ background: "#EDE9E3", minHeight: "100%", paddingBottom: 48 }}>
+      <div className="fulltext-page">
+        {/* Root title — rendered without chevron at depth 0 */}
+        <FullTextSection section={section} depth={0} {...sharedProps} />
+      </div>
+    </div>
+  );
+}
+
 // ── Expanded View Component ────────────────────────────────
 
 function ExpandedSection({
   section, depth, projectId, linkedTerms, onTermClick,
   selectedPara, onSelectPara, onUpdateText, onUpdateMeta, onUpdateSection,
   onAddParagraph, onDeleteParagraph, onAddNote, sectionNotes, onAddChildSection,
-  setConfirmAction,
+  setConfirmAction, onSetRightPanel, onSetShowRightPanel,
+  sectionDiagrams = [], onEditDiagram, onRemoveDiagram,
 }) {
-  const headingSize = Math.max(16, 32 - depth * 5);
+  const headingSizes = [36, 28, 22, 18, 16];
+  const headingSize = headingSizes[Math.min(depth, headingSizes.length - 1)];
   const st = STATUS[section.status] || STATUS.drafting;
   const topLevel = depth === 0;
 
@@ -1012,8 +1250,8 @@ function ExpandedSection({
       {depth > 0 && (
         <div style={{
           borderTop: depth === 1 ? `1px solid ${P.bd}` : "none",
-          paddingTop: depth === 1 ? 32 : 16,
-          marginTop: depth === 1 ? 16 : 8,
+          paddingTop: depth === 1 ? 36 : 20,
+          marginTop: depth === 1 ? 32 : 12,
         }} />
       )}
 
@@ -1028,7 +1266,7 @@ function ExpandedSection({
             {section.title}
           </h2>
           <span style={{
-            fontSize: 7, fontFamily: "'IBM Plex Mono', monospace", padding: "1px 6px",
+            fontSize: 10, fontFamily: "'IBM Plex Mono', monospace", padding: "1px 6px",
             borderRadius: 3, background: st.bg, color: st.text,
             border: `1px solid ${st.bd}`, letterSpacing: 1, textTransform: "uppercase",
             fontWeight: 600, flexShrink: 0, alignSelf: "center",
@@ -1040,12 +1278,12 @@ function ExpandedSection({
         {/* Spine */}
         {section.spine && (
           <div style={{
-            padding: "8px 14px", background: `${P.ac}06`,
-            borderLeft: `3px solid ${P.ac}`, borderRadius: "0 4px 4px 0",
-            marginBottom: 8,
+            padding: "10px 16px", background: `${P.ac}0A`,
+            borderLeft: `3px solid ${P.ac}`, borderTop: `1px solid ${P.ac}15`,
+            borderRadius: "0 5px 5px 0", marginBottom: 20,
           }}>
             <div style={{
-              fontSize: 13.5, color: P.tm, fontStyle: "italic", lineHeight: 1.55,
+              fontSize: 13.5, color: P.tm, fontStyle: "italic", lineHeight: 1.6,
               fontFamily: "'Spectral', serif",
             }}>
               {section.spine}
@@ -1059,12 +1297,14 @@ function ExpandedSection({
         const role = SPINE_ROLES[para.spineRole];
         const isSel = selectedPara === para.id;
         return (
+          <React.Fragment key={para.id}>
           <div
-            key={para.id}
+            data-para-id={para.id}
             onClick={() => onSelectPara(isSel ? null : para.id)}
             style={{
-              position: "relative", padding: "10px 16px 10px 36px", marginBottom: 2,
-              borderRadius: 4, cursor: "pointer", transition: "all 0.2s",
+              position: "relative", padding: "10px 16px 10px 36px", marginBottom: 8,
+              borderRadius: 5, cursor: "pointer",
+              transition: "background 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.2s",
               background: isSel ? P.sf : "transparent",
               border: isSel ? `1px solid ${P.bd}` : "1px solid transparent",
             }}
@@ -1089,7 +1329,7 @@ function ExpandedSection({
                   <div style={{ flex: 1 }} />
                   <button onClick={(e) => { e.stopPropagation(); onAddParagraph(projectId, section.id, para.id); }}
                     title="Add paragraph below"
-                    style={{ background: "none", border: `1px solid ${P.bd}`, borderRadius: 3, padding: "3px 6px", cursor: "pointer", color: P.tm, display: "flex", alignItems: "center", gap: 3, fontSize: 9, fontFamily: "'IBM Plex Mono', monospace" }}>
+                    style={{ background: "none", border: `1px solid ${P.bd}`, borderRadius: 3, padding: "3px 6px", cursor: "pointer", color: P.tm, display: "flex", alignItems: "center", gap: 3, fontSize: 10, fontFamily: "'IBM Plex Mono', monospace" }}>
                     <Plus size={10} /> Add
                   </button>
                   {section.paragraphs.length > 1 && (
@@ -1112,6 +1352,11 @@ function ExpandedSection({
               </div>
             )}
           </div>
+          {/* Inline diagrams after this paragraph */}
+          {sectionDiagrams.filter((d) => d.sectionId === section.id && d.afterParagraphId === para.id).map((diag, di) => (
+            <DiagramInline key={diag.id} diagram={diag} figureIndex={di + 1} onEdit={onEditDiagram} onRemove={onRemoveDiagram} />
+          ))}
+          </React.Fragment>
         );
       })}
 
@@ -1135,6 +1380,11 @@ function ExpandedSection({
           sectionNotes={sectionNotes}
           onAddChildSection={onAddChildSection}
           setConfirmAction={setConfirmAction}
+          onSetRightPanel={onSetRightPanel}
+          onSetShowRightPanel={onSetShowRightPanel}
+          sectionDiagrams={sectionDiagrams}
+          onEditDiagram={onEditDiagram}
+          onRemoveDiagram={onRemoveDiagram}
         />
       ))}
     </div>
@@ -1159,10 +1409,10 @@ function OutlineRow({ section, depth, projectId, onSelectSection, setEditorMode,
           padding: "10px 14px", paddingLeft: 14 + depth * 24,
           borderLeft: `3px solid ${st.text}40`,
           background: "transparent", cursor: "pointer",
-          transition: "background 0.15s",
+          transition: "background 0.15s, transform 0.15s ease",
         }}
-        onMouseOver={(e) => (e.currentTarget.style.background = P.sf)}
-        onMouseOut={(e) => (e.currentTarget.style.background = "transparent")}
+        onMouseOver={(e) => { e.currentTarget.style.background = P.sf; e.currentTarget.style.transform = "translateX(2px)"; }}
+        onMouseOut={(e) => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.transform = "translateX(0)"; }}
       >
         {/* Expand/collapse toggle */}
         <div
@@ -1185,13 +1435,13 @@ function OutlineRow({ section, depth, projectId, onSelectSection, setEditorMode,
               {section.title}
             </span>
             <span style={{
-              fontSize: 8, fontFamily: "'IBM Plex Mono', monospace", padding: "1px 6px",
+              fontSize: 10, fontFamily: "'IBM Plex Mono', monospace", padding: "1px 6px",
               borderRadius: 3, background: `${st.bg}`, color: st.text,
               border: `1px solid ${st.bd}`, letterSpacing: 1, textTransform: "uppercase", fontWeight: 600, whiteSpace: "nowrap",
             }}>
               {st.l}
             </span>
-            <span style={{ fontSize: 9, fontFamily: "'IBM Plex Mono', monospace", color: P.tf, whiteSpace: "nowrap" }}>
+            <span style={{ fontSize: 10, fontFamily: "'IBM Plex Mono', monospace", color: P.tf, whiteSpace: "nowrap" }}>
               {totalWords}w · {paraCount}¶
               {hasChildren ? ` · ${section.children.length} sub` : ""}
             </span>
@@ -1265,10 +1515,10 @@ function OutlineView({ section, projectId, onSelectSection, setEditorMode, onAdd
         display: "flex", alignItems: "center", gap: 12, padding: "12px 16px", marginBottom: 16,
         background: P.sf, borderRadius: 6, border: `1px solid ${P.bd}`,
       }}>
-        <span style={{ fontSize: 9, fontFamily: "'IBM Plex Mono', monospace", color: P.tm, letterSpacing: 1.5, textTransform: "uppercase" }}>
+        <span style={{ fontSize: 10, fontFamily: "'IBM Plex Mono', monospace", color: P.tm, letterSpacing: 1.5, textTransform: "uppercase" }}>
           Outline
         </span>
-        <span style={{ fontSize: 9, fontFamily: "'IBM Plex Mono', monospace", color: P.tf }}>
+        <span style={{ fontSize: 10, fontFamily: "'IBM Plex Mono', monospace", color: P.tf }}>
           {allSections.length} sections · {totalWords} total words
         </span>
         <div style={{ flex: 1 }} />
@@ -1280,7 +1530,7 @@ function OutlineView({ section, projectId, onSelectSection, setEditorMode, onAdd
             return next;
           })}
           style={{
-            fontSize: 8, fontFamily: "'IBM Plex Mono', monospace", padding: "3px 8px",
+            fontSize: 10, fontFamily: "'IBM Plex Mono', monospace", padding: "3px 8px",
             background: "transparent", border: `1px solid ${P.bd}`, borderRadius: 3,
             cursor: "pointer", color: P.tm, letterSpacing: 1, textTransform: "uppercase",
           }}
@@ -1345,7 +1595,13 @@ export default function Editor({
   // Notes props
   sectionNotes = [], looseNotes = [], allNotes = [],
   onAddNote, onUpdateNote, onDeleteNote, onResolveNote,
+  // Citation props
+  sources = [], citations = [], sectionCitations = [], noteIndexMap = {},
+  onAddSource, onUpdateSource, onAddCitation, onDeleteCitation,
   zenMode = false,
+  onSetRightPanel, onSetShowRightPanel,
+  // Diagram props
+  sectionDiagrams = [], onEditDiagram, onRemoveDiagram,
 }) {
   const [editingSpine, setEditingSpine] = useState(false);
   const [spineText, setSpineText] = useState("");
@@ -1354,6 +1610,20 @@ export default function Editor({
   const [notesCollapsed, setNotesCollapsed] = useState(false);
   const [editorMode, setEditorMode] = useState("draft"); // "draft" | "outline" | "expanded"
   const [confirmAction, setConfirmAction] = useState(null); // { title, message, danger, onConfirm }
+  const [citationPopover, setCitationPopover] = useState(null); // { paraId, x, y, from, to }
+
+  // Scroll to and flash-highlight paragraph when selected (e.g. from Notes panel click)
+  useEffect(() => {
+    if (!selectedPara) return;
+    const el = document.querySelector(`[data-para-id="${selectedPara}"]`);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "center" });
+      el.classList.remove("para-flash");
+      // Force reflow so re-adding the class restarts the animation
+      void el.offsetWidth;
+      el.classList.add("para-flash");
+    }
+  }, [selectedPara]);
 
   // Count notes per paragraph for gutter indicators
   const notesByPara = useMemo(() => {
@@ -1392,6 +1662,33 @@ export default function Editor({
       });
     }
   };
+
+  const handleCitationSave = useCallback(({ source, locator, footnoteText }) => {
+    if (!citationPopover || !onAddCitation) return;
+    const { paraId, from, to } = citationPopover;
+    // If source is new (from quick-add), create it first
+    let finalSource = source;
+    if (source._isNew && onAddSource) {
+      const { _isNew, ...sourceData } = source;
+      finalSource = onAddSource(sourceData);
+    }
+    // Get the anchor text from the paragraph
+    const para = section.paragraphs?.find((p) => p.id === paraId);
+    const anchorText = para?.text ? para.text.slice(Math.max(0, from - 1), to - 1) : "";
+    // Create the citation
+    const citation = onAddCitation({
+      sourceId: finalSource.id,
+      projectId: project?.id,
+      sectionId: section?.id,
+      paragraphId: paraId,
+      anchorText,
+      locator,
+      footnoteText,
+      inlineRange: { from, to },
+    });
+    setCitationPopover(null);
+    return citation;
+  }, [citationPopover, onAddCitation, onAddSource, project, section]);
 
   const status = section.status;
 
@@ -1435,8 +1732,8 @@ export default function Editor({
               <React.Fragment key={id}>
                 <ChevronRight size={9} style={{ color: P.tf }} />
                 <span onClick={() => onSelectSection(project.id, id)}
-                  style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: 9, color: i === path.length - 2 ? P.tx : P.tf, cursor: "pointer", letterSpacing: 1 }}>
-                  {id === section.id ? section.title : id}
+                  style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: 10, color: i === path.length - 2 ? P.tx : P.tf, cursor: "pointer", letterSpacing: 1 }}>
+                  {id === section.id ? section.title : (findSection(project.parts, id)?.section?.title || id)}
                 </span>
               </React.Fragment>
             ))}
@@ -1475,7 +1772,7 @@ export default function Editor({
         />
       )}
       {/* Main editor content */}
-      <div style={{ flex: 1, overflowY: "auto" }}>
+      <div className="smooth-scroll" style={{ flex: 1, overflowY: "auto" }}>
         <div style={{ maxWidth: zenMode ? 820 : status === "done" ? 640 : 720, margin: "0 auto", padding: zenMode ? "24px 48px 100px" : status === "done" ? "48px 64px 120px" : "32px 48px 100px" }}>
           {/* Breadcrumb (hidden in zen mode) */}
           {project && !zenMode && (
@@ -1489,14 +1786,14 @@ export default function Editor({
                   <span
                     onClick={() => onSelectSection(project.id, id)}
                     style={{
-                      fontFamily: "'IBM Plex Mono', monospace", fontSize: 9, color: i === path.length - 2 ? P.tx : P.tf,
+                      fontFamily: "'IBM Plex Mono', monospace", fontSize: 10, color: i === path.length - 2 ? P.tx : P.tf,
                       cursor: "pointer", letterSpacing: 1, transition: "color 0.15s",
                       textDecoration: "none", borderBottom: "1px solid transparent",
                     }}
                     onMouseOver={(e) => { e.target.style.color = P.ac; e.target.style.borderBottomColor = P.ac; }}
                     onMouseOut={(e) => { e.target.style.color = i === path.length - 2 ? P.tx : P.tf; e.target.style.borderBottomColor = "transparent"; }}
                   >
-                    {id === section.id ? section.title : id}
+                    {id === section.id ? section.title : (findSection(project.parts, id)?.section?.title || id)}
                   </span>
                 </React.Fragment>
               ))}
@@ -1506,6 +1803,7 @@ export default function Editor({
               {/* Draft / Outline toggle */}
               <div style={{ marginLeft: "auto", display: "flex", gap: 0, border: `1px solid ${P.bd}`, borderRadius: 4, overflow: "hidden" }}>
                 {[
+                  { key: "fulltext", icon: BookOpen, label: "Full Text" },
                   { key: "draft", icon: FileText, label: "Draft" },
                   { key: "expanded", icon: BookOpen, label: "Expanded" },
                   { key: "outline", icon: List, label: "Outline" },
@@ -1515,7 +1813,7 @@ export default function Editor({
                     onClick={() => setEditorMode(key)}
                     style={{
                       display: "flex", alignItems: "center", gap: 3, padding: "3px 8px",
-                      fontSize: 8, fontFamily: "'IBM Plex Mono', monospace", letterSpacing: 1.5, textTransform: "uppercase",
+                      fontSize: 10, fontFamily: "'IBM Plex Mono', monospace", letterSpacing: 1.5, textTransform: "uppercase",
                       background: editorMode === key ? `${P.ac}15` : "transparent",
                       color: editorMode === key ? P.ac : P.tf,
                       border: "none", cursor: "pointer", transition: "all 0.15s",
@@ -1575,11 +1873,11 @@ export default function Editor({
             )}
 
             {/* Spine */}
-            <div style={{ padding: "12px 16px", background: `${P.ac}06`, borderLeft: `3px solid ${P.ac}`, borderRadius: "0 4px 4px 0" }}>
-              <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: 9, color: P.ac, letterSpacing: 2.5, textTransform: "uppercase", marginBottom: 5, display: "flex", alignItems: "center", gap: 5 }}>
-                <GitBranch size={10} /> Section Spine
+            <div style={{ padding: "12px 16px", background: `${P.ac}0A`, borderLeft: `3px solid ${P.ac}`, borderTop: `1px solid ${P.ac}15`, borderRadius: "0 5px 5px 0" }}>
+              <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: 10, color: P.ac, letterSpacing: 2.5, textTransform: "uppercase", marginBottom: 5, display: "flex", alignItems: "center", gap: 5 }}>
+                <GitBranch size={11} /> Section Spine
                 {!editingSpine && (
-                  <Edit3 size={9} style={{ cursor: "pointer", marginLeft: "auto", opacity: 0.5 }}
+                  <Edit3 size={12} style={{ cursor: "pointer", marginLeft: "auto", opacity: 0.7, padding: 2 }}
                     onClick={() => { setSpineText(section.spine || ""); setEditingSpine(true); }} />
                 )}
               </div>
@@ -1628,7 +1926,7 @@ export default function Editor({
             </div>
             {/* Section word count */}
             {section.paragraphs?.length > 0 && (
-              <div style={{ marginTop: 8, fontSize: 9, fontFamily: "'IBM Plex Mono', monospace", color: P.tf, letterSpacing: 1 }}>
+              <div style={{ marginTop: 8, fontSize: 10, fontFamily: "'IBM Plex Mono', monospace", color: P.tf, letterSpacing: 1 }}>
                 {section.paragraphs.reduce((sum, p) => sum + (p.text ? p.text.trim().split(/\s+/).filter(Boolean).length : 0), 0)} words
                 {" \u00b7 "}
                 {section.paragraphs.length} {section.paragraphs.length === 1 ? "paragraph" : "paragraphs"}
@@ -1637,7 +1935,32 @@ export default function Editor({
           </div>
 
           {/* Outline mode */}
-          {editorMode === "outline" ? (
+          {editorMode === "fulltext" ? (
+            <FullTextView
+              section={section}
+              project={project}
+              projectId={project.id}
+              linkedTerms={linkedTerms}
+              onTermClick={onTermClick}
+              selectedPara={selectedPara}
+              onSelectPara={onSelectPara}
+              onUpdateText={onUpdateText}
+              onUpdateMeta={onUpdateMeta}
+              onUpdateSection={onUpdateSection}
+              onAddParagraph={onAddParagraph}
+              onDeleteParagraph={onDeleteParagraph}
+              onAddNote={onAddNote}
+              sectionNotes={sectionNotes}
+              onAddChildSection={onAddChildSection}
+              setConfirmAction={setConfirmAction}
+              onSetRightPanel={onSetRightPanel}
+              onSetShowRightPanel={onSetShowRightPanel}
+              notesByPara={notesByPara}
+              sectionDiagrams={sectionDiagrams}
+              onEditDiagram={onEditDiagram}
+              onRemoveDiagram={onRemoveDiagram}
+            />
+          ) : editorMode === "outline" ? (
             <OutlineView
               section={section}
               projectId={project.id}
@@ -1663,6 +1986,11 @@ export default function Editor({
               sectionNotes={sectionNotes}
               onAddChildSection={onAddChildSection}
               setConfirmAction={setConfirmAction}
+              onSetRightPanel={onSetRightPanel}
+              onSetShowRightPanel={onSetShowRightPanel}
+              sectionDiagrams={sectionDiagrams}
+              onEditDiagram={onEditDiagram}
+              onRemoveDiagram={onRemoveDiagram}
             />
           ) : (
           <>
@@ -1684,14 +2012,14 @@ export default function Editor({
                   ))}
                 </div>
               )}
-              <DoneContent section={section} linkedTerms={linkedTerms} onTermClick={onTermClick} />
+              <DoneContent section={section} linkedTerms={linkedTerms} onTermClick={onTermClick} sectionDiagrams={sectionDiagrams} onEditDiagram={onEditDiagram} />
             </>
           ) : status === "revised" ? (
             /* ── Revised: clean read-through with margin indicators ── */
             <>
               {section.children?.length > 0 && (
                 <div style={{ marginBottom: 28 }}>
-                  <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: 9, letterSpacing: 2, textTransform: "uppercase", color: P.tf, marginBottom: 10 }}>
+                  <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: 10, letterSpacing: 2, textTransform: "uppercase", color: P.tf, marginBottom: 10 }}>
                     Subsections ({section.children.length})
                   </div>
                   {section.children.map((child) => (
@@ -1717,7 +2045,7 @@ export default function Editor({
                   ))}
                 </div>
               )}
-              <RevisedContent section={section} linkedTerms={linkedTerms} onTermClick={onTermClick} sectionNotes={sectionNotes} />
+              <RevisedContent section={section} linkedTerms={linkedTerms} onTermClick={onTermClick} sectionNotes={sectionNotes} sectionDiagrams={sectionDiagrams} onEditDiagram={onEditDiagram} />
             </>
           ) : (
             /* ── Drafting: full editor with paragraphs ── */
@@ -1725,7 +2053,7 @@ export default function Editor({
               {/* Child sections (as clickable cards) */}
               {section.children?.length > 0 && (
                 <div style={{ marginBottom: 28 }}>
-                  <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: 9, letterSpacing: 2, textTransform: "uppercase", color: P.tf, marginBottom: 10, display: "flex", alignItems: "center", gap: 6 }}>
+                  <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: 10, letterSpacing: 2, textTransform: "uppercase", color: P.tf, marginBottom: 10, display: "flex", alignItems: "center", gap: 6 }}>
                     Subsections ({section.children.length})
                   </div>
                   <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
@@ -1745,7 +2073,7 @@ export default function Editor({
                           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                             <span style={{ fontSize: 14, fontWeight: 500, color: P.tx }}>{child.title}</span>
                             <span style={{
-                              fontSize: 8, fontFamily: "'IBM Plex Mono', monospace",
+                              fontSize: 10, fontFamily: "'IBM Plex Mono', monospace",
                               color: STATUS[child.status]?.text, letterSpacing: 1, textTransform: "uppercase",
                               padding: "1px 5px", borderRadius: 2, background: STATUS[child.status]?.bg,
                               border: `1px solid ${STATUS[child.status]?.bd}`,
@@ -1759,7 +2087,7 @@ export default function Editor({
                             </div>
                           )}
                           {(child.children?.length > 0 || child.paragraphs?.length > 0) && (
-                            <div style={{ fontSize: 9, color: P.tf, fontFamily: "'IBM Plex Mono', monospace", marginTop: 4 }}>
+                            <div style={{ fontSize: 10, color: P.tf, fontFamily: "'IBM Plex Mono', monospace", marginTop: 4 }}>
                               {child.children?.length > 0 && `${child.children.length} subsections`}
                               {child.children?.length > 0 && child.paragraphs?.length > 0 && " · "}
                               {child.paragraphs?.length > 0 && `${child.paragraphs.length}¶`}
@@ -1790,7 +2118,7 @@ export default function Editor({
               {section.paragraphs?.length > 0 && (
                 <>
                   {section.children?.length > 0 && (
-                    <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: 9, letterSpacing: 2, textTransform: "uppercase", color: P.tf, marginBottom: 10 }}>
+                    <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: 10, letterSpacing: 2, textTransform: "uppercase", color: P.tf, marginBottom: 10 }}>
                       Content
                     </div>
                   )}
@@ -1799,12 +2127,14 @@ export default function Editor({
                     const isSel = selectedPara === para.id;
                     const paraNoteCt = notesByPara[para.id] || 0;
                     return (
+                      <React.Fragment key={para.id}>
                       <div
-                        key={para.id}
+                        data-para-id={para.id}
                         onClick={() => onSelectPara(isSel ? null : para.id)}
                         style={{
-                          position: "relative", padding: "14px 16px 14px 44px", marginBottom: 2,
-                          borderRadius: 4, cursor: "pointer", transition: "all 0.2s",
+                          position: "relative", padding: "14px 16px 14px 44px", marginBottom: 4,
+                          borderRadius: 5, cursor: "pointer",
+                          transition: "background 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.2s, opacity 0.3s",
                           background: isSel ? P.sf : "transparent",
                           border: isSel ? `1px solid ${P.bd}` : "1px solid transparent",
                           opacity: zenMode && selectedPara && !isSel ? 0.35 : 1,
@@ -1815,12 +2145,15 @@ export default function Editor({
                         <div style={{ position: "absolute", left: 14, top: 16, width: 20, textAlign: "center", fontFamily: "serif", fontSize: 14, color: role?.c || P.tf }}>
                           {role?.i}
                         </div>
-                        <div style={{ position: "absolute", left: 15, top: 32, fontFamily: "'IBM Plex Mono', monospace", fontSize: 8, color: P.bl }}>
+                        <div style={{ position: "absolute", left: 15, top: 32, fontFamily: "'IBM Plex Mono', monospace", fontSize: 10, color: P.t3 }}>
                           {i + 1}
                         </div>
                         {paraNoteCt > 0 && (
                           <div title={`${paraNoteCt} note${paraNoteCt > 1 ? "s" : ""}`}
-                            style={{ position: "absolute", left: 4, top: 18, width: 6, height: 6, borderRadius: "50%", background: P.ac, opacity: 0.6 }}
+                            onClick={(e) => { e.stopPropagation(); onSelectPara(para.id); if (onSetRightPanel) onSetRightPanel("notes"); if (onSetShowRightPanel) onSetShowRightPanel(true); }}
+                            style={{ position: "absolute", left: 30, top: 34, width: 6, height: 6, borderRadius: "50%", background: P.ac, opacity: 0.7, cursor: "pointer", transition: "opacity 0.2s, transform 0.2s" }}
+                            onMouseOver={(e) => { e.currentTarget.style.opacity = "1"; e.currentTarget.style.transform = "scale(1.5)"; }}
+                            onMouseOut={(e) => { e.currentTarget.style.opacity = "0.7"; e.currentTarget.style.transform = "scale(1)"; }}
                           />
                         )}
 
@@ -1848,8 +2181,18 @@ export default function Editor({
                             } : undefined}
                             onClickInlineNote={onResolveNote ? (noteId) => {
                               // For now, clicking an inline comment shows it in the notes panel
-                              // Future: popover with resolve/edit options
                             } : undefined}
+                            citations={sectionCitations.filter((c) => c.paragraphId === para.id)}
+                            noteIndexMap={noteIndexMap}
+                            sources={sources}
+                            onAddCitation={onAddCitation ? (selPos) => {
+                              setCitationPopover({ paraId: para.id, x: selPos.x, y: selPos.y, from: selPos.from, to: selPos.to });
+                            } : undefined}
+                            onClickCitation={(citationId) => {
+                              // Navigate to bibliography panel and highlight the source
+                              if (onSetRightPanel) onSetRightPanel("bibliography");
+                              if (onSetShowRightPanel) onSetShowRightPanel(true);
+                            }}
                           />
                           </div>
                         ) : (
@@ -1867,7 +2210,7 @@ export default function Editor({
                             {para.linkedTerms?.map((t) => (
                               <span key={t} onClick={(e) => { e.stopPropagation(); onTermClick(t); }}
                                 style={{
-                                  fontSize: 9, fontFamily: "'IBM Plex Mono', monospace", padding: "3px 8px",
+                                  fontSize: 10, fontFamily: "'IBM Plex Mono', monospace", padding: "3px 8px",
                                   borderRadius: 3, background: `${linkedTerms[t]?.color}0C`, color: linkedTerms[t]?.color,
                                   border: `1px solid ${linkedTerms[t]?.color}25`, letterSpacing: 1,
                                   cursor: "pointer", display: "flex", alignItems: "center", gap: 3,
@@ -1879,13 +2222,13 @@ export default function Editor({
                               {onAddNote && (
                                 <button onClick={(e) => { e.stopPropagation(); handleAddParaNote(para.id); }}
                                   title="Add note for this paragraph"
-                                  style={{ background: "none", border: `1px solid ${P.ac}40`, borderRadius: 3, padding: "3px 6px", cursor: "pointer", color: P.ac, display: "flex", alignItems: "center", gap: 3, fontSize: 9, fontFamily: "'IBM Plex Mono', monospace" }}>
+                                  style={{ background: "none", border: `1px solid ${P.ac}40`, borderRadius: 3, padding: "3px 6px", cursor: "pointer", color: P.ac, display: "flex", alignItems: "center", gap: 3, fontSize: 10, fontFamily: "'IBM Plex Mono', monospace" }}>
                                   <MessageSquare size={10} /> Note
                                 </button>
                               )}
                               <button onClick={(e) => { e.stopPropagation(); onAddParagraph(project.id, section.id, para.id); }}
                                 title="Add paragraph below"
-                                style={{ background: "none", border: `1px solid ${P.bd}`, borderRadius: 3, padding: "3px 6px", cursor: "pointer", color: P.tm, display: "flex", alignItems: "center", gap: 3, fontSize: 9, fontFamily: "'IBM Plex Mono', monospace" }}>
+                                style={{ background: "none", border: `1px solid ${P.bd}`, borderRadius: 3, padding: "3px 6px", cursor: "pointer", color: P.tm, display: "flex", alignItems: "center", gap: 3, fontSize: 10, fontFamily: "'IBM Plex Mono', monospace" }}>
                                 <Plus size={10} /> Add ¶
                               </button>
                               {section.paragraphs.length > 1 && (
@@ -1899,6 +2242,11 @@ export default function Editor({
                           </div>
                         )}
                       </div>
+                      {/* Inline diagrams after this paragraph */}
+                      {sectionDiagrams.filter((d) => d.sectionId === section.id && d.afterParagraphId === para.id).map((diag, di) => (
+                        <DiagramInline key={diag.id} diagram={diag} figureIndex={di + 1} onEdit={onEditDiagram} onRemove={onRemoveDiagram} />
+                      ))}
+                      </React.Fragment>
                     );
                   })}
                 </>
@@ -1940,18 +2288,18 @@ export default function Editor({
         </div>
       </div>
 
-      {/* Notes panel (hidden in done mode and zen mode for minimal chrome) */}
-      {onAddNote && status !== "done" && !zenMode && (
-        <EditorNotesPanel
-          sectionNotes={sectionNotes}
-          looseNotes={looseNotes}
-          project={project}
-          section={section}
-          onAddNote={onAddNote}
-          onUpdateNote={onUpdateNote}
-          onDeleteNote={onDeleteNote}
-          collapsed={notesCollapsed || status === "revised"}
-          onToggle={() => setNotesCollapsed(!notesCollapsed)}
+      {/* Citation popover */}
+      {citationPopover && (
+        <CitationPopover
+          position={citationPopover}
+          sources={sources}
+          onSave={handleCitationSave}
+          onCancel={() => setCitationPopover(null)}
+          zoteroSearch={(() => {
+            const z = loadZoteroSettings();
+            if (!z.connected) return undefined;
+            return (query) => zoteroSearchLibrary(z.userId, z.apiKey, query);
+          })()}
         />
       )}
 

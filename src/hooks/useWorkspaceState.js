@@ -3,9 +3,15 @@ import { get as idbGet, set as idbSet } from "idb-keyval";
 import DEFAULT_PROJECTS from "../data/projects.js";
 import DEFAULT_LINKED_TERMS from "../data/linkedTerms.js";
 import DEFAULT_NOTES, { migrateNotes } from "../data/notes.js";
+import { DEFAULT_SOURCES, createSource, generateCitationKey } from "../data/sources.js";
+import { DEFAULT_CITATIONS, createCitation } from "../data/citations.js";
+import { DEFAULT_DIAGRAMS, createDiagram } from "../data/diagrams.js";
 
 const STORAGE_KEY = "tessera-workspace";
 const NOTES_KEY = "tessera-notes";
+const SOURCES_KEY = "tessera-sources";
+const CITATIONS_KEY = "tessera-citations";
+const DIAGRAMS_KEY = "tessera-diagrams";
 
 // ── Sync localStorage (for initial render + beforeunload fallback) ──
 
@@ -57,6 +63,62 @@ function saveNotesSync(notes) {
   }
 }
 
+function loadSourcesSync() {
+  try {
+    const raw = localStorage.getItem(SOURCES_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+    }
+  } catch (e) {
+    console.warn("Failed to load sources from localStorage:", e);
+  }
+  return DEFAULT_SOURCES;
+}
+
+function saveSourcesSync(sources) {
+  try { localStorage.setItem(SOURCES_KEY, JSON.stringify(sources)); } catch {}
+}
+
+function loadCitationsSync() {
+  try {
+    const raw = localStorage.getItem(CITATIONS_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed)) return parsed;
+    }
+  } catch (e) {
+    console.warn("Failed to load citations from localStorage:", e);
+  }
+  return DEFAULT_CITATIONS;
+}
+
+function saveCitationsSync(citations) {
+  try { localStorage.setItem(CITATIONS_KEY, JSON.stringify(citations)); } catch {}
+}
+
+function loadDiagramsSync() {
+  try {
+    const raw = localStorage.getItem(DIAGRAMS_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        // Merge any new defaults that don't exist in saved data
+        const savedIds = new Set(parsed.map((d) => d.id));
+        const missing = DEFAULT_DIAGRAMS.filter((d) => !savedIds.has(d.id));
+        return missing.length > 0 ? [...parsed, ...missing] : parsed;
+      }
+    }
+  } catch (e) {
+    console.warn("Failed to load diagrams from localStorage:", e);
+  }
+  return DEFAULT_DIAGRAMS;
+}
+
+function saveDiagramsSync(diagrams) {
+  try { localStorage.setItem(DIAGRAMS_KEY, JSON.stringify(diagrams)); } catch {}
+}
+
 // ── Async IndexedDB (primary storage, no size limit) ──
 
 async function saveStateAsync(projects, linkedTerms) {
@@ -77,6 +139,18 @@ async function saveNotesAsync(notes) {
     console.warn("Failed to save notes to IndexedDB:", e);
     return false;
   }
+}
+
+async function saveSourcesAsync(sources) {
+  try { await idbSet(SOURCES_KEY, sources); return true; } catch { return false; }
+}
+
+async function saveCitationsAsync(citations) {
+  try { await idbSet(CITATIONS_KEY, citations); return true; } catch { return false; }
+}
+
+async function saveDiagramsAsync(diagrams) {
+  try { await idbSet(DIAGRAMS_KEY, diagrams); return true; } catch { return false; }
 }
 
 // ── Tree helpers ──────────────────────────────────────────────
@@ -160,6 +234,10 @@ export default function useWorkspaceState() {
   const [view, setView] = useState("editor");
   const [zenMode, setZenMode] = useState(false);
   const [notes, setNotes] = useState(loadNotesSync);
+  const [sources, setSources] = useState(loadSourcesSync);
+  const [citations, setCitations] = useState(loadCitationsSync);
+  const [diagrams, setDiagrams] = useState(loadDiagramsSync);
+  const [activeDiagramId, setActiveDiagramId] = useState(null);
   const [decisionLog, setDecisionLog] = useState(() => {
     try {
       const raw = localStorage.getItem("tessera-decisions");
@@ -204,9 +282,15 @@ export default function useWorkspaceState() {
   const projectsRef = useRef(projects);
   const linkedTermsRef = useRef(linkedTerms);
   const notesRef = useRef(notes);
+  const sourcesRef = useRef(sources);
+  const citationsRef = useRef(citations);
+  const diagramsRef = useRef(diagrams);
   projectsRef.current = projects;
   linkedTermsRef.current = linkedTerms;
   notesRef.current = notes;
+  sourcesRef.current = sources;
+  citationsRef.current = citations;
+  diagramsRef.current = diagrams;
 
   // Track whether initial load is done (skip "saving" flash on mount)
   const hasMounted = useRef(false);
@@ -227,6 +311,17 @@ export default function useWorkspaceState() {
         const idbNotes = await idbGet(NOTES_KEY);
         if (Array.isArray(idbNotes) && idbNotes.length > 0) {
           setNotes(migrateNotes(idbNotes));
+        }
+        const idbSources = await idbGet(SOURCES_KEY);
+        if (Array.isArray(idbSources) && idbSources.length > 0) setSources(idbSources);
+        const idbCitations = await idbGet(CITATIONS_KEY);
+        if (Array.isArray(idbCitations)) setCitations(idbCitations);
+        const idbDiagrams = await idbGet(DIAGRAMS_KEY);
+        if (Array.isArray(idbDiagrams) && idbDiagrams.length > 0) {
+          // Merge any new defaults missing from IDB
+          const savedIds = new Set(idbDiagrams.map((d) => d.id));
+          const missing = DEFAULT_DIAGRAMS.filter((d) => !savedIds.has(d.id));
+          setDiagrams(missing.length > 0 ? [...idbDiagrams, ...missing] : idbDiagrams);
         }
       } catch (e) {
         console.warn("IndexedDB load failed, using localStorage data:", e);
@@ -259,6 +354,42 @@ export default function useWorkspaceState() {
     return () => clearTimeout(timer);
   }, [notes]);
 
+  // Auto-save sources
+  useEffect(() => {
+    if (!hasMounted.current) return;
+    setSaveStatus("saving");
+    const timer = setTimeout(async () => {
+      saveSourcesSync(sources);
+      const ok = await saveSourcesAsync(sources);
+      setSaveStatus(ok ? "saved" : "error");
+    }, 150);
+    return () => clearTimeout(timer);
+  }, [sources]);
+
+  // Auto-save citations
+  useEffect(() => {
+    if (!hasMounted.current) return;
+    setSaveStatus("saving");
+    const timer = setTimeout(async () => {
+      saveCitationsSync(citations);
+      const ok = await saveCitationsAsync(citations);
+      setSaveStatus(ok ? "saved" : "error");
+    }, 150);
+    return () => clearTimeout(timer);
+  }, [citations]);
+
+  // Auto-save diagrams
+  useEffect(() => {
+    if (!hasMounted.current) return;
+    setSaveStatus("saving");
+    const timer = setTimeout(async () => {
+      saveDiagramsSync(diagrams);
+      const ok = await saveDiagramsAsync(diagrams);
+      setSaveStatus(ok ? "saved" : "error");
+    }, 150);
+    return () => clearTimeout(timer);
+  }, [diagrams]);
+
   useEffect(() => {
     try { localStorage.setItem("tessera-decisions", JSON.stringify(decisionLog)); } catch {}
   }, [decisionLog]);
@@ -269,9 +400,15 @@ export default function useWorkspaceState() {
       // Sync flush to localStorage (guaranteed before tab close)
       saveStateSync(projectsRef.current, linkedTermsRef.current);
       saveNotesSync(notesRef.current);
+      saveSourcesSync(sourcesRef.current);
+      saveCitationsSync(citationsRef.current);
+      saveDiagramsSync(diagramsRef.current);
       // Also try async IndexedDB save (may or may not complete)
       saveStateAsync(projectsRef.current, linkedTermsRef.current);
       saveNotesAsync(notesRef.current);
+      saveSourcesAsync(sourcesRef.current);
+      saveCitationsAsync(citationsRef.current);
+      saveDiagramsAsync(diagramsRef.current);
     };
     window.addEventListener("beforeunload", flush);
     // Also save on visibility change (switching tabs, minimizing)
@@ -581,6 +718,147 @@ export default function useWorkspaceState() {
     );
   }, []);
 
+  // ── Source mutations ──────────────────────────────────────
+
+  const addSource = useCallback((sourceData) => {
+    const newSource = createSource(sourceData);
+    if (!newSource.citationKey) {
+      newSource.citationKey = generateCitationKey(newSource.authors, newSource.year);
+    }
+    setSources((prev) => [newSource, ...prev]);
+    return newSource;
+  }, []);
+
+  const updateSource = useCallback((sourceId, updates) => {
+    setSources((prev) =>
+      prev.map((s) =>
+        s.id !== sourceId ? s : { ...s, ...updates, updatedAt: Date.now() }
+      )
+    );
+  }, []);
+
+  const deleteSource = useCallback((sourceId) => {
+    setSources((prev) => prev.filter((s) => s.id !== sourceId));
+    // Also delete all citations referencing this source
+    setCitations((prev) => prev.filter((c) => c.sourceId !== sourceId));
+  }, []);
+
+  // ── Citation mutations ──────────────────────────────────────
+
+  const addCitation = useCallback((citationData) => {
+    const newCitation = createCitation(citationData);
+    setCitations((prev) => [...prev, newCitation]);
+    // Auto-set source category to "cited" if it has a citation now
+    if (newCitation.sourceId) {
+      setSources((prev) =>
+        prev.map((s) =>
+          s.id !== newCitation.sourceId ? s : { ...s, category: "cited", updatedAt: Date.now() }
+        )
+      );
+    }
+    return newCitation;
+  }, []);
+
+  const updateCitation = useCallback((citationId, updates) => {
+    setCitations((prev) =>
+      prev.map((c) => (c.id !== citationId ? c : { ...c, ...updates }))
+    );
+  }, []);
+
+  const deleteCitation = useCallback((citationId) => {
+    setCitations((prev) => prev.filter((c) => c.id !== citationId));
+  }, []);
+
+  // ── Citation derived state ──────────────────────────────────
+
+  // Citations for the current section
+  const sectionCitations = useMemo(() => {
+    if (!activeSectionId) return [];
+    return citations.filter((c) => c.sectionId === activeSectionId);
+  }, [citations, activeSectionId]);
+
+  // Citations grouped by source ID
+  const citationsBySource = useMemo(() => {
+    const map = {};
+    for (const c of citations) {
+      if (!map[c.sourceId]) map[c.sourceId] = [];
+      map[c.sourceId].push(c);
+    }
+    return map;
+  }, [citations]);
+
+  // Compute sequential note indices (superscript numbers) per project in document order.
+  // Walk all sections in tree order, assign incrementing numbers.
+  const noteIndexMap = useMemo(() => {
+    const map = {}; // citationId → noteIndex
+    if (!activeProject) return map;
+
+    // Collect all paragraphs in document order
+    const orderedParaIds = [];
+    function walkSections(sections) {
+      for (const sec of sections) {
+        for (const p of sec.paragraphs || []) orderedParaIds.push(p.id);
+        if (sec.children?.length) walkSections(sec.children);
+      }
+    }
+    for (const part of activeProject.parts || []) {
+      walkSections(part.children || []);
+    }
+
+    // Sort citations by document order
+    const projectCitations = citations
+      .filter((c) => c.projectId === activeProjectId)
+      .sort((a, b) => {
+        const ai = orderedParaIds.indexOf(a.paragraphId);
+        const bi = orderedParaIds.indexOf(b.paragraphId);
+        if (ai !== bi) return ai - bi;
+        // Same paragraph: sort by inlineRange.from
+        return (a.inlineRange?.from || 0) - (b.inlineRange?.from || 0);
+      });
+
+    projectCitations.forEach((c, i) => {
+      map[c.id] = i + 1;
+    });
+
+    return map;
+  }, [citations, activeProject, activeProjectId]);
+
+  // ── Diagram mutations ──────────────────────────────────────
+
+  // Diagrams for the current section
+  const sectionDiagrams = useMemo(() => {
+    if (!activeSectionId) return [];
+    return diagrams.filter((d) => d.sectionId === activeSectionId);
+  }, [diagrams, activeSectionId]);
+
+  // All diagrams for the active project
+  const projectDiagrams = useMemo(() => {
+    if (!activeProjectId) return [];
+    return diagrams.filter((d) => d.projectId === activeProjectId);
+  }, [diagrams, activeProjectId]);
+
+  const addDiagram = useCallback((diagramData) => {
+    const newDiagram = { ...createDiagram(), ...diagramData };
+    setDiagrams((prev) => [newDiagram, ...prev]);
+    setActiveDiagramId(newDiagram.id);
+    return newDiagram;
+  }, []);
+
+  const updateDiagram = useCallback((diagramId, updates) => {
+    setDiagrams((prev) =>
+      prev.map((d) =>
+        d.id !== diagramId ? d : { ...d, ...updates, updatedAt: Date.now() }
+      )
+    );
+  }, []);
+
+  const deleteDiagram = useCallback((diagramId) => {
+    setDiagrams((prev) => prev.filter((d) => d.id !== diagramId));
+    setActiveDiagramId((prev) => prev === diagramId ? null : prev);
+  }, []);
+
+  // WHO section import applied via console script (2026-04-02).
+
   // ── Other ──────────────────────────────────────────────────
 
   const addDecision = useCallback((text) => {
@@ -605,6 +883,14 @@ export default function useWorkspaceState() {
     // Notes
     notes, sectionNotes, looseNotes, noteCountBySection,
     addNote, updateNote, deleteNote, resolveNote,
+    // Sources & Citations
+    sources, citations, sectionCitations, citationsBySource, noteIndexMap,
+    addSource, updateSource, deleteSource,
+    addCitation, updateCitation, deleteCitation,
+    setSources, setCitations,
+    // Diagrams
+    diagrams, sectionDiagrams, projectDiagrams, activeDiagramId,
+    addDiagram, updateDiagram, deleteDiagram, setActiveDiagramId,
     // Setters
     setActiveProjectId, setActiveSectionId, setExpandedNodes, setSelectedTerm,
     setRightPanel, setShowRightPanel, setSearchQuery, setSelectedPara, setView,

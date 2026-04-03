@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useEffect } from "react";
+import React, { useCallback, useRef, useEffect, useState } from "react";
 import { PALETTE as P } from "./data/constants.js";
 import useWorkspaceState from "./hooks/useWorkspaceState.js";
 import TopBar from "./components/TopBar.jsx";
@@ -9,7 +9,312 @@ import CrossRefPanel from "./components/CrossRefPanel.jsx";
 import Brainstorm from "./components/Brainstorm.jsx";
 import CalculusView from "./components/CalculusView.jsx";
 import DictionaryView from "./components/DictionaryView.jsx";
+import DiagramBuilder from "./components/DiagramBuilder.jsx";
 import { importDocxAsDocument } from "./components/DocImporter.jsx";
+import PrintPreview from "./components/PrintPreview.jsx";
+
+// ── Resize Handle ─────────────────────────────────────────
+
+function ResizeHandle({ onDrag }) {
+  const [dragging, setDragging] = useState(false);
+
+  const handleMouseDown = useCallback((e) => {
+    e.preventDefault();
+    setDragging(true);
+    const startX = e.clientX;
+
+    const handleMouseMove = (e2) => {
+      onDrag(e2.clientX - startX, e2.clientX);
+    };
+    const handleMouseUp = () => {
+      setDragging(false);
+      document.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("mouseup", handleMouseUp);
+      document.body.style.cursor = "";
+      document.body.style.userSelect = "";
+    };
+
+    document.addEventListener("mousemove", handleMouseMove);
+    document.addEventListener("mouseup", handleMouseUp);
+    document.body.style.cursor = "col-resize";
+    document.body.style.userSelect = "none";
+  }, [onDrag]);
+
+  return (
+    <div
+      onMouseDown={handleMouseDown}
+      style={{
+        width: 6, cursor: "col-resize", flexShrink: 0,
+        position: "relative", zIndex: 5,
+      }}
+    >
+      <div style={{
+        position: "absolute", top: 0, bottom: 0, left: 2, width: 2, borderRadius: 1,
+        background: dragging ? P.ac : P.bd,
+        transition: dragging ? "none" : "background 0.2s",
+      }} />
+    </div>
+  );
+}
+
+// ── Resizable Three-Panel Layout ──────────────────────────
+
+function ResizableLayout({ zen, state }) {
+  const SIDEBAR_DEFAULT = 268;
+  const RIGHT_DEFAULT = 296;
+  const SIDEBAR_MIN = 180;
+  const SIDEBAR_MAX = 450;
+  const RIGHT_MIN = 220;
+  const RIGHT_MAX = 500;
+
+  const [sidebarWidth, setSidebarWidth] = useState(() => {
+    try { return parseInt(localStorage.getItem("tessera-sidebar-w")) || SIDEBAR_DEFAULT; } catch { return SIDEBAR_DEFAULT; }
+  });
+  const [rightWidth, setRightWidth] = useState(() => {
+    try { return parseInt(localStorage.getItem("tessera-right-w")) || RIGHT_DEFAULT; } catch { return RIGHT_DEFAULT; }
+  });
+
+  // Persist widths
+  const sidebarRef = useRef(sidebarWidth);
+  const rightRef = useRef(rightWidth);
+  sidebarRef.current = sidebarWidth;
+  rightRef.current = rightWidth;
+
+  useEffect(() => {
+    const save = () => {
+      localStorage.setItem("tessera-sidebar-w", String(sidebarRef.current));
+      localStorage.setItem("tessera-right-w", String(rightRef.current));
+    };
+    window.addEventListener("beforeunload", save);
+    return () => window.removeEventListener("beforeunload", save);
+  }, []);
+
+  const handleSidebarDrag = useCallback((delta, clientX) => {
+    setSidebarWidth((prev) => Math.min(SIDEBAR_MAX, Math.max(SIDEBAR_MIN, prev + delta)));
+  }, []);
+
+  const handleRightDrag = useCallback((delta, clientX) => {
+    setRightWidth((prev) => Math.min(RIGHT_MAX, Math.max(RIGHT_MIN, prev - delta)));
+  }, []);
+
+  // Use a stable ref for drag so the closure always has current width
+  const sidebarStartRef = useRef(0);
+  const rightStartRef = useRef(0);
+
+  const handleSidebarMouseDown = useCallback((e) => {
+    e.preventDefault();
+    sidebarStartRef.current = sidebarRef.current;
+    const startX = e.clientX;
+    const move = (e2) => {
+      const delta = e2.clientX - startX;
+      const next = Math.min(SIDEBAR_MAX, Math.max(SIDEBAR_MIN, sidebarStartRef.current + delta));
+      setSidebarWidth(next);
+    };
+    const up = () => {
+      document.removeEventListener("mousemove", move);
+      document.removeEventListener("mouseup", up);
+      document.body.style.cursor = "";
+      document.body.style.userSelect = "";
+      localStorage.setItem("tessera-sidebar-w", String(sidebarRef.current));
+    };
+    document.addEventListener("mousemove", move);
+    document.addEventListener("mouseup", up);
+    document.body.style.cursor = "col-resize";
+    document.body.style.userSelect = "none";
+  }, []);
+
+  const handleRightMouseDown = useCallback((e) => {
+    e.preventDefault();
+    rightStartRef.current = rightRef.current;
+    const startX = e.clientX;
+    const move = (e2) => {
+      const delta = e2.clientX - startX;
+      const next = Math.min(RIGHT_MAX, Math.max(RIGHT_MIN, rightStartRef.current - delta));
+      setRightWidth(next);
+    };
+    const up = () => {
+      document.removeEventListener("mousemove", move);
+      document.removeEventListener("mouseup", up);
+      document.body.style.cursor = "";
+      document.body.style.userSelect = "";
+      localStorage.setItem("tessera-right-w", String(rightRef.current));
+    };
+    document.addEventListener("mousemove", move);
+    document.addEventListener("mouseup", up);
+    document.body.style.cursor = "col-resize";
+    document.body.style.userSelect = "none";
+  }, []);
+
+  return (
+    <div style={{ flex: 1, display: "flex", overflow: "hidden", position: "relative" }}>
+      {/* Sidebar */}
+      {!zen && (
+        <>
+          <div style={{ width: sidebarWidth, flexShrink: 0, overflow: "hidden" }}>
+            <Sidebar
+              projects={state.projects}
+              linkedTerms={state.linkedTerms}
+              activeProjectId={state.activeProjectId}
+              activeSectionId={state.activeSectionId}
+              expandedNodes={state.expandedNodes}
+              selectedTerm={state.selectedTerm}
+              noteCountBySection={state.noteCountBySection}
+              onToggle={state.toggleNode}
+              onSelect={state.selectSection}
+              onSelectTerm={state.selectTerm}
+              onAddChild={state.addChildSection}
+              onDeleteSection={state.deleteSection}
+              onMoveSection={state.moveSection}
+              onSetActiveProject={state.setActiveProjectId}
+            />
+          </div>
+          <div onMouseDown={handleSidebarMouseDown} className="resize-handle" style={{
+            width: 6, cursor: "col-resize", flexShrink: 0, position: "relative", zIndex: 5,
+          }}>
+            <div style={{ position: "absolute", top: 0, bottom: 0, left: 2, width: 2, borderRadius: 1, background: P.bd }} />
+          </div>
+        </>
+      )}
+
+      {/* Main content */}
+      <div className="smooth-scroll" style={{ flex: 1, overflowY: "auto", background: P.bg }}>
+        {state.view === "editor" ? (
+          <Editor
+            project={state.activeProject}
+            section={state.activeSection}
+            path={state.activePath}
+            linkedTerms={state.linkedTerms}
+            selectedPara={state.selectedPara}
+            onSelectPara={state.setSelectedPara}
+            onTermClick={state.selectTerm}
+            onUpdateText={state.updateParagraphText}
+            onUpdateMeta={state.updateParagraphMeta}
+            onUpdateSection={state.updateSection}
+            onAddParagraph={state.addParagraph}
+            onDeleteParagraph={state.deleteParagraph}
+            onAddChildSection={state.addChildSection}
+            onSelectSection={state.selectSection}
+            sectionNotes={state.sectionNotes}
+            looseNotes={state.looseNotes}
+            allNotes={state.notes}
+            onAddNote={state.addNote}
+            onUpdateNote={state.updateNote}
+            onDeleteNote={state.deleteNote}
+            onResolveNote={state.resolveNote}
+            sources={state.sources}
+            citations={state.citations}
+            sectionCitations={state.sectionCitations}
+            noteIndexMap={state.noteIndexMap}
+            onAddSource={state.addSource}
+            onUpdateSource={state.updateSource}
+            onAddCitation={state.addCitation}
+            onDeleteCitation={state.deleteCitation}
+            zenMode={zen}
+            onSetRightPanel={state.setRightPanel}
+            onSetShowRightPanel={state.setShowRightPanel}
+            sectionDiagrams={state.projectDiagrams}
+            onEditDiagram={(diagramId) => {
+              state.setActiveDiagramId(diagramId);
+              state.setView("diagrams");
+            }}
+            onRemoveDiagram={(diagramId) => {
+              state.updateDiagram(diagramId, { afterParagraphId: null, sectionId: null });
+            }}
+          />
+        ) : state.view === "argmap" ? (
+          <ArgumentMap
+            projects={state.projects}
+            linkedTerms={state.linkedTerms}
+            onSelectSection={state.selectSection}
+            onSelectTerm={state.selectTerm}
+            onSetView={state.setView}
+          />
+        ) : state.view === "brainstorm" ? (
+          <Brainstorm
+            notes={state.notes}
+            addNote={state.addNote}
+            updateNote={state.updateNote}
+            deleteNote={state.deleteNote}
+            onNavigateToSection={(projectId, sectionId) => {
+              state.selectSection(projectId, sectionId);
+              state.setView("editor");
+            }}
+          />
+        ) : state.view === "diagrams" ? (
+          <DiagramBuilder
+            diagrams={state.diagrams}
+            projectDiagrams={state.projectDiagrams}
+            activeDiagramId={state.activeDiagramId}
+            onAddDiagram={state.addDiagram}
+            onUpdateDiagram={state.updateDiagram}
+            onDeleteDiagram={state.deleteDiagram}
+            projects={state.projects}
+            activeProjectId={state.activeProjectId}
+            onSelectSection={state.selectSection}
+            onSetView={state.setView}
+          />
+        ) : state.view === "calculus" ? (
+          <CalculusView
+            projects={state.projects}
+            linkedTerms={state.linkedTerms}
+            onSelectSection={state.selectSection}
+            onSelectTerm={state.selectTerm}
+            onSetView={state.setView}
+          />
+        ) : state.view === "dictionary" ? (
+          <DictionaryView
+            projects={state.projects}
+            linkedTerms={state.linkedTerms}
+            onSelectSection={state.selectSection}
+            onSelectTerm={state.selectTerm}
+            onSetView={state.setView}
+          />
+        ) : null}
+      </div>
+
+      {/* Right panel */}
+      {!zen && (
+        <>
+          <div onMouseDown={handleRightMouseDown} className="resize-handle" style={{
+            width: 6, cursor: "col-resize", flexShrink: 0, position: "relative", zIndex: 5,
+          }}>
+            <div style={{ position: "absolute", top: 0, bottom: 0, left: 2, width: 2, borderRadius: 1, background: P.bd }} />
+          </div>
+          <div style={{ width: rightWidth, flexShrink: 0, overflow: "hidden" }}>
+            <CrossRefPanel
+              projects={state.projects}
+              linkedTerms={state.linkedTerms}
+              selectedTerm={state.selectedTerm}
+              rightPanel={state.rightPanel}
+              showRightPanel={state.showRightPanel}
+              activeProject={state.activeProject}
+              activeSectionId={state.activeSectionId}
+              sectionNotes={state.sectionNotes}
+              looseNotes={state.looseNotes}
+              project={state.activeProject}
+              section={state.activeSection}
+              onAddNote={state.addNote}
+              onUpdateNote={state.updateNote}
+              onDeleteNote={state.deleteNote}
+              onSetRightPanel={state.setRightPanel}
+              onSetShowRightPanel={state.setShowRightPanel}
+              onSelectSection={state.selectSection}
+              onSelectTerm={state.selectTerm}
+              sources={state.sources}
+              citations={state.citations}
+              noteIndexMap={state.noteIndexMap}
+              onUpdateSource={state.updateSource}
+              onDeleteSource={state.deleteSource}
+              onDeleteCitation={state.deleteCitation}
+              onSelectPara={state.setSelectedPara}
+              selectedPara={state.selectedPara}
+            />
+          </div>
+        </>
+      )}
+    </div>
+  );
+}
 
 export default function TesseraWorkspace() {
   const state = useWorkspaceState();
@@ -108,6 +413,7 @@ export default function TesseraWorkspace() {
   }, [state.zenMode, state.setZenMode, state.undo, state.redo]);
 
   const zen = state.zenMode;
+  const [showPreview, setShowPreview] = useState(false);
 
   return (
     <div style={{
@@ -130,115 +436,17 @@ export default function TesseraWorkspace() {
           projects={state.projects}
           linkedTerms={state.linkedTerms}
           notes={state.notes}
+          sources={state.sources}
           onTermClick={state.selectTerm}
           onSelectDoc={state.selectSection}
           onImport={handleImport}
+          onPreview={() => setShowPreview(true)}
           saveStatus={state.saveStatus}
           onZenMode={() => state.setZenMode(true)}
         />
       )}
 
-      <div style={{ flex: 1, display: "flex", overflow: "hidden", position: "relative" }}>
-        {!zen && (
-          <Sidebar
-            projects={state.projects}
-            linkedTerms={state.linkedTerms}
-            activeProjectId={state.activeProjectId}
-            activeSectionId={state.activeSectionId}
-            expandedNodes={state.expandedNodes}
-            selectedTerm={state.selectedTerm}
-            noteCountBySection={state.noteCountBySection}
-            onToggle={state.toggleNode}
-            onSelect={state.selectSection}
-            onSelectTerm={state.selectTerm}
-            onAddChild={state.addChildSection}
-            onDeleteSection={state.deleteSection}
-            onMoveSection={state.moveSection}
-            onSetActiveProject={state.setActiveProjectId}
-          />
-        )}
-
-        <div style={{ flex: 1, overflowY: "auto", background: P.bg }}>
-          {state.view === "editor" ? (
-            <Editor
-              project={state.activeProject}
-              section={state.activeSection}
-              path={state.activePath}
-              linkedTerms={state.linkedTerms}
-              selectedPara={state.selectedPara}
-              onSelectPara={state.setSelectedPara}
-              onTermClick={state.selectTerm}
-              onUpdateText={state.updateParagraphText}
-              onUpdateMeta={state.updateParagraphMeta}
-              onUpdateSection={state.updateSection}
-              onAddParagraph={state.addParagraph}
-              onDeleteParagraph={state.deleteParagraph}
-              onAddChildSection={state.addChildSection}
-              onSelectSection={state.selectSection}
-              sectionNotes={state.sectionNotes}
-              looseNotes={state.looseNotes}
-              allNotes={state.notes}
-              onAddNote={state.addNote}
-              onUpdateNote={state.updateNote}
-              onDeleteNote={state.deleteNote}
-              onResolveNote={state.resolveNote}
-              zenMode={zen}
-            />
-          ) : state.view === "argmap" ? (
-            <ArgumentMap
-              projects={state.projects}
-              linkedTerms={state.linkedTerms}
-              onSelectSection={state.selectSection}
-              onSelectTerm={state.selectTerm}
-              onSetView={state.setView}
-            />
-          ) : state.view === "brainstorm" ? (
-            <Brainstorm
-              notes={state.notes}
-              addNote={state.addNote}
-              updateNote={state.updateNote}
-              deleteNote={state.deleteNote}
-              onNavigateToSection={(projectId, sectionId) => {
-                state.selectSection(projectId, sectionId);
-                state.setView("editor");
-              }}
-            />
-          ) : state.view === "calculus" ? (
-            <CalculusView
-              projects={state.projects}
-              linkedTerms={state.linkedTerms}
-              onSelectSection={state.selectSection}
-              onSelectTerm={state.selectTerm}
-              onSetView={state.setView}
-            />
-          ) : state.view === "dictionary" ? (
-            <DictionaryView
-              projects={state.projects}
-              linkedTerms={state.linkedTerms}
-              onSelectSection={state.selectSection}
-              onSelectTerm={state.selectTerm}
-              onSetView={state.setView}
-            />
-          ) : null}
-        </div>
-
-        {!zen && (
-          <CrossRefPanel
-            projects={state.projects}
-            linkedTerms={state.linkedTerms}
-            selectedTerm={state.selectedTerm}
-            rightPanel={state.rightPanel}
-            showRightPanel={state.showRightPanel}
-            activeProject={state.activeProject}
-            activeSectionId={state.activeSectionId}
-            sectionNotes={state.sectionNotes}
-            onSetRightPanel={state.setRightPanel}
-            onSetShowRightPanel={state.setShowRightPanel}
-            onSelectSection={state.selectSection}
-            onSelectTerm={state.selectTerm}
-          />
-        )}
-      </div>
+      <ResizableLayout zen={zen} state={state} />
 
       {/* Zen mode exit button */}
       {zen && (
@@ -249,7 +457,7 @@ export default function TesseraWorkspace() {
             display: "flex", alignItems: "center", gap: 6,
             padding: "6px 14px", borderRadius: 6,
             background: P.tb, color: "#8A7E6E",
-            fontSize: 9, fontFamily: "'IBM Plex Mono', monospace", letterSpacing: 1.5, textTransform: "uppercase",
+            fontSize: 10, fontFamily: "'IBM Plex Mono', monospace", letterSpacing: 1.5, textTransform: "uppercase",
             cursor: "pointer", opacity: 0.6, transition: "opacity 0.3s",
             border: `1px solid #50473A`,
           }}
@@ -259,6 +467,18 @@ export default function TesseraWorkspace() {
         >
           Exit Zen
         </div>
+      )}
+
+      {/* Print Preview overlay */}
+      {showPreview && (
+        <PrintPreview
+          project={state.activeProject}
+          linkedTerms={state.linkedTerms}
+          sources={state.sources}
+          citations={state.citations}
+          noteIndexMap={state.noteIndexMap}
+          onClose={() => setShowPreview(false)}
+        />
       )}
     </div>
   );

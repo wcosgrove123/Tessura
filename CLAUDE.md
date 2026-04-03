@@ -34,16 +34,23 @@ TesseraWorkspace
 ├── TopBar (search, view tabs, import)
 ├── Sidebar (collapsible tree navigator)
 ├── Editor (TipTap rich text, breadcrumbs, spine editing)
-│   └── ParagraphEditor (per-paragraph TipTap instance)
+│   ├── ParagraphEditor (per-paragraph TipTap instance)
+│   └── DiagramInline (read-only inline diagram figures)
 ├── Brainstorm (categorized notes with tags)
 ├── ArgumentMap (React Flow interactive graph)
+├── DiagramBuilder (React Flow diagram editor with templates)
+│   ├── DiagramNode (custom node: 8 shapes)
+│   ├── DiagramPropertiesPanel (node/edge/diagram editing)
+│   └── DiagramTemplates (14 templates in 5 categories)
 └── CrossRefPanel (linked terms + spines)
 ```
 Full documentation: `docs/architecture/components.md`
 
 ### Key Libraries
 - **TipTap** — Rich text editing (bold, italic, underline, highlight, lists)
-- **React Flow** (@xyflow/react) — Interactive argument map
+- **React Flow** (@xyflow/react) — Interactive argument map + diagram builder
+- **dagre** (@dagrejs/dagre) — Hierarchical diagram auto-layout
+- **d3-force** — Force-directed physics simulation for knowledge graphs
 - **mammoth** — .docx import
 - **Lucide React** — Icons
 
@@ -52,6 +59,9 @@ Full documentation: `docs/architecture/components.md`
 - `src/data/linkedTerms.js` — 8 cross-project terms with symbols, definitions, refs
 - `src/data/constants.js` — Status/role/palette constants
 - `src/data/notes.js` — 38 categorized brainstorm notes (ideas, questions, tasks, bibliography)
+- `src/data/diagrams.js` — Diagram definitions, 14 type constants, 6 default inline diagrams
+- `src/data/sources.js` — Bibliography sources (Zotero integration)
+- `src/data/citations.js` — Chicago NB citations linked to paragraphs
 
 ### State & Persistence
 - Central state in `src/hooks/useWorkspaceState.js` with tree traversal helpers
