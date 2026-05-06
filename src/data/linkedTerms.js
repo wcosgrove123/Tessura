@@ -1,8 +1,8 @@
 /**
  * Tessera Linked Terms — Auto-generated with cross-references
- * Generated: 2026-03-31T20:30:30.968Z
- * 61 terms tracked across 3 projects
- * 1448 cross-references detected
+ * Generated: 2026-05-06T20:05:34.731Z
+ * 73 terms tracked across 3 projects
+ * 434 cross-references detected
  */
 
 const LINKED_TERMS = {
@@ -14,18 +14,23 @@ const LINKED_TERMS = {
     "refs": [
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-1-the-axiomatics-of-this-system",
-        "snippet": "This ontological dictionary is an axiomatica—a product of axiomatics, the practice o..."
+        "doc": "od-the-axiomatics-of-this-system",
+        "snippet": "... ontological dictionary is an axiomatica—a product of axiomatics, the practice o..."
       },
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-4-axiomatics-axiomation",
-        "snippet": "...iomatics—the journey of constructing an axiomatica."
+        "doc": "od-axiomation",
+        "snippet": "...he journey of constructing an axiomatica."
       },
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-4-axiomatics-to-axiomatize",
-        "snippet": "...o engage in axiomation; to construct an axiomatica through the organization of schema."
+        "doc": "od-to-axiomatize",
+        "snippet": "...n axiomation; to construct an axiomatica through the organization of schema."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-axiomatica",
+        "snippet": "... ontological dictionary is an axiomatica, but so is any synthetical creation bas..."
       }
     ]
   },
@@ -37,18 +42,33 @@ const LINKED_TERMS = {
     "refs": [
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-1-the-axiomatics-of-this-system",
-        "snippet": "...ictionary is an axiomatica—a product of axiomatics, the practice of organizing schema into..."
+        "doc": "od-the-axiomatics-of-this-system",
+        "snippet": "...is an axiomatica—a product of axiomatics, the practice of organizing schema into..."
       },
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-1-the-axiomatics-of-this-system",
-        "snippet": "Axiomatics is not creating new truth. It is reorga..."
+        "doc": "od-axiomatics",
+        "snippet": "...ble, followable rule-systems. Axiomatics is not creating new truth—it is reorgan..."
       },
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-4-axiomatics",
-        "snippet": "...le, agreeable, followable rule-systems. Axiomatics is not creating new truth—it is reorgan..."
+        "doc": "od-axiomation",
+        "snippet": "...active process of engaging in axiomatics—the journey of constructing an axiomati..."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-axiomatist",
+        "snippet": "...xiomatizes; one who practices axiomatics."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-axiomatica",
+        "snippet": "...nition: A specific product of axiomatics—a rule-system that has been constructed..."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-notes-for-future-terminology-work",
+        "snippet": "... integrate the Versōr System, Axiomatics, Schema/Schemata distinctions, and the ..."
       }
     ]
   },
@@ -60,13 +80,13 @@ const LINKED_TERMS = {
     "refs": [
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-4-axiomatics-to-axiomatize",
+        "doc": "od-to-axiomatize",
         "snippet": "Definition: To engage in axiomation; to construct an axiomatica through the..."
       },
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-4-axiomatics-axiomatica",
-        "snippet": "...ystem that has been constructed through axiomation. This ontological dictionary is an axio..."
+        "doc": "od-axiomatica",
+        "snippet": "... has been constructed through axiomation. This ontological dictionary is an axio..."
       }
     ]
   },
@@ -86,49 +106,49 @@ const LINKED_TERMS = {
   },
   "axis": {
     "symbol": "α",
-    "definition": "The formed understanding of a \"so what?",
+    "definition": "The formed understanding of a \"so what?\"—the guiding question, purpose, or concern that emerges from the Endosphere and rises in the Perifield, pulling noema into organized orbit during...",
     "project": "ontological-dictionary",
     "color": "#AA6644",
     "refs": [
       {
         "project": "purpose-of-schools",
-        "doc": "cognitive-oppression",
-        "snippet": "...externalized oppression separates on 2 axis: awareness and intent (did you know you..."
+        "doc": "where-kumashiro-stops",
+        "snippet": "...framework orbits a particular axis. He identifies oppression by first esta..."
       },
       {
         "project": "purpose-of-schools",
-        "doc": "s7-4",
-        "snippet": "...a political compas with an x, y, and z axis. every class wants to practice soemthin..."
+        "doc": "universal-mechanism-unequal-manifestation",
+        "snippet": "...occupying one position on one axis of power exempts a consciousness from a..."
       },
       {
-        "project": "axiometric-calculus",
-        "doc": "ac-part-1-1-1-how-this-document-emerged",
-        "snippet": "...the observer and the observed. Then an axis emerged: We need a new language."
+        "project": "purpose-of-schools",
+        "doc": "why-race-and-why-black-and-white",
+        "snippet": "... Not because race is the only axis of oppression, nor because the Black an..."
       },
       {
-        "project": "axiometric-calculus",
-        "doc": "ac-part-1-1-1-how-this-document-emerged",
-        "snippet": "...e constellation that formed around that axis. But the process of building it changed..."
-      },
-      {
-        "project": "axiometric-calculus",
-        "doc": "ac-part-6-6-1-relational-structures",
-        "snippet": "Symbol: α | Name: axis | Definition: Guiding 'so what?' questi..."
+        "project": "purpose-of-schools",
+        "doc": "critical-thinkingreflectionrefracture",
+        "snippet": "... those noema around a guiding axis. Each habit can point to what it studie..."
       },
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-2-noema-lifecycle",
-        "snippet": "...ORGANIZATION (constellaration around an axis in the Perifield) → BONDING (traces can..."
+        "doc": "od-noema-lifecycle",
+        "snippet": "...ON (constellaration around an axis in the Perifield) → BONDING (traces can..."
       },
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-2-products-relations-and-events-nebula",
-        "snippet": "...t have not yet been organized around an axis."
+        "doc": "od-nebula",
+        "snippet": "... yet been organized around an axis."
       },
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-2-products-relations-and-events-axis",
-        "snippet": "...d orbit during constellaration. When an axis rises in the Perifield, scattered noema..."
+        "doc": "od-axis",
+        "snippet": "...ring constellaration. When an axis rises in the Perifield, scattered noema..."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-constellation",
+        "snippet": "...ly organizing noema around an axis in the Perifield. A constellation is no..."
       }
     ]
   },
@@ -140,33 +160,43 @@ const LINKED_TERMS = {
     "refs": [
       {
         "project": "purpose-of-schools",
-        "doc": "group-ideology",
-        "snippet": "...t is natural for homo sapiens to feel a bond in a group. Even before civilization, b..."
+        "doc": "omnipere-in-practice-from-welding-to-worlds",
+        "snippet": "...ly technical: amperage, heat, bond strength, metallurgy, safety protocols...."
       },
       {
-        "project": "purpose-of-schools",
-        "doc": "omnipere-impl",
-        "snippet": "...pears purely technical: amperage, heat, bond strength, metallurgy, safety protocols...."
+        "project": "ontological-dictionary",
+        "doc": "od-noema",
+        "snippet": "...erge, transform, fuse, split, bond, and return to the Endosphere in contin..."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-trace",
+        "snippet": "Trace vs. Bond: A trace (passive or active) is the con..."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-bond",
+        "snippet": "...nto an organized structure. A bond is not just an active trace—it is a tra..."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-cogniscent",
+        "snippet": "Example: \"The bond is not the noema; the cogniscent unders..."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-what-omnipere-is-and-is-not",
+        "snippet": "...ithout needing to identify or bond them."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-notes-for-future-terminology-work",
+        "snippet": "2. The verb for \"becoming a bond\" — Consider: to crystallize (traces cry..."
       },
       {
         "project": "axiometric-calculus",
         "doc": "ac-part-6-6-1-relational-structures",
         "snippet": "Symbol: β | Name: bond | Definition: τ⁺ solidified through cog..."
-      },
-      {
-        "project": "ontological-dictionary",
-        "doc": "od-part-2-complete-terminology-with-examples-noema",
-        "snippet": "...d: they emerge, transform, fuse, split, bond, and return to the Endosphere in contin..."
-      },
-      {
-        "project": "ontological-dictionary",
-        "doc": "od-part-2-products-relations-and-events-trace",
-        "snippet": "Trace vs. Bond: A trace (passive or active) is the con..."
-      },
-      {
-        "project": "ontological-dictionary",
-        "doc": "od-part-2-products-relations-and-events-bond",
-        "snippet": "...tegrated into an organized structure. A bond is not just an active trace—it is a tra..."
       }
     ]
   },
@@ -178,23 +208,28 @@ const LINKED_TERMS = {
     "refs": [
       {
         "project": "purpose-of-schools",
-        "doc": "metacognition",
-        "snippet": "...how you are able to know. When students cognesce inside a Contexture, they are not only..."
+        "doc": "practicing-metacognition",
+        "snippet": "...e able to know. When students cognesce inside a Contexture, they are not only ..."
       },
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-2-complete-terminology-with-examples-noemata",
-        "snippet": "...ver. You cannot directly internalize or cognesce noemata—only your interpretation of the..."
+        "doc": "od-noemata",
+        "snippet": "...annot directly internalize or cognesce noemata—only your interpretation of the..."
       },
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-2-cogniscence-and-learning-to-cognesce",
-        "snippet": "Part of Speech: Verb (infinitive: to cognesce; gerund: cognescing)"
+        "doc": "od-to-cognesce",
+        "snippet": "... Speech: Verb (infinitive: to cognesce; gerund: cognescing)"
       },
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-2-cogniscence-and-learning-to-cognesce",
-        "snippet": "...are structuring your thinking. When you cognesce, you are not passively letting your End..."
+        "doc": "od-contexture",
+        "snippet": "... design Contextures; students cognesce within them."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-to-contexture",
+        "snippet": "...t typically \"contexture\"—they cognesce within a Contexture. The verb form is m..."
       }
     ]
   },
@@ -206,43 +241,43 @@ const LINKED_TERMS = {
     "refs": [
       {
         "project": "purpose-of-schools",
-        "doc": "metacognition",
-        "snippet": "...thinking. The point of a Contexture is Cogniscence: learning that includes awareness of ho..."
-      },
-      {
-        "project": "purpose-of-schools",
-        "doc": "metacognition",
-        "snippet": "...and Synthesis, as the core practices of Cogniscence. Each habit names a different way of mo..."
-      },
-      {
-        "project": "axiometric-calculus",
-        "doc": "ac-part-2-2-3-the-source-of-truth-schema",
-        "snippet": "...Truth): σ ≝ ν held-as-true in E through cogniscence."
-      },
-      {
-        "project": "axiometric-calculus",
-        "doc": "ac-part-3-3-5-reframing-fluxion",
-        "snippet": "...'Active fluxion' (noema changing during cogniscence) is awareness moving through slices whi..."
-      },
-      {
-        "project": "axiometric-calculus",
-        "doc": "ac-part-5-5-4-substance-markers",
-        "snippet": "...| Meaning: ν held-as-true in E through cogniscence. Source of truth."
+        "doc": "practicing-metacognition",
+        "snippet": "... The point of a Contexture is Cogniscence: learning that includes awareness of ho..."
       },
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-2-noema-lifecycle",
-        "snippet": "...(traces can solidify into bonds through cogniscence) → CONSTELLATION (structured pattern in..."
+        "doc": "od-noema-lifecycle",
+        "snippet": "...n solidify into bonds through cogniscence) → CONSTELLATION (structured pattern in..."
       },
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-2-the-noemascape",
-        "snippet": "...lf); The Perifield (the space of active cogniscence, outside the Endosphere but within the..."
+        "doc": "od-the-noemascape",
+        "snippet": "...erifield (the space of active cogniscence, outside the Endosphere but within the ..."
       },
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-2-the-noemascape-the-perifield",
-        "snippet": "...where metacognitive habits occur—where cogniscence happens. The Perifield is the \"sky\" of..."
+        "doc": "od-the-perifield",
+        "snippet": "...acognitive habits occur—where cogniscence happens. The Perifield is the \"sky\" of ..."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-the-outer-lens",
+        "snippet": "...n between dormancy and active cogniscence."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-the-exofield",
+        "snippet": "...on: The Exofield is NOT where cogniscence happens. Cogniscence happens in the Per..."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-the-noemagraph",
+        "snippet": "...ces that are activated during cogniscence become visible/usable; Constantly trans..."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-fluxion",
+        "snippet": "... when they are engaged during cogniscence. It is the noematic moment when a noema..."
       }
     ]
   },
@@ -253,24 +288,24 @@ const LINKED_TERMS = {
     "color": "#B06B3A",
     "refs": [
       {
+        "project": "ontological-dictionary",
+        "doc": "od-trace",
+        "snippet": "...is what forms when you become cogniscent of the trace—when you are aware of the ..."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-bond",
+        "snippet": "...t has been solidified through cogniscent awareness: consciously identified, exam..."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-cogniscent",
+        "snippet": "...he bond is not the noema; the cogniscent understanding of the bond is.\" \"Her cog..."
+      },
+      {
         "project": "axiometric-calculus",
         "doc": "ac-part-6-6-1-relational-structures",
-        "snippet": "...ond | Definition: τ⁺ solidified through cogniscent identification. Named, deliberately hel..."
-      },
-      {
-        "project": "ontological-dictionary",
-        "doc": "od-part-2-noema-properties",
-        "snippet": "...gh traces (passive or active) or bonds (cogniscent)"
-      },
-      {
-        "project": "ontological-dictionary",
-        "doc": "od-part-2-products-relations-and-events-trace",
-        "snippet": "...f. A bond is what forms when you become cogniscent of the trace—when you are aware of the..."
-      },
-      {
-        "project": "ontological-dictionary",
-        "doc": "od-part-2-products-relations-and-events-bond",
-        "snippet": "...trace that has been solidified through cogniscent awareness: consciously identified, exam..."
+        "snippet": "...nition: τ⁺ solidified through cogniscent identification. Named, deliberately hel..."
       }
     ]
   },
@@ -282,33 +317,43 @@ const LINKED_TERMS = {
     "refs": [
       {
         "project": "purpose-of-schools",
-        "doc": "right-way",
-        "snippet": "...e traditions focus on justice, critical consciousness, redistribution, and liberation; not eq..."
+        "doc": "what-no-design-can-fix",
+        "snippet": "... instrument can transcend the consciousness that created it."
       },
       {
         "project": "purpose-of-schools",
-        "doc": "group-ideology",
-        "snippet": "...what many agree to be the emergence of consciousness, it is theorized that we genocided our..."
+        "doc": "whats-left-for-the-rest-force-of-change",
+        "snippet": "...ns focus on justice, critical consciousness, redistribution, and liberation; not eq..."
       },
       {
         "project": "purpose-of-schools",
-        "doc": "cognitive-oppression",
-        "snippet": "...environment/society. With only a single consciousness, a single ability to conceive meaning,..."
+        "doc": "who-does-not-have-the-power",
+        "snippet": "...ical label. As a condition of consciousness."
       },
       {
-        "project": "axiometric-calculus",
-        "doc": "ac-part-1-1-3-the-second-core-insight",
-        "snippet": "...ought is instinct combined with memory. Consciousness is thought reflecting on itself. And me..."
+        "project": "purpose-of-schools",
+        "doc": "the-question-underneath-the-categories",
+        "snippet": "...e perceived or known by human consciousness. That would require omnipotence. Instea..."
       },
       {
-        "project": "axiometric-calculus",
-        "doc": "ac-part-2-2-6-the-cognitive-ladder-from-instinct-t",
-        "snippet": "...but ¬(Em → κ). Embedded in thought, not consciousness."
+        "project": "purpose-of-schools",
+        "doc": "a-condition-of-consciousness",
+        "snippet": "...ssible case. Imagine a single consciousness, alone. No other mind exists. There is ..."
       },
       {
-        "project": "axiometric-calculus",
-        "doc": "ac-part-2-2-6-the-cognitive-ladder-from-instinct-t",
-        "snippet": "Symbol: κ | Name: Consciousness | Definition: Intentional decision-maki..."
+        "project": "purpose-of-schools",
+        "doc": "from-limitation-to-institution",
+        "snippet": "With only two consciousnesses, there is disagreement but not domina..."
+      },
+      {
+        "project": "purpose-of-schools",
+        "doc": "universal-mechanism-unequal-manifestation",
+        "snippet": "...n one axis of power exempts a consciousness from all others. Lincoln was the most p..."
+      },
+      {
+        "project": "purpose-of-schools",
+        "doc": "when-reality-is-total",
+        "snippet": "...erring the question the way a consciousness defers the thoughts it is not yet equip..."
       }
     ]
   },
@@ -320,38 +365,43 @@ const LINKED_TERMS = {
     "refs": [
       {
         "project": "purpose-of-schools",
-        "doc": "cognitive-oppression",
-        "snippet": "...ces of noema unrealized before. This is constellaration."
+        "doc": "practicing-metacognition",
+        "snippet": "...ospection, Omniperegrination, Constellaration, Refraction, Exospection, and Synthesis..."
       },
       {
         "project": "purpose-of-schools",
-        "doc": "metacognition",
-        "snippet": "...abits: Endospection, Omniperegrination, Constellaration, Refraction, Exospection, and Synthesis..."
+        "doc": "constellare-in-an-opportunity-centered-curriculum",
+        "snippet": "...s draw on as needed for their constellaration."
       },
       {
         "project": "purpose-of-schools",
-        "doc": "constellare-opp",
-        "snippet": "...at students draw on as needed for their constellaration."
+        "doc": "critical-thinkingreflectionrefracture",
+        "snippet": "...ces noema (units of meaning). Constellaration organizes those noema around a guiding ..."
       },
       {
-        "project": "axiometric-calculus",
-        "doc": "ac-part-6-6-1-relational-structures",
-        "snippet": "...attern of ν bonded around α. Product of constellaration."
+        "project": "purpose-of-schools",
+        "doc": "the-outer-lens",
+        "snippet": "...peregrination, cluster during constellaration, and become available for examination d..."
+      },
+      {
+        "project": "purpose-of-schools",
+        "doc": "refraction-in-contexture",
+        "snippet": "... wanders down familiar paths. Constellaration organizes around axes the student has u..."
+      },
+      {
+        "project": "purpose-of-schools",
+        "doc": "the-first-turn-outward",
+        "snippet": "...ation asked what you noticed. Constellaration asked how you arranged what you noticed..."
       },
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-2-noema-lifecycle",
-        "snippet": "...ation in the Perifield) → ORGANIZATION (constellaration around an axis in the Perifield) → BOND..."
+        "doc": "od-noema-lifecycle",
+        "snippet": "...he Perifield) → ORGANIZATION (constellaration around an axis in the Perifield) → BOND..."
       },
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-2-the-noemascape-the-perifield",
-        "snippet": "...realities being examined); Axes (during constellaration); Nebulae (during omniperegrination); C..."
-      },
-      {
-        "project": "ontological-dictionary",
-        "doc": "od-part-2-products-relations-and-events-axis",
-        "snippet": "...lling noema into organized orbit during constellaration. When an axis rises in the Perifield, s..."
+        "doc": "od-the-perifield",
+        "snippet": "...being examined); Axes (during constellaration); Nebulae (during omniperegrination); C..."
       }
     ]
   },
@@ -363,38 +413,43 @@ const LINKED_TERMS = {
     "refs": [
       {
         "project": "purpose-of-schools",
-        "doc": "metacognition",
-        "snippet": "...every other habit—Omnipere’s wandering, Constellare’s research, Refraction’s critique—rests..."
+        "doc": "where-to-intervene",
+        "snippet": "...rt 2: endospection, omnipere, constellare, refraction, exospection, and synthesis..."
       },
       {
         "project": "purpose-of-schools",
-        "doc": "noema-constellations",
-        "snippet": "...s. This is where the next habit enters: Constellare."
+        "doc": "practicing-metacognition",
+        "snippet": "...r habit—Omnipere’s wandering, Constellare’s research, Refraction’s critique—rests..."
       },
       {
         "project": "purpose-of-schools",
-        "doc": "constellare-impl",
-        "snippet": "Before Constellare is a habit, it is an image. Imagine ver..."
+        "doc": "noema-and-constellations",
+        "snippet": "... where the next habit enters: Constellare."
       },
       {
-        "project": "axiometric-calculus",
-        "doc": "ac-part-7-7-6-the-habit-operators",
-        "snippet": "...r: const(ν, α) | Habit + Core Question: Constellare: 'So what?' | Transformation: {ν} × α →..."
+        "project": "purpose-of-schools",
+        "doc": "constellare-research-purposeful-organization-of-noema",
+        "snippet": "Constellare is the habit of anchoring scattered uni..."
       },
       {
-        "project": "ontological-dictionary",
-        "doc": "od-part-1-three-ontological-layers",
-        "snippet": "...3: THE HABITS (Endospecture, Omnipere, Constellare, Refracture, Exospecture)"
+        "project": "purpose-of-schools",
+        "doc": "constellare-in-an-opportunity-centered-curriculum",
+        "snippet": "For curriculum design, Constellare raises a different set of questions tha..."
       },
       {
-        "project": "ontological-dictionary",
-        "doc": "od-part-2-the-noemascape-the-noemagraph",
-        "snippet": "...does not create the Noemagraph itself. Constellare constellarates traces into constellatio..."
+        "project": "purpose-of-schools",
+        "doc": "designing-constellare-first-opportunities",
+        "snippet": "Seen this way, a Constellare task is not just “write a research pape..."
       },
       {
-        "project": "ontological-dictionary",
-        "doc": "od-part-2-cogniscence-and-learning-cogniscence",
-        "snippet": "...to the habits (Endospection, Omnipere, Constellare, Refraction, Exospection) that are movi..."
+        "project": "purpose-of-schools",
+        "doc": "critical-thinkingreflectionrefracture",
+        "snippet": "... the lens has always favored. Constellare without refracture reaches for axes the..."
+      },
+      {
+        "project": "purpose-of-schools",
+        "doc": "refraction-in-contexture",
+        "snippet": "...liar work, refracture without constellare cannot see how its own observations gro..."
       }
     ]
   },
@@ -406,43 +461,43 @@ const LINKED_TERMS = {
     "refs": [
       {
         "project": "purpose-of-schools",
-        "doc": "orrery",
-        "snippet": "...re organized around a core idea, with a constellation of orbiting concepts that contribute to..."
+        "doc": "knowledge-orrery-orbiting-a-moving-center",
+        "snippet": "...ed around a core idea, with a constellation of orbiting concepts that contribute to..."
       },
       {
         "project": "purpose-of-schools",
-        "doc": "constellare-impl",
-        "snippet": "...less like random points and more like a constellation."
+        "doc": "constellare-research-purposeful-organization-of-noema",
+        "snippet": "... of meaning into a purposeful constellation of inquiry, to transform wandering insi..."
       },
       {
         "project": "purpose-of-schools",
-        "doc": "constellare-opp",
-        "snippet": "...hoods change and for whom”) and build a constellation that cuts across disciplines: archival..."
+        "doc": "constellare-in-an-opportunity-centered-curriculum",
+        "snippet": "...ge and for whom”) and build a constellation that cuts across disciplines: archival ..."
       },
       {
-        "project": "axiometric-calculus",
-        "doc": "ac-part-1-1-1-how-this-document-emerged",
-        "snippet": "This calculus is the constellation that formed around that axis. But the p..."
-      },
-      {
-        "project": "axiometric-calculus",
-        "doc": "ac-part-6-6-1-relational-structures",
-        "snippet": "Symbol: Ω | Name: constellation | Definition: Organized pattern of ν bo..."
+        "project": "purpose-of-schools",
+        "doc": "designing-constellare-first-opportunities",
+        "snippet": "...rspectives) so that different constellations are possible. Content is curated for i..."
       },
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-1-grammar-as-representation-not-grammar-it",
-        "snippet": "...The grammar is itself noematic—it is a constellation of linguistic noema that we have struct..."
+        "doc": "od-grammar-as-representation-not-grammar-itself",
+        "snippet": "...ar is itself noematic—it is a constellation of linguistic noema that we have struct..."
       },
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-2-noema-lifecycle",
-        "snippet": "...idify into bonds through cogniscence) → CONSTELLATION (structured pattern in the Perifield) →..."
+        "doc": "od-noema-lifecycle",
+        "snippet": "... bonds through cogniscence) → CONSTELLATION (structured pattern in the Perifield) →..."
       },
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-2-complete-terminology-with-examples-noematic",
-        "snippet": "Example: \"The noematic density of this constellation is unusually high—there are at least fo..."
+        "doc": "od-noematic",
+        "snippet": "...\"The noematic density of this constellation is unusually high—there are at least fo..."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-nebula",
+        "snippet": "...ebula is what exists before a constellation: noema that have drifted close to each ..."
       }
     ]
   },
@@ -454,38 +509,43 @@ const LINKED_TERMS = {
     "refs": [
       {
         "project": "purpose-of-schools",
-        "doc": "factorials",
-        "snippet": "...the term I will use from here forward: contexture. Contexture is not a remedy. It is a re..."
+        "doc": "fracturing-factorials",
+        "snippet": "...I will use from here forward: contexture. Contexture is a reframing, not a remed..."
       },
       {
         "project": "purpose-of-schools",
-        "doc": "factorials",
-        "snippet": "A contexture is not a plan, a sequence, or a set of..."
+        "doc": "transition-section",
+        "snippet": "...hat curriculum, understood as contexture, does not exist apart from its interpre..."
       },
       {
         "project": "purpose-of-schools",
-        "doc": "factorials",
-        "snippet": "...what habits it cultivates over time. A contexture provides cognescient opportunities: ope..."
+        "doc": "where-the-root-system-ends",
+        "snippet": "...evise, and which to reject. A contexture builds that capacity. What students do ..."
       },
       {
-        "project": "axiometric-calculus",
-        "doc": "ac-part-5-5-1-equality-operators",
-        "snippet": "...ity | Meaning: 'Close enough in current contexture.' Pragmatic, not ontological."
+        "project": "purpose-of-schools",
+        "doc": "what-success-looks-like",
+        "snippet": "...ng authentically one’s own. A contexture cannot determine what students will val..."
       },
       {
-        "project": "ontological-dictionary",
-        "doc": "od-part-2-the-core-ontological-claim",
-        "snippet": "...f a noema are determined by the current contexture, not by any fixed structure."
+        "project": "purpose-of-schools",
+        "doc": "section-7-designing-a-metacognititve-curriculum",
+        "snippet": "... or purpose or objective of a contexture is giving students and children and cit..."
       },
       {
-        "project": "ontological-dictionary",
-        "doc": "od-part-2-noema-properties",
-        "snippet": "...split apart; its \"shape\" depends on the contexture"
+        "project": "purpose-of-schools",
+        "doc": "practicing-metacognition",
+        "snippet": "...book, I call those structures Contextures: interwoven learning environments that..."
       },
       {
-        "project": "ontological-dictionary",
-        "doc": "od-part-2-cogniscence-and-learning-contexture",
-        "snippet": "...they learn, not just what they learn. A Contexture is not a \"unit on the American Revoluti..."
+        "project": "purpose-of-schools",
+        "doc": "constellare-in-an-opportunity-centered-curriculum",
+        "snippet": "... metacognitive curriculum (or contexture), the primary unit of design is not the..."
+      },
+      {
+        "project": "purpose-of-schools",
+        "doc": "critical-thinkingreflectionrefracture",
+        "snippet": "...ferently, are the questions a Contexture has to be designed around. The next sec..."
       }
     ]
   },
@@ -498,22 +558,32 @@ const LINKED_TERMS = {
       {
         "project": "purpose-of-schools",
         "doc": "communication",
-        "snippet": "...er “tells” can communicate subconscious emotion or thought. Metacognition itself is a f..."
+        "snippet": "... can communicate subconscious emotion or thought. Metacognition itself is a f..."
       },
       {
         "project": "axiometric-calculus",
         "doc": "ac-part-2-2-6-the-cognitive-ladder-from-instinct-t",
-        "snippet": "Symbol: Em | Name: Emotion | Definition: Experiential coloring of..."
-      },
-      {
-        "project": "axiometric-calculus",
-        "doc": "ac-part-2-2-6-the-cognitive-ladder-from-instinct-t",
-        "snippet": "...ed instinct and memory. An elephant has emotion—it grieves at the grave of its dead. Bu..."
+        "snippet": "Symbol: Em | Name: Emotion | Definition: Experiential coloring of ..."
       },
       {
         "project": "axiometric-calculus",
         "doc": "ac-part-5-5-5-causal-markers",
         "snippet": "Symbol: Em | Name: emotion | Meaning: Embedded in θ, not κ. Em → θ..."
+      },
+      {
+        "project": "axiometric-calculus",
+        "doc": "ac-part-7-7-1-the-hierarchy-of-mind",
+        "snippet": "Em (emotion) → θ — experiential coloring of thought"
+      },
+      {
+        "project": "axiometric-calculus",
+        "doc": "ac-part-7-7-4-emotion-em",
+        "snippet": "Emotion implies thought but does not imply cons..."
+      },
+      {
+        "project": "axiometric-calculus",
+        "doc": "ac-part-9-9-5-cognitive-definitions",
+        "snippet": "Em (Emotion): Em → θ ∧ ¬(Em → κ)"
       }
     ]
   },
@@ -525,38 +595,33 @@ const LINKED_TERMS = {
     "refs": [
       {
         "project": "purpose-of-schools",
-        "doc": "endospection-impl",
-        "snippet": "...pportunities to engage in metacognitive endologue[51] can be more indirect. A class proje..."
+        "doc": "edospecture-in-contexture",
+        "snippet": "...es to engage in metacognitive endologue can be more indirect. A class project m..."
       },
       {
         "project": "purpose-of-schools",
-        "doc": "omnipere-impl",
-        "snippet": "...in their schooling, students inevitably endologue questions such as, “Why do I have to le..."
+        "doc": "omnipere-exploration-and-curiosity",
+        "snippet": "...chooling, students inevitably endologue questions such as, “Why do I have to le..."
       },
       {
         "project": "purpose-of-schools",
-        "doc": "constellare-impl",
-        "snippet": "...tage, the work of Constellare is mostly endologue. Its primary audience is the self. Stud..."
+        "doc": "constellare-research-purposeful-organization-of-noema",
+        "snippet": "...work of Constellare is mostly endologue. Its primary audience is the self. Stud..."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-exologue",
+        "snippet": "...ue is to Exospecture what the endologue is to Endospecture: a specific episode ..."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-versologue",
+        "snippet": "... exchange using versation. As endologue is to endospection, versologue is to ve..."
       },
       {
         "project": "axiometric-calculus",
         "doc": "ac-part-5-5-3-frame-operators",
-        "snippet": "...nal context. Operation occurs within E. Endologue."
-      },
-      {
-        "project": "ontological-dictionary",
-        "doc": "od-part-2-products-relations-and-events-exologue",
-        "snippet": "The exologue is to Exospecture what the endologue is to Endospecture: a specific episode..."
-      },
-      {
-        "project": "ontological-dictionary",
-        "doc": "od-part-3-complete-parallel-structure",
-        "snippet": "Layer: PRODUCT | Endospecture: Endologue | Omnipere: Nebulae / Activated Traces..."
-      },
-      {
-        "project": "ontological-dictionary",
-        "doc": "od-part-5-versation-and-the-vers-tor-versologue",
-        "snippet": "...municative exchange using versation. As endologue is to endospection, versologue is to ve..."
+        "snippet": "...t. Operation occurs within E. Endologue."
       }
     ]
   },
@@ -568,43 +633,43 @@ const LINKED_TERMS = {
     "refs": [
       {
         "project": "purpose-of-schools",
-        "doc": "cognitive-oppression",
-        "snippet": "...ation is mitigated with the practice of endospection). The less time spent endospecting, the..."
+        "doc": "where-to-intervene",
+        "snippet": "...he sentence above gestures at endospection (detecting imposed meanings), refractio..."
       },
       {
         "project": "purpose-of-schools",
-        "doc": "cognitive-oppression",
-        "snippet": "...wn reality. The metacognitive habits of endospection and refraction are precisely what allow..."
+        "doc": "practicing-metacognition",
+        "snippet": "...ing six metacognitive habits: Endospection, Omniperegrination, Constellaration, Re..."
       },
       {
         "project": "purpose-of-schools",
-        "doc": "cognitive-oppression",
-        "snippet": "...naissance”, and “are important parts of endospection, whereas inquisitive analytical questio..."
+        "doc": "nature-vs-nurture-instinct-vs-reflex-biology-vs-society-evol",
+        "snippet": "... and asks what just happened. Endospection allows You² to show up earlier and more..."
       },
       {
-        "project": "axiometric-calculus",
-        "doc": "ac-part-3-3-3-memory-as-marker-of-change",
-        "snippet": "...ught (θ), which combined with reflexive endospection produces consciousness (κ), which enabl..."
+        "project": "purpose-of-schools",
+        "doc": "edospecture-in-contexture",
+        "snippet": "Endospection, then, is the metacognitive habit of in..."
       },
       {
-        "project": "axiometric-calculus",
-        "doc": "ac-part-7-7-5-consciousness",
-        "snippet": "...it is the definition. Consciousness is endospection of thought."
+        "project": "purpose-of-schools",
+        "doc": "omnipere-exploration-and-curiosity",
+        "snippet": "...heavily on what I have called endospection: examining how the self has been constr..."
       },
       {
-        "project": "ontological-dictionary",
-        "doc": "od-part-1-the-axiomatics-of-this-system",
-        "snippet": "...flection)—a versative act distinct from endospection itself (see Part V: The Versōr System f..."
+        "project": "purpose-of-schools",
+        "doc": "curriculum-fences-and-the-role-of-structure",
+        "snippet": "...eper habits like omnipere and endospection."
       },
       {
-        "project": "ontological-dictionary",
-        "doc": "od-part-2-schemata-and-schema-the-trust-distinctio-schema",
-        "snippet": "...art of cogniscience, especially through endospection and refraction—the ability to separate..."
+        "project": "purpose-of-schools",
+        "doc": "autonomy-power-and-the-expansion-of-exospection",
+        "snippet": "... landscape and is as fluid as endospection."
       },
       {
-        "project": "ontological-dictionary",
-        "doc": "od-part-2-cogniscence-and-learning-cogniscence",
-        "snippet": "...ubstance of thought) and to the habits (Endospection, Omnipere, Constellare, Refraction, Exo..."
+        "project": "purpose-of-schools",
+        "doc": "noema-and-constellations",
+        "snippet": "... who we take ourselves to be. Endospection names the work we do on that Endosphere..."
       }
     ]
   },
@@ -615,24 +680,44 @@ const LINKED_TERMS = {
     "color": "#2A6050",
     "refs": [
       {
-        "project": "axiometric-calculus",
-        "doc": "ac-part-7-7-6-the-habit-operators",
-        "snippet": "...rator: endo(ν) | Habit + Core Question: Endospecture: 'Who am I?' | Transformation: ν → [ν']..."
+        "project": "purpose-of-schools",
+        "doc": "endospection-self-identity",
+        "snippet": "Endospecture is the habit of disciplined self-inquir..."
+      },
+      {
+        "project": "purpose-of-schools",
+        "doc": "nature-vs-nurture-instinct-vs-reflex-biology-vs-society-evol",
+        "snippet": "... the first step in practicing Endospecture."
       },
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-1-three-ontological-layers",
+        "doc": "od-three-ontological-layers",
         "snippet": "LAYER 3: THE HABITS (Endospecture, Omnipere, Constellare, Refracture, Exo..."
       },
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-2-the-noemascape-the-outer-lens",
+        "doc": "od-the-outer-lens",
         "snippet": "Endospecture learns to adjust the Outer Lens (gainin..."
       },
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-2-products-relations-and-events-exologue",
-        "snippet": "...to Exospecture what the endologue is to Endospecture: a specific episode or process within t..."
+        "doc": "od-exologue",
+        "snippet": "...ture what the endologue is to Endospecture: a specific episode or process within t..."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-habit-1-endospecture",
+        "snippet": "Endospecture is the habit of returning to, narrating..."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-definition",
+        "snippet": "Endospecture is the foundational metacognitive habit..."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-what-endospecture-examines",
+        "snippet": "...ther cognition. Additionally, Endospecture learns to adjust the Outer Lens—gaining..."
       }
     ]
   },
@@ -644,48 +729,43 @@ const LINKED_TERMS = {
     "refs": [
       {
         "project": "purpose-of-schools",
-        "doc": "cognitive-oppression",
-        "snippet": "...me than you expected (the transfer from endosphere to exosphere filters the meaning of you..."
+        "doc": "where-the-root-system-ends",
+        "snippet": "...d the cycle before adding the endosphere and the outer lens."
       },
       {
         "project": "purpose-of-schools",
-        "doc": "metacognition",
-        "snippet": "...o” as a pulsing sphere of selfhood, the Endosphere: the current, always-changing configura..."
+        "doc": "practicing-metacognition",
+        "snippet": "...lsing sphere of selfhood, the Endosphere: the current, always-changing configura..."
       },
       {
         "project": "purpose-of-schools",
-        "doc": "endospection-impl",
-        "snippet": "...ere of identity. I call that sphere the Endosphere: the current, always-changing configura..."
+        "doc": "edospecture-in-contexture",
+        "snippet": "...ntity. I call that sphere the Endosphere: the current, always-changing configura..."
       },
       {
-        "project": "axiometric-calculus",
-        "doc": "ac-part-2-2-2-the-cartesian-anchor-cogito",
-        "snippet": "The Endosphere (E) is the Cartesian anchor. It is the..."
+        "project": "purpose-of-schools",
+        "doc": "noema-and-constellations",
+        "snippet": "...ander. I call that sphere the Endosphere: the current, always-changing configura..."
       },
       {
-        "project": "axiometric-calculus",
-        "doc": "ac-part-2-2-3-the-source-of-truth-schema",
-        "snippet": "...you have cognisced as true within your Endosphere. This is the only truth available. Ther..."
+        "project": "purpose-of-schools",
+        "doc": "constellare-research-purposeful-organization-of-noema",
+        "snippet": "... from different points on the Endosphere into the space where noema drift. Each ..."
       },
       {
-        "project": "axiometric-calculus",
-        "doc": "ac-part-2-2-4-the-perifield-rule",
-        "snippet": "...it's what makes P different from E. The Endosphere contains dormant noema (passive, unatte..."
+        "project": "purpose-of-schools",
+        "doc": "constellare-in-an-opportunity-centered-curriculum",
+        "snippet": "... what?” that matters to their Endosphere. Teachers do not ask, “What content sta..."
       },
       {
-        "project": "ontological-dictionary",
-        "doc": "od-part-1-grammar-as-representation-not-grammar-it",
-        "snippet": "...visualization represents but is not the Endosphere, the grammatical structure of this term..."
+        "project": "purpose-of-schools",
+        "doc": "designing-constellare-first-opportunities",
+        "snippet": "...actually present in students’ Endosphere and experiences) and then pulls in disc..."
       },
       {
-        "project": "ontological-dictionary",
-        "doc": "od-part-1-three-ontological-layers",
-        "snippet": "LAYER 1: THE SELF (Endosphere)"
-      },
-      {
-        "project": "ontological-dictionary",
-        "doc": "od-part-2-noema-properties",
-        "snippet": "...noema originate from and return to the Endosphere; they cannot be created or destroyed, o..."
+        "project": "purpose-of-schools",
+        "doc": "critical-thinkingreflectionrefracture",
+        "snippet": "...ct. Endospection examines the Endosphere, the pulsing sphere of selfhood. Omnipe..."
       }
     ]
   },
@@ -696,34 +776,44 @@ const LINKED_TERMS = {
     "color": "#9E5A2A",
     "refs": [
       {
-        "project": "axiometric-calculus",
-        "doc": "ac-part-5-5-4-substance-markers",
-        "snippet": "...oemata | Meaning: Communicated ν in the Exofield. Paradoxical: inaccessible directly."
+        "project": "purpose-of-schools",
+        "doc": "the-architecture-exosphere-exologue-threshold",
+        "snippet": "...in an unreachable field – the Exofield. You cannot lift the cover and check yo..."
       },
       {
-        "project": "axiometric-calculus",
-        "doc": "ac-part-5-5-4-substance-markers",
-        "snippet": "...σ* | Name: schemata | Meaning: σ in the Exofield. Knowledge without personal 'why.' Dict..."
-      },
-      {
-        "project": "axiometric-calculus",
-        "doc": "ac-part-6-intro",
-        "snippet": "Symbol: X | Name: Exofield | Definition: Paradoxical 'outside' of..."
+        "project": "purpose-of-schools",
+        "doc": "what-exospecture-is-not",
+        "snippet": "...erior. It would mean that the Exofield had been reached and read. The Exofield..."
       },
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-2-complete-terminology-with-examples-noemata",
-        "snippet": "...nsmission between Noemascapes. Like the Exofield, noemata exhibit a tesseractic paradox:..."
+        "doc": "od-noemata",
+        "snippet": "...between Noemascapes. Like the Exofield, noemata exhibit a tesseractic paradox:..."
       },
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-2-complete-terminology-with-examples-noemata",
-        "snippet": "...mata exist \"between\" Noemascapes in the Exofield, belonging fully to neither sender nor..."
+        "doc": "od-schema",
+        "snippet": "...arating both 'you's' from the exofield and other noemascapes."
       },
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-2-complete-terminology-with-examples-noemata",
-        "snippet": "...Threshold, noema become noemata in the Exofield—communication in modes such as speech,..."
+        "doc": "od-the-noemascape",
+        "snippet": "...undary between Noemascape and Exofield); All noema (dormant and active); All t..."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-the-perifield",
+        "snippet": "Key Distinction from Exofield: The Perifield exists within the Noemas..."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-the-threshold",
+        "snippet": "...oemascape and the paradoxical Exofield—where the actual externalization and in..."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-the-exofield",
+        "snippet": "Definition: The Exofield is the paradoxical \"outside\" of the Noe..."
       }
     ]
   },
@@ -734,34 +824,44 @@ const LINKED_TERMS = {
     "color": "#A0633A",
     "refs": [
       {
-        "project": "axiometric-calculus",
-        "doc": "ac-part-1-1-1-how-this-document-emerged",
-        "snippet": "...e answers came through dialogue—through exologue crossing Thresholds, through noemata be..."
+        "project": "purpose-of-schools",
+        "doc": "the-first-turn-outward",
+        "snippet": "...its own Exosphere and its own exologue. Or you can model the whole act as one ..."
       },
       {
-        "project": "axiometric-calculus",
-        "doc": "ac-part-5-5-3-frame-operators",
-        "snippet": "...ternal context. Engages Ξ or crosses T. Exologue."
+        "project": "purpose-of-schools",
+        "doc": "the-architecture-exosphere-exologue-threshold",
+        "snippet": "...The first orients the inbound exologue, the act of interpretation; the second ..."
       },
       {
-        "project": "axiometric-calculus",
-        "doc": "ac-part-10-10-1-the-self-reference",
-        "snippet": "...und an axis, crossed Thresholds through exologue. The meta-story is the content."
+        "project": "purpose-of-schools",
+        "doc": "demonstration-watching-the-architecture-run",
+        "snippet": "...n on the page was an outbound exologue from them, calibrated against their own..."
+      },
+      {
+        "project": "purpose-of-schools",
+        "doc": "what-exospecture-is-not",
+        "snippet": "...re of the modeled, an inbound exologue read with care, an outbound exologue ca..."
+      },
+      {
+        "project": "purpose-of-schools",
+        "doc": "exospecture-in-contexture",
+        "snippet": "Inbound exologue does not only transpire through people ..."
       },
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-1-the-axiomatics-of-this-system",
-        "snippet": "...noema through processed and controlled exologue and filtered noemata."
+        "doc": "od-the-axiomatics-of-this-system",
+        "snippet": "...ough processed and controlled exologue and filtered noemata."
       },
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-2-the-noemascape-the-threshold",
-        "snippet": "...pretation of it (noema-of-noemata). The exologue process (border-crossing transformation..."
+        "doc": "od-the-threshold",
+        "snippet": "...of it (noema-of-noemata). The exologue process (border-crossing transformation..."
       },
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-2-products-relations-and-events-exologue",
-        "snippet": "Definition: The Exologue is the border-crossing process by which..."
+        "doc": "od-the-nuloscape",
+        "snippet": "...e modeler looks for, what the exologue carries, and what counts as accuracy al..."
       }
     ]
   },
@@ -773,33 +873,43 @@ const LINKED_TERMS = {
     "refs": [
       {
         "project": "purpose-of-schools",
-        "doc": "metacognition",
-        "snippet": "...grination, Constellaration, Refraction, Exospection, and Synthesis, as the core practices o..."
+        "doc": "where-to-intervene",
+        "snippet": "...w they filter communication), exospection (modeling other consciousnesses), and s..."
       },
       {
         "project": "purpose-of-schools",
-        "doc": "autonomy-power",
-        "snippet": "...directly strengthens what I later call exospection: the habit of understanding and acting..."
+        "doc": "practicing-metacognition",
+        "snippet": "... Constellaration, Refraction, Exospection, and Synthesis, as the core practices o..."
       },
       {
         "project": "purpose-of-schools",
-        "doc": "constellare-impl",
-        "snippet": "...presentation (that will be the focus of Exospection) but internal organization. How am I ar..."
+        "doc": "autonomy-power-and-the-expansion-of-exospection",
+        "snippet": "...strengthens what I later call exospection: the habit of understanding and acting ..."
       },
       {
-        "project": "ontological-dictionary",
-        "doc": "od-part-2-the-noemascape-the-exofield",
-        "snippet": "...is noema. The exospheres formed during exospection are noema (in the Perifield, modeling t..."
+        "project": "purpose-of-schools",
+        "doc": "constellare-research-purposeful-organization-of-noema",
+        "snippet": "...on (that will be the focus of Exospection) but internal organization. How am I ar..."
       },
       {
-        "project": "ontological-dictionary",
-        "doc": "od-part-2-products-relations-and-events-exologue",
-        "snippet": "Distinction from Exospection: Exospection = the metacognitive habit..."
+        "project": "purpose-of-schools",
+        "doc": "designing-constellare-first-opportunities",
+        "snippet": "...s and blind spots), and later Exospection (sharing and negotiating meaning with o..."
       },
       {
-        "project": "ontological-dictionary",
-        "doc": "od-part-2-cogniscence-and-learning-cogniscence",
-        "snippet": "...ion, Omnipere, Constellare, Refraction, Exospection) that are moving and organizing those n..."
+        "project": "purpose-of-schools",
+        "doc": "critical-thinkingreflectionrefracture",
+        "snippet": "...long elsewhere, mostly within exospection, where students model external realitie..."
+      },
+      {
+        "project": "purpose-of-schools",
+        "doc": "refraction-in-contexture",
+        "snippet": "...ays reach for the same shape. Exospection models others through distortions never..."
+      },
+      {
+        "project": "purpose-of-schools",
+        "doc": "exospecture",
+        "snippet": "Exospection is the habit of modeling external reali..."
       }
     ]
   },
@@ -810,24 +920,44 @@ const LINKED_TERMS = {
     "color": "#3B8570",
     "refs": [
       {
-        "project": "axiometric-calculus",
-        "doc": "ac-part-7-7-6-the-habit-operators",
-        "snippet": "...erator: exo(ν) | Habit + Core Question: Exospecture: 'What do I do with this?' | Transforma..."
+        "project": "purpose-of-schools",
+        "doc": "the-first-turn-outward",
+        "snippet": "...rn the apparatus on yourself. Exospecture is the first habit whose object is not ..."
+      },
+      {
+        "project": "purpose-of-schools",
+        "doc": "the-architecture-exosphere-exologue-threshold",
+        "snippet": "Exospecture is the habit; the Exosphere is its prod..."
+      },
+      {
+        "project": "purpose-of-schools",
+        "doc": "demonstration-watching-the-architecture-run",
+        "snippet": "...hat is being modeled, because exospecture knows the difference and uses it."
+      },
+      {
+        "project": "purpose-of-schools",
+        "doc": "what-exospecture-is-not",
+        "snippet": "...eader might try to assimilate Exospecture to a habit, a feeling, or a technique t..."
+      },
+      {
+        "project": "purpose-of-schools",
+        "doc": "exospecture-in-contexture",
+        "snippet": "For Exospecture to be productive, it must be intentiona..."
       },
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-1-three-ontological-layers",
-        "snippet": "...ure, Omnipere, Constellare, Refracture, Exospecture)"
+        "doc": "od-three-ontological-layers",
+        "snippet": "...ere, Constellare, Refracture, Exospecture)"
       },
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-2-products-relations-and-events-projection",
-        "snippet": "Part of Speech: Noun (product of Exospecture)"
+        "doc": "od-the-noemascape",
+        "snippet": "... own. This is the distinction Exospecture rests on: the habit knows the differenc..."
       },
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-2-products-relations-and-events-exologue",
-        "snippet": "...munication—not the metacognitive habit (Exospecture) but the actual transformation event at..."
+        "doc": "od-the-nuloscape",
+        "snippet": "... own. This is the distinction Exospecture rests on: the habit knows the differenc..."
       }
     ]
   },
@@ -839,33 +969,43 @@ const LINKED_TERMS = {
     "refs": [
       {
         "project": "purpose-of-schools",
-        "doc": "cognitive-oppression",
-        "snippet": "...ments (much like the noemascape and the exosphere)."
+        "doc": "the-first-turn-outward",
+        "snippet": "...nd to engage with requires an Exosphere, and an Exosphere is what Exospection b..."
       },
       {
         "project": "purpose-of-schools",
-        "doc": "cognitive-oppression",
-        "snippet": "...pected (the transfer from endosphere to exosphere filters the meaning of your communicati..."
+        "doc": "the-architecture-exosphere-exologue-threshold",
+        "snippet": "Exospecture is the habit; the Exosphere is its product. Internally, exospection..."
       },
       {
-        "project": "axiometric-calculus",
-        "doc": "ac-part-6-6-1-relational-structures",
-        "snippet": "Symbol: Ξ | Name: exosphere | Definition: ν in P modeling an extern..."
+        "project": "purpose-of-schools",
+        "doc": "demonstration-watching-the-architecture-run",
+        "snippet": "... not change between them. The exosphere is the same kind of object whether the ..."
+      },
+      {
+        "project": "purpose-of-schools",
+        "doc": "what-exospecture-is-not",
+        "snippet": "...the empath who never built an Exosphere of the person they were feeling for end..."
+      },
+      {
+        "project": "purpose-of-schools",
+        "doc": "exospecture-in-contexture",
+        "snippet": "...1500s, they build a model (or exosphere) of the ship log’s reality. Documentati..."
       },
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-2-the-noemascape-the-outer-lens",
-        "snippet": "...ecome material for examination. Dormant exosphere-noema are pulled out and activated."
+        "doc": "od-the-outer-lens",
+        "snippet": "...rial for examination. Dormant exosphere-noema are pulled out and activated."
       },
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-2-products-relations-and-events-exosphere",
+        "doc": "od-the-nuloscape",
+        "snippet": "...'s Perifield when modeled: an Exosphere. The Exosphere does not know the differ..."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-exosphere",
         "snippet": "Definition: An Exosphere is a noema that represents your interpr..."
-      },
-      {
-        "project": "ontological-dictionary",
-        "doc": "od-part-2-products-relations-and-events-exosphere",
-        "snippet": "...y access your interpretation of it), an Exosphere is your noema-of-another's-reality. It..."
       }
     ]
   },
@@ -877,33 +1017,43 @@ const LINKED_TERMS = {
     "refs": [
       {
         "project": "purpose-of-schools",
-        "doc": "cognitive-oppression",
-        "snippet": "...arns a new concept (creating meaning by fluxion), their comprehension is limited by tha..."
-      },
-      {
-        "project": "axiometric-calculus",
-        "doc": "ac-part-3-3-5-reframing-fluxion",
-        "snippet": "What we call 'fluxion' (↝) is not transformation. Noema don't..."
-      },
-      {
-        "project": "axiometric-calculus",
-        "doc": "ac-part-3-3-5-reframing-fluxion",
-        "snippet": "'Passive fluxion' (noema changing without attention) is..."
+        "doc": "the-practice-of-refraction",
+        "snippet": "What underwent passive fluxion that I didn't notice?"
       },
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-2-noema-lifecycle",
-        "snippet": "...g omniperegrination in the Perifield) → FLUXION (fusing, splitting, reshaping events) →..."
+        "doc": "od-noema-lifecycle",
+        "snippet": "...grination in the Perifield) → FLUXION (fusing, splitting, reshaping events) →..."
       },
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-2-complete-terminology-with-examples-noema",
-        "snippet": "...t a \"different\" noema. It has undergone fluxion."
+        "doc": "od-noema",
+        "snippet": "...rent\" noema. It has undergone fluxion."
       },
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-2-complete-terminology-with-examples-noema",
-        "snippet": "...o her Endosphere). \"The noema underwent fluxion\" (abstract/general)."
+        "doc": "od-schemata",
+        "snippet": "..., or passively formed through fluxion. They are the raw material that could b..."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-the-noemagraph",
+        "snippet": "...tive traces become bonds, and fluxion reshapes noema; The \"shape\" of the Noem..."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-trace",
+        "snippet": "...aken over time due to passive fluxion, even without conscious attention."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-fluxion",
+        "snippet": "...ing, splitting, or reshaping. Fluxion is not a product; it is what happens to..."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-projection",
+        "snippet": "...on of how noemata might cause fluxion in someone else's noema (as you model t..."
       }
     ]
   },
@@ -915,48 +1065,43 @@ const LINKED_TERMS = {
     "refs": [
       {
         "project": "purpose-of-schools",
-        "doc": "orrery",
-        "snippet": "...earning is organized around a center of gravity. Instead of pulling learners upward or..."
+        "doc": "knowledge-orrery-orbiting-a-moving-center",
+        "snippet": "... organized around a center of gravity. Instead of pulling learners upward or ..."
       },
       {
         "project": "purpose-of-schools",
-        "doc": "factorials",
-        "snippet": "...cture. Instead, it shifts the center of gravity. Rather than organizing everything arou..."
+        "doc": "fracturing-factorials",
+        "snippet": "...tead, it shifts the center of gravity. Rather than organizing everything arou..."
       },
       {
         "project": "purpose-of-schools",
-        "doc": "endospection-impl",
-        "snippet": "...ithout a comprehension of the universe, gravity, rotation, or astrophysics, that was re..."
+        "doc": "edospecture-in-contexture",
+        "snippet": "...omprehension of the universe, gravity, rotation, or astrophysics, that was re..."
       },
       {
-        "project": "axiometric-calculus",
-        "doc": "ac-part-1-1-3-the-second-core-insight",
-        "snippet": "...arate investigation—into instinct, into gravity, into the nature of life itself—produce..."
+        "project": "purpose-of-schools",
+        "doc": "designing-constellare-first-opportunities",
+        "snippet": "...se a cluster that already has gravity for them, rather than being handed a ge..."
       },
       {
-        "project": "axiometric-calculus",
-        "doc": "ac-part-1-1-3-the-second-core-insight",
-        "snippet": "Gravity is the fundamental relational force. In..."
-      },
-      {
-        "project": "axiometric-calculus",
-        "doc": "ac-part-2-2-5-the-causal-substrate-gravity-and-ins",
-        "snippet": "P₄ (Gravity): g is the fundamental relational force..."
+        "project": "purpose-of-schools",
+        "doc": "refraction-in-contexture",
+        "snippet": "...asure the acceleration due to gravity using a pendulum. Their results will va..."
       },
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-2-products-relations-and-events-axis",
-        "snippet": "...o organize around it. The axis provides gravity: it determines which noema are relevant..."
+        "doc": "od-axis",
+        "snippet": "... around it. The axis provides gravity: it determines which noema are relevant..."
       },
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-2-products-relations-and-events-projection",
-        "snippet": "...ing noema into organized orbits through gravity), projections shoot outward like lightn..."
+        "doc": "od-projection",
+        "snippet": "...into organized orbits through gravity), projections shoot outward like lightn..."
       },
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-3-habit-3-constellare-what-constellare-organizes-around",
-        "snippet": "...eld: the guiding question that provides gravity, pulling noema into organized orbits, t..."
+        "doc": "od-what-constellare-organizes-around",
+        "snippet": "...uiding question that provides gravity, pulling noema into organized orbits, t..."
       }
     ]
   },
@@ -967,19 +1112,44 @@ const LINKED_TERMS = {
     "color": "#357A66",
     "refs": [
       {
-        "project": "axiometric-calculus",
-        "doc": "ac-part-1-1-3-the-second-core-insight",
-        "snippet": "A separate investigation—into instinct, into gravity, into the nature of life..."
+        "project": "purpose-of-schools",
+        "doc": "nature-vs-nurture-instinct-vs-reflex-biology-vs-society-evol",
+        "snippet": "Reflex and instinct are quintessential attributes for life’..."
       },
       {
         "project": "axiometric-calculus",
         "doc": "ac-part-1-1-3-the-second-core-insight",
-        "snippet": "Awareness moves because instinct compels it."
+        "snippet": "A separate investigation—into instinct, into gravity, into the nature of life ..."
       },
       {
         "project": "axiometric-calculus",
-        "doc": "ac-part-1-1-3-the-second-core-insight",
-        "snippet": "...ty is the fundamental relational force. Instinct is gravity applied to structure. Change..."
+        "doc": "ac-part-2-2-5-the-causal-substrate-gravity-and-ins",
+        "snippet": "P₅ (Instinct): i ≝ g applied to ν. Instinct is the r..."
+      },
+      {
+        "project": "axiometric-calculus",
+        "doc": "ac-part-2-2-6-the-cognitive-ladder-from-instinct-t",
+        "snippet": "Between raw instinct and full metacognition lies a hierarchy..."
+      },
+      {
+        "project": "axiometric-calculus",
+        "doc": "ac-part-3-3-2-why-awareness-moves-the-causal-answe",
+        "snippet": "T₃ (Instinct-Movement): i → ω(μₙ → μₙ₊₁)"
+      },
+      {
+        "project": "axiometric-calculus",
+        "doc": "ac-part-3-3-4-implications-for-identity",
+        "snippet": ".... It's always moving (because instinct compels it), always stitching. From the..."
+      },
+      {
+        "project": "axiometric-calculus",
+        "doc": "ac-part-4-a1-identity-paradox-a-a",
+        "snippet": "...not-equal' aspect arises from instinct-driven awareness moving through slices."
+      },
+      {
+        "project": "axiometric-calculus",
+        "doc": "ac-part-4-c0-gravity-instinct-g-i",
+        "snippet": "If gravity exists, then instinct exists."
       }
     ]
   },
@@ -992,32 +1162,42 @@ const LINKED_TERMS = {
       {
         "project": "purpose-of-schools",
         "doc": "introduction",
-        "snippet": "...country needed a shared sense of civic life. Throughout the nineteenth century, thi..."
+        "snippet": "...eeded a shared sense of civic life. Throughout the nineteenth century, thi..."
       },
       {
         "project": "purpose-of-schools",
-        "doc": "introduction",
-        "snippet": "...and participate meaningfully in public life[1]. He later proposed the first plan fo..."
+        "doc": "foundations-of-us-curriculum",
+        "snippet": "...cipate meaningfully in public life. He later proposed the first plan for f..."
       },
       {
         "project": "purpose-of-schools",
-        "doc": "introduction",
-        "snippet": "...could practice the habits of democratic life. In The School and Society, Dewey empha..."
+        "doc": "taxonomy-ladders-mistaken-for-maps",
+        "snippet": "... classification system, not a life-long staircase. You can zoom a taxonomy..."
       },
       {
-        "project": "axiometric-calculus",
-        "doc": "ac-part-1-1-3-the-second-core-insight",
-        "snippet": "...tinct, into gravity, into the nature of life itself—produced a second insight that c..."
+        "project": "purpose-of-schools",
+        "doc": "knowledge-orrery-orbiting-a-moving-center",
+        "snippet": "...uch as sensorially, practical life, independence, and concentration."
       },
       {
-        "project": "axiometric-calculus",
-        "doc": "ac-part-2-2-6-the-cognitive-ladder-from-instinct-t",
-        "snippet": "...hysical marker of change. Exists in non-life (craters) and life (DNA). M → Δ (memory..."
+        "project": "purpose-of-schools",
+        "doc": "knowledge-graph-undecided",
+        "snippet": "... evolving realities of modern life without collapsing under the pressure o..."
       },
       {
-        "project": "axiometric-calculus",
-        "doc": "ac-part-2-2-6-the-cognitive-ladder-from-instinct-t",
-        "snippet": "...which ν enters awareness. Required for life."
+        "project": "purpose-of-schools",
+        "doc": "corporate-era",
+        "snippet": "...ued that because contemporary life is \"so complex\" and \"continually changi..."
+      },
+      {
+        "project": "purpose-of-schools",
+        "doc": "the-sovereign-and-the-fettered",
+        "snippet": "...n American history, spent his life navigating a world whose definitions he..."
+      },
+      {
+        "project": "purpose-of-schools",
+        "doc": "where-to-intervene",
+        "snippet": "...have produced real, material, life-altering results. Nothing in the argume..."
       }
     ]
   },
@@ -1029,43 +1209,43 @@ const LINKED_TERMS = {
     "refs": [
       {
         "project": "purpose-of-schools",
-        "doc": "taxonomy",
-        "snippet": "...ences. Evaluation is impossible without memory anchoring the criteria against which de..."
+        "doc": "taxonomy-ladders-mistaken-for-maps",
+        "snippet": "...for storing knowledge in your memory (Sherlock Holm’s mind palace), then app..."
       },
       {
         "project": "purpose-of-schools",
-        "doc": "taxonomy",
-        "snippet": "...re than just the highest stair. Without memory, none of the categories in the taxonomy..."
+        "doc": "knowledge-graph-undecided",
+        "snippet": "...me already formed pattern” in memory (Bartlett, 1932, pp. 32–33). Rumelhart ..."
       },
       {
         "project": "purpose-of-schools",
-        "doc": "taxonomy",
-        "snippet": "...odel does not account for the fact that memory shapes every cognitive act. Thought can..."
+        "doc": "metacognition",
+        "snippet": "..., with a perfect photographic memory. Remembering your last conversation exa..."
       },
       {
-        "project": "axiometric-calculus",
-        "doc": "ac-part-1-1-3-the-second-core-insight",
-        "snippet": "...structure. Change is instinct realized. Memory is the marker of change. Thought is ins..."
+        "project": "purpose-of-schools",
+        "doc": "endospection-self-identity",
+        "snippet": "...formed awareness conducted by memory. There is a sense in which the self is ..."
       },
       {
-        "project": "axiometric-calculus",
-        "doc": "ac-part-2-2-6-the-cognitive-ladder-from-instinct-t",
-        "snippet": "Symbol: M | Name: Memory | Definition: Physical marker of change..."
+        "project": "purpose-of-schools",
+        "doc": "nature-vs-nurture-instinct-vs-reflex-biology-vs-society-evol",
+        "snippet": "...ndants. The substrate isn't a memory of any event your ancestors lived throu..."
       },
       {
-        "project": "axiometric-calculus",
-        "doc": "ac-part-2-2-6-the-cognitive-ladder-from-instinct-t",
-        "snippet": "...tional collection of instincts enabling memory. θ ≝ i ∧ M. Allows perception through s..."
+        "project": "purpose-of-schools",
+        "doc": "edospecture-in-contexture",
+        "snippet": "...out a persistent photographic memory, and without being able to recreate the..."
+      },
+      {
+        "project": "purpose-of-schools",
+        "doc": "demonstration-watching-the-architecture-run",
+        "snippet": "... cycle, the school board, the memory of last year's reform, the vocabulary t..."
       },
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-2-complete-terminology-with-examples-noema",
-        "snippet": "...undaryless experience, concept, belief, memory, or perception that can, in principle,..."
-      },
-      {
-        "project": "ontological-dictionary",
-        "doc": "od-part-5-case-study-endo-reflection-endospection--when-to-use-each",
-        "snippet": "...specific noema (a belief, value, skill, memory) within your endosphere. You want to ve..."
+        "doc": "od-noema",
+        "snippet": "... experience, concept, belief, memory, or perception that can, in principle, ..."
       }
     ]
   },
@@ -1078,47 +1258,42 @@ const LINKED_TERMS = {
       {
         "project": "purpose-of-schools",
         "doc": "introduction",
-        "snippet": "...models are no longer sufficient and why metacognition should become the new center of curricu..."
+        "snippet": "... no longer sufficient and why metacognition should become the new center of curricu..."
       },
       {
         "project": "purpose-of-schools",
-        "doc": "knowledge-graph",
-        "snippet": "...is also explains why, in this sequence, metacognition is not a top rung but the maintenance p..."
+        "doc": "knowledge-graph-undecided",
+        "snippet": "...plains why, in this sequence, metacognition is not a top rung but the maintenance p..."
       },
       {
         "project": "purpose-of-schools",
-        "doc": "cognitive-oppression",
-        "snippet": "...o meaning, is a preventative measure in metacognition. When one omniperigrenates (wonder) or..."
+        "doc": "who-does-not-have-the-power",
+        "snippet": "...ing is itself the imposition. Metacognition is the alternative — teaching people to..."
       },
       {
-        "project": "axiometric-calculus",
-        "doc": "ac-part-1-1-3-the-second-core-insight",
-        "snippet": "...ss is thought reflecting on itself. And metacognition—the five habits this system formalizes—..."
+        "project": "purpose-of-schools",
+        "doc": "the-question-underneath-the-categories",
+        "snippet": "...: Your comment (Comment 13): \"Metacognition is not natural. It’s not easy. And it’s..."
       },
       {
-        "project": "axiometric-calculus",
-        "doc": "ac-part-2-2-6-the-cognitive-ladder-from-instinct-t",
-        "snippet": "Between raw instinct and full metacognition lies a hierarchy of cognitive capacitie..."
+        "project": "purpose-of-schools",
+        "doc": "overexplored-and-underexplored-identity",
+        "snippet": "...es the terms. The resolution (metacognition as agency within oppression, not escape..."
       },
       {
-        "project": "axiometric-calculus",
-        "doc": "ac-part-4-4-2-the-dependency-structure",
-        "snippet": "θ → L → κ → Metacognition"
+        "project": "purpose-of-schools",
+        "doc": "how-it-moves",
+        "snippet": "...ch is empirical evidence that metacognition interrupts the cycle at Stage 2 (extern..."
       },
       {
-        "project": "ontological-dictionary",
-        "doc": "od-part-2-the-noemascape",
-        "snippet": "...c.—all in the Perifield); All levels of metacognition simultaneously; Representations of itse..."
+        "project": "purpose-of-schools",
+        "doc": "where-to-intervene",
+        "snippet": "... Jim Crow did not end through metacognition. It ended through legislation, protest,..."
       },
       {
-        "project": "ontological-dictionary",
-        "doc": "od-part-2-the-noemascape",
-        "snippet": "...f meta-levels that goes \"outside.\" Meta-metacognition doesn't escape the Noemascape; it's fol..."
-      },
-      {
-        "project": "ontological-dictionary",
-        "doc": "od-part-3-habit-1-endospecture-definition",
-        "snippet": "...e of examining one's own Endosphere. If metacognition is about monitoring and directing one's..."
+        "project": "purpose-of-schools",
+        "doc": "the-illusion-of-difference",
+        "snippet": "...n limit the opportunities for metacognition. It assumes that 'normal' learners are ..."
       }
     ]
   },
@@ -1130,18 +1305,18 @@ const LINKED_TERMS = {
     "refs": [
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-2-noema-lifecycle",
-        "snippet": "...itting, reshaping events) → CLUSTERING (nebula formation in the Perifield) → ORGANIZAT..."
+        "doc": "od-noema-lifecycle",
+        "snippet": "...shaping events) → CLUSTERING (nebula formation in the Perifield) → ORGANIZAT..."
       },
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-2-products-relations-and-events-nebula",
-        "snippet": "...been named, examined, or structured. A nebula is what exists before a constellation:..."
+        "doc": "od-nebula",
+        "snippet": "...d, examined, or structured. A nebula is what exists before a constellation: ..."
       },
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-2-products-relations-and-events-nebula",
-        "snippet": "Nebula vs. Trace: A trace is the line connecti..."
+        "doc": "od-axis",
+        "snippet": "...h may have been drifting as a nebula) begin to organize around it. The axis ..."
       }
     ]
   },
@@ -1153,48 +1328,43 @@ const LINKED_TERMS = {
     "refs": [
       {
         "project": "purpose-of-schools",
-        "doc": "cognitive-oppression",
-        "snippet": "...constellates (research), they may flux noema and form conclusions upon prior beliefs..."
+        "doc": "noema-and-constellations",
+        "snippet": "...return to. I call these units noema. A noema can be as simple as “2 + 2 = 4..."
       },
       {
         "project": "purpose-of-schools",
-        "doc": "cognitive-oppression",
-        "snippet": "...ion, you need a pre-existing network of noema (understanding) to launch the inquiry...."
+        "doc": "constellare-research-purposeful-organization-of-noema",
+        "snippet": "...dosphere into the space where noema drift. Each pole represents a guiding q..."
       },
       {
         "project": "purpose-of-schools",
-        "doc": "cognitive-oppression",
-        "snippet": "...where the answer will connect traces of noema unrealized before. This is constellarat..."
+        "doc": "constellare-in-an-opportunity-centered-curriculum",
+        "snippet": "...ompted to choose a cluster of noema, frame a “so what?” question, and organ..."
       },
       {
-        "project": "axiometric-calculus",
-        "doc": "ac-part-1-1-1-how-this-document-emerged",
-        "snippet": "...new questions. Should the primitive be noema or schema? What does equality mean when..."
+        "project": "purpose-of-schools",
+        "doc": "designing-constellare-first-opportunities",
+        "snippet": "...urfacing existing clusters of noema through Endospective and Omnipere activ..."
       },
       {
-        "project": "axiometric-calculus",
-        "doc": "ac-part-1-1-1-how-this-document-emerged",
-        "snippet": "...h exologue crossing Thresholds, through noemata becoming noema-of-noemata, through th..."
+        "project": "purpose-of-schools",
+        "doc": "critical-thinkingreflectionrefracture",
+        "snippet": "...ood. Omniperegrination traces noema (units of meaning). Constellaration org..."
       },
       {
-        "project": "axiometric-calculus",
-        "doc": "ac-part-1-1-3-the-second-core-insight",
-        "snippet": "...ucture at once? The answer lies beneath noema, in the causal substrate that produces..."
+        "project": "purpose-of-schools",
+        "doc": "the-outer-lens",
+        "snippet": "... self. The Perifield is where noema wander during omniperegrination, cluste..."
       },
       {
-        "project": "ontological-dictionary",
-        "doc": "od-part-1-grammar-as-representation-not-grammar-it",
-        "snippet": "...enomena it names. The grammar is itself noematic—it is a constellation of linguistic..."
+        "project": "purpose-of-schools",
+        "doc": "refraction-in-contexture",
+        "snippet": "...atively; they are missing the noema the lesson requires. Content knowledge ..."
       },
       {
-        "project": "ontological-dictionary",
-        "doc": "od-part-1-three-ontological-layers",
-        "snippet": "LAYER 2: THE SUBSTANCE (Noema)"
-      },
-      {
-        "project": "ontological-dictionary",
-        "doc": "od-part-1-the-axiomatics-of-this-system",
-        "snippet": "...e sake of limiting the variation in our noema through processed and controlled exolog..."
+        "project": "purpose-of-schools",
+        "doc": "the-architecture-exosphere-exologue-threshold",
+        "snippet": "...n of the Exofield is itself a noema inside your Noemascape. You never have ..."
       }
     ]
   },
@@ -1205,34 +1375,44 @@ const LINKED_TERMS = {
     "color": "#A0633A",
     "refs": [
       {
+        "project": "ontological-dictionary",
+        "doc": "od-the-noemascape",
+        "snippet": "...ve and active) and bonds; The Noemagraph (the network of traces, navigated in th..."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-the-perifield",
+        "snippet": "...ion or other cogniscence; The Noemagraph (the network of traces being navigated)..."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-the-noemagraph",
+        "snippet": "Definition: The Noemagraph is the network structure of all traces ..."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-habit-2-omnipere",
+        "snippet": "...omniperegrinating through the Noemagraph in the Perifield during omniperegrinati..."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-what-omnipere-navigates",
+        "snippet": "The Noemagraph in the Perifield: the network structure..."
+      },
+      {
         "project": "axiometric-calculus",
         "doc": "ac-part-1-1-2-the-first-core-insight",
-        "snippet": "...ses Thresholds, what traces through the Noemagraph."
+        "snippet": "...olds, what traces through the Noemagraph."
       },
       {
         "project": "axiometric-calculus",
         "doc": "ac-part-4-a3-difference-paradox-a-b",
-        "snippet": "...some sense—through traces, through the Noemagraph, through the tesseractic containment wh..."
+        "snippet": "...e—through traces, through the Noemagraph, through the tesseractic containment wh..."
       },
       {
         "project": "axiometric-calculus",
         "doc": "ac-part-5-5-1-equality-operators",
-        "snippet": "...e equality | Meaning: 'Connected in the Noemagraph.' Trivially universal (all ν trace to a..."
-      },
-      {
-        "project": "ontological-dictionary",
-        "doc": "od-part-2-the-noemascape",
-        "snippet": "...ces (passive and active) and bonds; The Noemagraph (the network of traces, navigated in th..."
-      },
-      {
-        "project": "ontological-dictionary",
-        "doc": "od-part-2-the-noemascape-the-perifield",
-        "snippet": "...peregrination or other cogniscence; The Noemagraph (the network of traces being navigated)..."
-      },
-      {
-        "project": "ontological-dictionary",
-        "doc": "od-part-2-the-noemascape-the-noemagraph",
-        "snippet": "Definition: The Noemagraph is the network structure of all traces..."
+        "snippet": "... | Meaning: 'Connected in the Noemagraph.' Trivially universal (all ν trace to a..."
       }
     ]
   },
@@ -1244,33 +1424,43 @@ const LINKED_TERMS = {
     "refs": [
       {
         "project": "purpose-of-schools",
-        "doc": "cognitive-oppression",
-        "snippet": "...these three compartments (much like the noemascape and the exosphere)."
+        "doc": "critical-thinkingreflectionrefracture",
+        "snippet": "... at. It is not a thing in the Noemascape but the act by which the Noemascape bec..."
       },
       {
         "project": "purpose-of-schools",
-        "doc": "cognitive-oppression",
-        "snippet": "...transfer one’s own noema into another’s noemascape. Speaking, writing, singing, dancing, d..."
+        "doc": "the-outer-lens",
+        "snippet": "...ons they contain) make up the Noemascape, the total metacognitive space of a sin..."
       },
       {
-        "project": "axiometric-calculus",
-        "doc": "ac-part-6-intro",
-        "snippet": "Symbol: N | Name: Noemascape | Definition: Total metacognitive space..."
+        "project": "purpose-of-schools",
+        "doc": "the-first-turn-outward",
+        "snippet": "... different region of the same Noemascape, and each one produced knowledge addres..."
+      },
+      {
+        "project": "purpose-of-schools",
+        "doc": "the-architecture-exosphere-exologue-threshold",
+        "snippet": "...is itself a noema inside your Noemascape. You never have the thing itself. What ..."
+      },
+      {
+        "project": "purpose-of-schools",
+        "doc": "demonstration-watching-the-architecture-run",
+        "snippet": "...r her fingers does not have a Noemascape; it has a Nuloscape, structure without ..."
+      },
+      {
+        "project": "purpose-of-schools",
+        "doc": "what-exospecture-is-not",
+        "snippet": "...quires interior access to the Noemascape under examination. Another's Noemascape..."
+      },
+      {
+        "project": "purpose-of-schools",
+        "doc": "exospecture-in-contexture",
+        "snippet": "...s a fixed relationship in her Noemascape, she realizes that: Breath + Finger Pos..."
       },
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-2-the-noemascape",
+        "doc": "od-the-noemascape",
         "snippet": "Definition: The Noemascape is the total metacognitive space contai..."
-      },
-      {
-        "project": "ontological-dictionary",
-        "doc": "od-part-2-the-noemascape",
-        "snippet": "The Noemascape is self-contained and tesseractic by ne..."
-      },
-      {
-        "project": "ontological-dictionary",
-        "doc": "od-part-2-the-noemascape",
-        "snippet": "What the Noemascape Contains:"
       }
     ]
   },
@@ -1281,34 +1471,44 @@ const LINKED_TERMS = {
     "color": "#A0633A",
     "refs": [
       {
-        "project": "axiometric-calculus",
-        "doc": "ac-part-1-1-1-how-this-document-emerged",
-        "snippet": "...h exologue crossing Thresholds, through noemata becoming noema-of-noemata, through the..."
-      },
-      {
-        "project": "axiometric-calculus",
-        "doc": "ac-part-4-a1-5-expression-paradox-a-b-a-b",
-        "snippet": "...wrote is not the expression I received—noemata crossed the Threshold, lossy transforma..."
-      },
-      {
-        "project": "axiometric-calculus",
-        "doc": "ac-part-5-5-2-derivation-operators",
-        "snippet": "...means noema crosses Threshold to become noemata. Lossy."
+        "project": "ontological-dictionary",
+        "doc": "od-the-axiomatics-of-this-system",
+        "snippet": "...trolled exologue and filtered noemata."
       },
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-1-the-axiomatics-of-this-system",
-        "snippet": "...ed and controlled exologue and filtered noemata."
+        "doc": "od-noemata",
+        "snippet": "Definition: Noemata are communicated noema—the \"substance\" ..."
       },
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-2-complete-terminology-with-examples-noemata",
-        "snippet": "Definition: Noemata are communicated noema—the \"substance\"..."
+        "doc": "od-the-threshold",
+        "snippet": "...s. This is where noema become noemata (outbound) and noemata become noema-of-..."
       },
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-2-complete-terminology-with-examples-noemata",
-        "snippet": "Noemata exist \"between\" Noemascapes in the Exof..."
+        "doc": "od-the-exofield",
+        "snippet": "...g outside it: the space where noemata \"exist,\" where other people's Noemascap..."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-exosphere",
+        "snippet": "...and inference, communication (noemata transformed into noema-of-noemata), ima..."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-projection",
+        "snippet": "...simulating how your noema (or noemata) might interact with another's modeled ..."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-exologue",
+        "snippet": "...by which noema transform into noemata (outbound) and noemata transform into n..."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-definition-5",
+        "snippet": "...ions (your simulations of how noemata might interact with others' noema); The..."
       }
     ]
   },
@@ -1319,34 +1519,44 @@ const LINKED_TERMS = {
     "color": "#8B5C3E",
     "refs": [
       {
-        "project": "axiometric-calculus",
-        "doc": "ac-part-2-2-5-the-causal-substrate-gravity-and-ins",
-        "snippet": "...ubstances, but as the forces that cause noematic structure to be traversed."
-      },
-      {
-        "project": "axiometric-calculus",
-        "doc": "ac-part-3-3-1-the-moment-slice-model",
-        "snippet": "...Moment): μ is a frozen cross-section of noematic structure."
-      },
-      {
-        "project": "axiometric-calculus",
-        "doc": "ac-part-4-intro",
-        "snippet": "...is is not a flaw—it is the structure of noematic reality."
+        "project": "ontological-dictionary",
+        "doc": "od-grammar-as-representation-not-grammar-itself",
+        "snippet": "... names. The grammar is itself noematic—it is a constellation of linguistic noe..."
       },
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-1-grammar-as-representation-not-grammar-it",
-        "snippet": "...enomena it names. The grammar is itself noematic—it is a constellation of linguistic noe..."
+        "doc": "od-noemata",
+        "snippet": "...the \"pure\" noemata—only their noematic interpretation of it. Noemata are like ..."
       },
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-2-complete-terminology-with-examples-noemata",
-        "snippet": "...ne access the \"pure\" noemata—only their noematic interpretation of it. Noemata are like..."
-      },
-      {
-        "project": "ontological-dictionary",
-        "doc": "od-part-2-complete-terminology-with-examples-noematic",
+        "doc": "od-noematic",
         "snippet": "Example: \"The noematic density of this constellation is unusua..."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-the-exofield",
+        "snippet": "... But this \"where\" is itself a noematic construction—a useful fiction that help..."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-bond",
+        "snippet": "...tructural relationship is not noematic. The bond as a perceived, conceptualize..."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-fluxion",
+        "snippet": "...during cogniscence. It is the noematic moment when a noema's \"shape\" changes—w..."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-definition-5",
+        "snippet": "... Exospheres (your constructed noematic models of external realities, in the Pe..."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-habit-6-synthesure",
+        "snippet": "...gular agency—synthesizing all noematic movement through the Axiometric Calculu..."
       }
     ]
   },
@@ -1358,38 +1568,43 @@ const LINKED_TERMS = {
     "refs": [
       {
         "project": "purpose-of-schools",
-        "doc": "metacognition",
-        "snippet": "...n. It matters because every other habit—Omnipere’s wandering, Constellare’s research, Re..."
+        "doc": "where-to-intervene",
+        "snippet": "...oped in Part 2: endospection, omnipere, constellare, refraction, exospection, ..."
       },
       {
         "project": "purpose-of-schools",
-        "doc": "omnipere-impl",
-        "snippet": "Omnipere emerges as the antidote: a metacognitiv..."
+        "doc": "practicing-metacognition",
+        "snippet": "...ers because every other habit—Omnipere’s wandering, Constellare’s research, Re..."
       },
       {
         "project": "purpose-of-schools",
-        "doc": "omnipere-impl",
-        "snippet": "...nly not new in philosophy or education. Omnipere crystallizes several strands of curricu..."
+        "doc": "omnipere-exploration-and-curiosity",
+        "snippet": "Omnipere is the freeing habit of intentional, se..."
       },
       {
-        "project": "axiometric-calculus",
-        "doc": "ac-part-7-7-6-the-habit-operators",
-        "snippet": "...rator: omni(ν) | Habit + Core Question: Omnipere: 'Where can thought go?' | Transformati..."
+        "project": "purpose-of-schools",
+        "doc": "curriculum-fences-and-the-role-of-structure",
+        "snippet": "...ilt around deeper habits like omnipere and endospection."
       },
       {
-        "project": "ontological-dictionary",
-        "doc": "od-part-1-three-ontological-layers",
-        "snippet": "LAYER 3: THE HABITS (Endospecture, Omnipere, Constellare, Refracture, Exospecture)"
+        "project": "purpose-of-schools",
+        "doc": "omnipere-in-practice-from-welding-to-worlds",
+        "snippet": "In this sense, omnipere does not require schools to abandon pra..."
       },
       {
-        "project": "ontological-dictionary",
-        "doc": "od-part-2-the-noemascape-the-noemagraph",
-        "snippet": "...ery other noema. The Noemagraph is what Omnipere navigates during omniperegrination."
+        "project": "purpose-of-schools",
+        "doc": "autonomy-power-and-the-expansion-of-exospection",
+        "snippet": "...ounts as legitimate thinking. Omnipere works by building relationships between..."
       },
       {
-        "project": "ontological-dictionary",
-        "doc": "od-part-2-the-noemascape-the-noemagraph",
-        "snippet": "...ion: The Noemagraph is not a product of Omnipere or omniperegrination. It pre-exists inf..."
+        "project": "purpose-of-schools",
+        "doc": "noema-and-constellations",
+        "snippet": "Omnipere and its unfolding, omniperegrination, d..."
+      },
+      {
+        "project": "purpose-of-schools",
+        "doc": "constellare-research-purposeful-organization-of-noema",
+        "snippet": "...s. The same is true of noema. Omnipere can lead to spontaneous clusters (momen..."
       }
     ]
   },
@@ -1401,43 +1616,43 @@ const LINKED_TERMS = {
     "refs": [
       {
         "project": "purpose-of-schools",
-        "doc": "metacognition",
-        "snippet": "...six metacognitive habits: Endospection, Omniperegrination, Constellaration, Refraction, Exospecti..."
+        "doc": "practicing-metacognition",
+        "snippet": "...gnitive habits: Endospection, Omniperegrination, Constellaration, Refraction, Exospecti..."
       },
       {
         "project": "purpose-of-schools",
-        "doc": "omnipere-impl",
+        "doc": "omnipere-exploration-and-curiosity",
         "snippet": "Omniperegrination names the journey that follows when thi..."
       },
       {
         "project": "purpose-of-schools",
-        "doc": "omnipere-impl",
-        "snippet": "...ict?”—the experience has not yet become omniperegrination. Omnipere presumes intentional curiosit..."
+        "doc": "curriculum-fences-and-the-role-of-structure",
+        "snippet": "...uses content as raw material. Omniperegrination moves through art, physics, welding, li..."
       },
       {
-        "project": "axiometric-calculus",
-        "doc": "ac-part-1-1-1-how-this-document-emerged",
-        "snippet": "Those pages were omniperegrination—thought wandering without predetermined..."
+        "project": "purpose-of-schools",
+        "doc": "omnipere-in-practice-from-welding-to-worlds",
+        "snippet": "Omniperegrination can be as narrow or as wide as a studen..."
       },
       {
-        "project": "axiometric-calculus",
-        "doc": "ac-part-10-10-1-the-self-reference",
-        "snippet": "...its own principles. It emerged through omniperegrination, constellated around an axis, crossed T..."
+        "project": "purpose-of-schools",
+        "doc": "autonomy-power-and-the-expansion-of-exospection",
+        "snippet": "...e the journey. But the actual omniperegrination happens within the learner’s own cognit..."
       },
       {
-        "project": "ontological-dictionary",
-        "doc": "od-part-2-noema-lifecycle",
-        "snippet": "...ull through Outer Lens) → DRIFT (during omniperegrination in the Perifield) → FLUXION (fusing, sp..."
+        "project": "purpose-of-schools",
+        "doc": "noema-and-constellations",
+        "snippet": "Omnipere and its unfolding, omniperegrination, describe a particular stance toward th..."
       },
       {
-        "project": "ontological-dictionary",
-        "doc": "od-part-2-complete-terminology-with-examples-noema",
-        "snippet": "...nter \"2+2=5\" (the Orwell-noema). During omniperegrination, you trace a connection between them—an..."
+        "project": "purpose-of-schools",
+        "doc": "constellare-research-purposeful-organization-of-noema",
+        "snippet": "...ns that first appeared during omniperegrination become clearer and more stable. A regio..."
       },
       {
-        "project": "ontological-dictionary",
-        "doc": "od-part-2-complete-terminology-with-examples-noema",
-        "snippet": "...l. \"Her noema drifted into orbit during omniperegrination\" (relational to her Endosphere). \"The n..."
+        "project": "purpose-of-schools",
+        "doc": "constellare-in-an-opportunity-centered-curriculum",
+        "snippet": "... physics of waves and fields. Omniperegrination might lead some toward visual art, othe..."
       }
     ]
   },
@@ -1449,18 +1664,43 @@ const LINKED_TERMS = {
     "refs": [
       {
         "project": "purpose-of-schools",
-        "doc": "right-way",
-        "snippet": "...k, and later, to a deeper discussion of oppression and anti-oppression as concepts rather..."
+        "doc": "educating-the-right-way-tool-of-change",
+        "snippet": "...er, to a deeper discussion of oppression and anti-oppression as concepts rather ..."
       },
       {
         "project": "purpose-of-schools",
-        "doc": "who-no-power",
-        "snippet": "...lean conservative, whereas those under oppression tend to be the ones fighting for change..."
+        "doc": "who-does-not-have-the-power",
+        "snippet": "...ore closely at the concept of oppression itself. Not as a political label. As a ..."
       },
       {
         "project": "purpose-of-schools",
-        "doc": "who-oppressed",
-        "snippet": "...de a unique control group for examining oppression as grouping naturally occurs on every l..."
+        "doc": "kumashiros-contributions",
+        "snippet": "... frameworks for understanding oppression in educational contexts. His analysis b..."
+      },
+      {
+        "project": "purpose-of-schools",
+        "doc": "where-kumashiro-stops",
+        "snippet": "...articular axis. He identifies oppression by first establishing a dominant norm (..."
+      },
+      {
+        "project": "purpose-of-schools",
+        "doc": "the-question-underneath-the-categories",
+        "snippet": "...ro is not alone in organizing oppression around identity. The entire landscape o..."
+      },
+      {
+        "project": "purpose-of-schools",
+        "doc": "a-condition-of-consciousness",
+        "snippet": "If oppression is not best understood through the cate..."
+      },
+      {
+        "project": "purpose-of-schools",
+        "doc": "from-limitation-to-institution",
+        "snippet": "If cognitive oppression begins with two consciousnesses, it doe..."
+      },
+      {
+        "project": "purpose-of-schools",
+        "doc": "universal-mechanism-unequal-manifestation",
+        "snippet": "If the mechanism of cognitive oppression operates at every scale, from the inter..."
       }
     ]
   },
@@ -1471,29 +1711,44 @@ const LINKED_TERMS = {
     "color": "#9A5832",
     "refs": [
       {
-        "project": "axiometric-calculus",
-        "doc": "ac-part-2-2-4-the-perifield-rule",
-        "snippet": "...e been intentionally pulled through the Outer Lens for examination. If it's in P, you're a..."
+        "project": "purpose-of-schools",
+        "doc": "where-the-root-system-ends",
+        "snippet": "...adding the endosphere and the outer lens."
       },
       {
-        "project": "axiometric-calculus",
-        "doc": "ac-part-6-intro",
-        "snippet": "Symbol: L | Name: Outer Lens | Definition: Boundary E ↔ P. Configura..."
+        "project": "purpose-of-schools",
+        "doc": "critical-thinkingreflectionrefracture",
+        "snippet": "...t all. Refracture studies the Outer Lens: the boundary between cognitive and met..."
+      },
+      {
+        "project": "purpose-of-schools",
+        "doc": "the-outer-lens",
+        "snippet": "...itive observer, is called the Outer Lens. When you are endospecting, you are not..."
+      },
+      {
+        "project": "purpose-of-schools",
+        "doc": "the-practice-of-refraction",
+        "snippet": "...ks on the Endosphere. But the Outer Lens is not part of the Endosphere; it is th..."
+      },
+      {
+        "project": "purpose-of-schools",
+        "doc": "refraction-in-contexture",
+        "snippet": "...eal time. The aperture of the Outer Lens comes under more deliberate control, no..."
+      },
+      {
+        "project": "purpose-of-schools",
+        "doc": "the-first-turn-outward",
+        "snippet": "...Perifield got better lit. The Outer Lens became something you could examine inst..."
+      },
+      {
+        "project": "purpose-of-schools",
+        "doc": "what-exospecture-is-not",
+        "snippet": "...el is incomplete, knowing the Outer Lens has bent it, knowing the gap between th..."
       },
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-2-noema-lifecycle",
-        "snippet": "...CE (intentional or passive pull through Outer Lens) → DRIFT (during omniperegrination in t..."
-      },
-      {
-        "project": "ontological-dictionary",
-        "doc": "od-part-2-complete-terminology-with-examples-noemata",
-        "snippet": "...cate: (1) Your noema passes through the Outer Lens (exiting the Endosphere into the Perifi..."
-      },
-      {
-        "project": "ontological-dictionary",
-        "doc": "od-part-2-complete-terminology-with-examples-noemata",
-        "snippet": "...oema-of-those-noemata was shaped by his Outer Lens as it entered his Perifield: years of d..."
+        "doc": "od-noema-lifecycle",
+        "snippet": "...ional or passive pull through Outer Lens) → DRIFT (during omniperegrination in t..."
       }
     ]
   },
@@ -1504,34 +1759,44 @@ const LINKED_TERMS = {
     "color": "#8C4E28",
     "refs": [
       {
-        "project": "axiometric-calculus",
-        "doc": "ac-part-2-2-4-the-perifield-rule",
-        "snippet": "P₃ (Perifield): ∀ν ∈ P, ν is cognisced."
+        "project": "purpose-of-schools",
+        "doc": "critical-thinkingreflectionrefracture",
+        "snippet": "...of-the-lens that lives in the Perifield like any other noema. The recursion doe..."
       },
       {
-        "project": "axiometric-calculus",
-        "doc": "ac-part-2-2-4-the-perifield-rule",
-        "snippet": "Any noema in the Perifield (P) is already cognisced. This is defin..."
+        "project": "purpose-of-schools",
+        "doc": "the-outer-lens",
+        "snippet": "...ve work occurs. I call it the Perifield: the atmospheric space surrounding the ..."
       },
       {
-        "project": "axiometric-calculus",
-        "doc": "ac-part-6-intro",
-        "snippet": "Symbol: P | Name: Perifield | Definition: Space outside E but withi..."
+        "project": "purpose-of-schools",
+        "doc": "the-first-turn-outward",
+        "snippet": "...e Endosphere got clearer. The Perifield got better lit. The Outer Lens became s..."
+      },
+      {
+        "project": "purpose-of-schools",
+        "doc": "the-architecture-exosphere-exologue-threshold",
+        "snippet": "..., it lands as a noema in your Perifield, and your Exosphere of her does the wor..."
+      },
+      {
+        "project": "purpose-of-schools",
+        "doc": "demonstration-watching-the-architecture-run",
+        "snippet": "...f the teacher inside your own Perifield. The question on the page was an outbou..."
       },
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-2-noema-lifecycle",
-        "snippet": "...DRIFT (during omniperegrination in the Perifield) → FLUXION (fusing, splitting, reshapin..."
+        "doc": "od-noema-lifecycle",
+        "snippet": "...ring omniperegrination in the Perifield) → FLUXION (fusing, splitting, reshapin..."
       },
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-2-complete-terminology-with-examples-noemata",
-        "snippet": "...r Lens (exiting the Endosphere into the Perifield). (2) Through the Threshold, noema beco..."
+        "doc": "od-noemata",
+        "snippet": "...iting the Endosphere into the Perifield). (2) Through the Threshold, noema beco..."
       },
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-2-complete-terminology-with-examples-noemata",
-        "snippet": "...ped by his Outer Lens as it entered his Perifield: years of dismissal had bent the words..."
+        "doc": "od-the-noemascape",
+        "snippet": "...he Endosphere (the self); The Perifield (the space of active cogniscence, outsi..."
       }
     ]
   },
@@ -1542,19 +1807,34 @@ const LINKED_TERMS = {
     "color": "#A46038",
     "refs": [
       {
-        "project": "ontological-dictionary",
-        "doc": "od-part-2-products-relations-and-events-exosphere",
-        "snippet": "...into noema-of-noemata), imagination and projection, and prior experiences with similar ent..."
+        "project": "purpose-of-schools",
+        "doc": "where-the-root-system-ends",
+        "snippet": "...nto comrades. He saw that the projection reproduces the original imposition. But..."
+      },
+      {
+        "project": "purpose-of-schools",
+        "doc": "the-architecture-exosphere-exologue-threshold",
+        "snippet": "...outbound exologue, the act of projection. The Exosphere is the model that makes ..."
       },
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-2-products-relations-and-events-projection",
+        "doc": "od-exosphere",
+        "snippet": "...-of-noemata), imagination and projection, and prior experiences with similar ent..."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-projection",
         "snippet": "Definition: A Projection is the act and product of simulating ho..."
       },
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-3-complete-parallel-structure",
-        "snippet": "...e: Refractal | Exospecture: Exosphere / Projection"
+        "doc": "od-core-questions-6",
+        "snippet": "...on as one?\" \"Does my external projection (Exo) accurately reflect my internal id..."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-the-three-elements-encoded-in-every-versm",
+        "snippet": "...Open ( = to another, external projection/communication."
       }
     ]
   },
@@ -1565,24 +1845,19 @@ const LINKED_TERMS = {
     "color": "#9E5A2A",
     "refs": [
       {
-        "project": "axiometric-calculus",
-        "doc": "ac-part-6-6-1-relational-structures",
-        "snippet": "Symbol: ρ | Name: refractal | Definition: Insight about how L shape..."
+        "project": "purpose-of-schools",
+        "doc": "refraction-in-contexture",
+        "snippet": "...ichever they blame first is a refractal about their mental model of how program..."
       },
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-2-products-relations-and-events-refractal",
+        "doc": "od-refractal",
         "snippet": "Definition: A Refractal is the product of refraction: a specifi..."
       },
       {
-        "project": "ontological-dictionary",
-        "doc": "od-part-3-complete-parallel-structure",
-        "snippet": "...re: Constellation / Bonds | Refracture: Refractal | Exospecture: Exosphere / Projection"
-      },
-      {
-        "project": "ontological-dictionary",
-        "doc": "od-part-6-appendix-b-possessive-rules-summary",
-        "snippet": "...Pattern: \"Their constellation\" ✓ / \"Her refractal\" ✓"
+        "project": "axiometric-calculus",
+        "doc": "ac-part-6-6-1-relational-structures",
+        "snippet": "Symbol: ρ | Name: refractal | Definition: Insight about how L shape..."
       }
     ]
   },
@@ -1594,38 +1869,43 @@ const LINKED_TERMS = {
     "refs": [
       {
         "project": "purpose-of-schools",
-        "doc": "cognitive-oppression",
-        "snippet": "...lower the ability to refract. With less refraction, the less of an ability one has to endo..."
+        "doc": "where-to-intervene",
+        "snippet": "...(detecting imposed meanings), refraction (examining how they filter communicatio..."
       },
       {
         "project": "purpose-of-schools",
-        "doc": "cognitive-oppression",
-        "snippet": "...etacognitive habits of endospection and refraction are precisely what allows for what Dewe..."
+        "doc": "practicing-metacognition",
+        "snippet": "...regrination, Constellaration, Refraction, Exospection, and Synthesis, as the cor..."
       },
       {
         "project": "purpose-of-schools",
-        "doc": "cognitive-oppression",
-        "snippet": "...n is unavoidable and the goal should be refraction, not eradication. Refraction helps with..."
+        "doc": "designing-constellare-first-opportunities",
+        "snippet": "...ecome the basis for feedback, Refraction (interrogating biases and blind spots),..."
       },
       {
-        "project": "axiometric-calculus",
-        "doc": "ac-part-6-6-1-relational-structures",
-        "snippet": "...bout how L shapes cognition. Product of refraction."
-      },
-      {
-        "project": "ontological-dictionary",
-        "doc": "od-part-2-schemata-and-schema-the-trust-distinctio-schema",
-        "snippet": "...ce, especially through endospection and refraction—the ability to separate the 'you' who i..."
+        "project": "purpose-of-schools",
+        "doc": "what-exospecture-is-not",
+        "snippet": "...ntirely. Exospecture sharpens Refraction by allowing you to better reflect on ou..."
       },
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-2-products-relations-and-events-refractal",
-        "snippet": "...finition: A Refractal is the product of refraction: a specific insight about how your Oute..."
+        "doc": "od-schema",
+        "snippet": "...ally through endospection and refraction—the ability to separate the 'you' who i..."
       },
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-2-cogniscence-and-learning-cogniscence",
-        "snippet": "...s (Endospection, Omnipere, Constellare, Refraction, Exospection) that are moving and organ..."
+        "doc": "od-refractal",
+        "snippet": "...A Refractal is the product of refraction: a specific insight about how your Oute..."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-cogniscence",
+        "snippet": "...ction, Omnipere, Constellare, Refraction, Exospection) that are moving and organ..."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-to-cognesce",
+        "snippet": "...into constellations, OR using Refraction to see how your Outer Lens shapes what ..."
       }
     ]
   },
@@ -1637,28 +1917,43 @@ const LINKED_TERMS = {
     "refs": [
       {
         "project": "purpose-of-schools",
-        "doc": "cognitive-oppression",
-        "snippet": "...e study of ones’ own analysis practice (refracture). More observable questions such as “wh..."
+        "doc": "critical-thinkingreflectionrefracture",
+        "snippet": "Refracture is the habit of examining how your thin..."
       },
       {
-        "project": "axiometric-calculus",
-        "doc": "ac-part-7-7-6-the-habit-operators",
-        "snippet": "...rator: refr(ν) | Habit + Core Question: Refracture: 'How does identity shape me?' | Transf..."
+        "project": "purpose-of-schools",
+        "doc": "the-outer-lens",
+        "snippet": "...tters more than any other for refracture. The boundary between the Endosphere an..."
+      },
+      {
+        "project": "purpose-of-schools",
+        "doc": "the-practice-of-refraction",
+        "snippet": "...f seeing. That examination is refracture."
+      },
+      {
+        "project": "purpose-of-schools",
+        "doc": "refraction-in-contexture",
+        "snippet": "Refracture lives one layer up, inside the same act..."
+      },
+      {
+        "project": "purpose-of-schools",
+        "doc": "the-first-turn-outward",
+        "snippet": "...ou arranged what you noticed. Refracture asked how your lens came to see what it..."
+      },
+      {
+        "project": "purpose-of-schools",
+        "doc": "what-exospecture-is-not",
+        "snippet": "Exospecture is not Refracture turned outward. This is the substitutio..."
       },
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-1-three-ontological-layers",
-        "snippet": "...S (Endospecture, Omnipere, Constellare, Refracture, Exospecture)"
+        "doc": "od-three-ontological-layers",
+        "snippet": "...cture, Omnipere, Constellare, Refracture, Exospecture)"
       },
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-2-the-noemascape-the-outer-lens",
-        "snippet": "...gaining control of focus and aperture). Refracture examines the Outer Lens (how does this..."
-      },
-      {
-        "project": "ontological-dictionary",
-        "doc": "od-part-2-the-noemascape-the-outer-lens",
-        "snippet": "The Camera Metaphor: Refracture is the habit of examining the Outer Len..."
+        "doc": "od-the-outer-lens",
+        "snippet": "...ntrol of focus and aperture). Refracture examines the Outer Lens (how does this ..."
       }
     ]
   },
@@ -1670,48 +1965,43 @@ const LINKED_TERMS = {
     "refs": [
       {
         "project": "purpose-of-schools",
-        "doc": "knowledge-graph",
-        "snippet": "...hool discussions of conflict and power. Schema theorists such as Bartlett, Rumelhart,..."
-      },
-      {
-        "project": "purpose-of-schools",
-        "doc": "knowledge-graph",
-        "snippet": "...gnity) to make sense of what they read. Schema theory tells us that comprehension is l..."
-      },
-      {
-        "project": "purpose-of-schools",
-        "doc": "knowledge-graph",
-        "snippet": "...and interpretations shift. They rely on schema evolution, where categories and relatio..."
-      },
-      {
-        "project": "axiometric-calculus",
-        "doc": "ac-part-1-1-1-how-this-document-emerged",
-        "snippet": "...tions. Should the primitive be noema or schema? What does equality mean when nothing s..."
-      },
-      {
-        "project": "axiometric-calculus",
-        "doc": "ac-part-2-2-1-the-fundamental-substance-noema",
-        "snippet": "Why noema and not schema? Schema (σ) is noema that has been meta..."
-      },
-      {
-        "project": "axiometric-calculus",
-        "doc": "ac-part-2-2-3-the-source-of-truth-schema",
-        "snippet": "Schema (σ) is the source of truth. Not externa..."
+        "doc": "knowledge-graph-undecided",
+        "snippet": "...ssions of conflict and power. Schema theorists such as Bartlett, Rumelhart, ..."
       },
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-1-the-axiomatics-of-this-system",
-        "snippet": "...axiomatics, the practice of organizing schema into communicable, agreeable, followabl..."
+        "doc": "od-the-axiomatics-of-this-system",
+        "snippet": "...s, the practice of organizing schema into communicable, agreeable, followabl..."
       },
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-1-the-axiomatics-of-this-system",
-        "snippet": "...a new form of communication by blending schema (collectively agreed-upon truths in pre..."
-      },
-      {
-        "project": "ontological-dictionary",
-        "doc": "od-part-2-schemata-and-schema-the-trust-distinctio-schemata",
+        "doc": "od-schemata",
         "snippet": "Schemata can be inherited, absorbed, or passiv..."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-schema",
+        "snippet": "Definition: Schemata that have been endo(trusted)—cognisce..."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-to-schematize",
+        "snippet": "Definition: To convert schemata into schema through cogniscient verif..."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-axiomatics",
+        "snippet": "... The contexture of organizing schema into communicable, agreeable, followabl..."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-to-axiomatize",
+        "snippet": "...a through the organization of schema."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-axiomatica",
+        "snippet": "...reation based on preconceived schema: a new mathematical system, a new langu..."
       }
     ]
   },
@@ -1723,33 +2013,33 @@ const LINKED_TERMS = {
     "refs": [
       {
         "project": "purpose-of-schools",
-        "doc": "knowledge-graph",
-        "snippet": "...this accumulated web of past knowledge. Schemata, as they call them, are interconnected..."
+        "doc": "knowledge-graph-undecided",
+        "snippet": "...ulated web of past knowledge. Schemata, as they call them, are interconnected ..."
       },
       {
-        "project": "purpose-of-schools",
-        "doc": "knowledge-graph",
-        "snippet": "..., 1986). Anderson likewise argued that “schemata are organized hierarchically according..."
+        "project": "ontological-dictionary",
+        "doc": "od-schemata",
+        "snippet": "...truths without endo(tracing). Schemata are still noema, but noema functioning ..."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-schema",
+        "snippet": "Definition: Schemata that have been endo(trusted)—cogniscent..."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-to-schematize",
+        "snippet": "Definition: To convert schemata into schema through cogniscient verific..."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-notes-for-future-terminology-work",
+        "snippet": "...ōr System, Axiomatics, Schema/Schemata distinctions, and the noun-as-noun conv..."
       },
       {
         "project": "axiometric-calculus",
         "doc": "ac-part-5-5-4-substance-markers",
         "snippet": "Symbol: σ* | Name: schemata | Meaning: σ in the Exofield. Knowledge..."
-      },
-      {
-        "project": "ontological-dictionary",
-        "doc": "od-part-2-schemata-and-schema-the-trust-distinctio-schemata",
-        "snippet": "...s assumed truths without endo(tracing). Schemata are still noema, but noema functioning..."
-      },
-      {
-        "project": "ontological-dictionary",
-        "doc": "od-part-2-schemata-and-schema-the-trust-distinctio-schemata",
-        "snippet": "Schemata can be inherited, absorbed, or passivel..."
-      },
-      {
-        "project": "ontological-dictionary",
-        "doc": "od-part-2-schemata-and-schema-the-trust-distinctio-schemata",
-        "snippet": "Key Distinction: Schemata are noema that you trust but have not e..."
       }
     ]
   },
@@ -1767,34 +2057,44 @@ const LINKED_TERMS = {
     "color": "#3D7F6B",
     "refs": [
       {
-        "project": "axiometric-calculus",
-        "doc": "ac-part-2-2-1-the-fundamental-substance-noema",
-        "snippet": "...ion: Noema (ν) is the fluid, recursive, tesseractic unit of meaning. It cannot be created o..."
-      },
-      {
-        "project": "axiometric-calculus",
-        "doc": "ac-part-2-2-2-the-cartesian-anchor-cogito",
-        "snippet": "...oth not-real (no external verification, tesseractic equality) AND real (the cogito proves e..."
-      },
-      {
-        "project": "axiometric-calculus",
-        "doc": "ac-part-3-3-4-implications-for-identity",
-        "snippet": "ν@μ₁ =* ν@μ₂ (tesseractic identity)"
+        "project": "ontological-dictionary",
+        "doc": "od-the-core-ontological-claim",
+        "snippet": ".... But unlike water, noema are tesseractic: a single noema can contain other noema..."
       },
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-2-the-core-ontological-claim",
-        "snippet": "...n distinct. But unlike water, noema are tesseractic: a single noema can contain other noema..."
+        "doc": "od-why-this-matters",
+        "snippet": "This tesseractic fluidity is not a bug in the model; it ..."
       },
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-2-the-core-ontological-claim-why-this-matters",
-        "snippet": "This tesseractic fluidity is not a bug in the model; it..."
+        "doc": "od-noema",
+        "snippet": "...nition: The fluid, recursive, tesseractic unit(s) of meaning that constitute all ..."
       },
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-2-noema-properties",
-        "snippet": "Property: Recursive (Tesseractic) | Description: A noema can contain oth..."
+        "doc": "od-noemata",
+        "snippet": "...e Exofield, noemata exhibit a tesseractic paradox: they cannot truly exist as thi..."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-noematic",
+        "snippet": "...exhibit the fluid, recursive, tesseractic properties of meaning-units. Can be use..."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-the-noemascape",
+        "snippet": "...ss. It is the field where the tesseractic nature of habits exists, fluxes, and in..."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-trace",
+        "snippet": "The Tesseractic Nature of Traces: A trace is not simply..."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-bond",
+        "snippet": "Part of Speech: Noun (tesseractic, identifiable relation)"
       }
     ]
   },
@@ -1806,48 +2106,43 @@ const LINKED_TERMS = {
     "refs": [
       {
         "project": "purpose-of-schools",
-        "doc": "taxonomy",
-        "snippet": "...that memory shapes every cognitive act. Thought cannot exist without memory; thought is..."
+        "doc": "taxonomy-ladders-mistaken-for-maps",
+        "snippet": "...y shapes every cognitive act. Thought cannot exist without memory; thought is..."
       },
       {
         "project": "purpose-of-schools",
-        "doc": "compass",
-        "snippet": "...riting are the only legitimate forms of thought, drowning out everything else students..."
+        "doc": "when-the-compass-mistakes-north-for-the-only-way-forward",
+        "snippet": "... the only legitimate forms of thought. But literacy is not the argument, it's..."
       },
       {
         "project": "purpose-of-schools",
-        "doc": "group-ideology",
-        "snippet": "...vel – it certainly can. Every action or thought, in a way, is inspired by society’s imp..."
+        "doc": "communication",
+        "snippet": "...y in translating an idea or a thought from one’s own consciousness into one o..."
       },
       {
-        "project": "axiometric-calculus",
-        "doc": "ac-part-1-1-1-how-this-document-emerged",
-        "snippet": "Those pages were omniperegrination—thought wandering without predetermined destina..."
+        "project": "purpose-of-schools",
+        "doc": "endospection-self-identity",
+        "snippet": "... thinking is itself a form of thought. If thought makes doubting possible, an..."
       },
       {
-        "project": "axiometric-calculus",
-        "doc": "ac-part-1-1-1-how-this-document-emerged",
-        "snippet": "...tion. What you hold now is not what was thought. It is your interpretation of symbols t..."
+        "project": "purpose-of-schools",
+        "doc": "nature-vs-nurture-instinct-vs-reflex-biology-vs-society-evol",
+        "snippet": "...survival. In fact, nearly all thought is either of the two: breathing, pumpin..."
       },
       {
-        "project": "axiometric-calculus",
-        "doc": "ac-part-1-1-3-the-second-core-insight",
-        "snippet": "...alized. Memory is the marker of change. Thought is instinct combined with memory. Consc..."
+        "project": "purpose-of-schools",
+        "doc": "edospecture-in-contexture",
+        "snippet": "...dospection is not an abstract thought experiment; it is the foundation for st..."
       },
       {
-        "project": "ontological-dictionary",
-        "doc": "od-part-1-the-axiomatics-of-this-system",
-        "snippet": "...structing, recategorizing, resequencing thought and metacognitive activity. It creates..."
+        "project": "purpose-of-schools",
+        "doc": "omnipere-exploration-and-curiosity",
+        "snippet": "...t is the practice of allowing thought to travel across disciplines, experienc..."
       },
       {
-        "project": "ontological-dictionary",
-        "doc": "od-part-2-the-noemascape",
-        "snippet": "...\" the Noemascape, that idea—having been thought—originated from within the Noemascape...."
-      },
-      {
-        "project": "ontological-dictionary",
-        "doc": "od-part-2-cogniscence-and-learning-cogniscence",
-        "snippet": "...nds both to the noema (the substance of thought) and to the habits (Endospection, Omnip..."
+        "project": "purpose-of-schools",
+        "doc": "autonomy-power-and-the-expansion-of-exospection",
+        "snippet": "...between past and new nodes of thought, ideas, beliefs, perceptions, curiositi..."
       }
     ]
   },
@@ -1858,34 +2153,44 @@ const LINKED_TERMS = {
     "color": "#A46038",
     "refs": [
       {
-        "project": "axiometric-calculus",
-        "doc": "ac-part-4-a1-5-expression-paradox-a-b-a-b",
-        "snippet": "...pression I received—noemata crossed the Threshold, lossy transformation occurred. Yet the..."
+        "project": "purpose-of-schools",
+        "doc": "the-first-turn-outward",
+        "snippet": "...ne thing actually crosses the threshold with it: intention.[59] Not information..."
       },
       {
-        "project": "axiometric-calculus",
-        "doc": "ac-part-5-5-2-derivation-operators",
-        "snippet": "Symbol: ⇒* | Name: threshold crossing | Meaning: ν ⇒* ν* means noema..."
+        "project": "purpose-of-schools",
+        "doc": "the-architecture-exosphere-exologue-threshold",
+        "snippet": "The threshold is where the exologue happens. Picture ..."
       },
       {
-        "project": "axiometric-calculus",
-        "doc": "ac-part-6-intro",
-        "snippet": "Symbol: T | Name: Threshold | Definition: Boundary N ↔ X. Where ν ⇒..."
+        "project": "purpose-of-schools",
+        "doc": "demonstration-watching-the-architecture-run",
+        "snippet": "... The content that crossed the threshold was correct on its face and meaningless..."
+      },
+      {
+        "project": "purpose-of-schools",
+        "doc": "what-exospecture-is-not",
+        "snippet": "... the modeler approaches every threshold, in what they take as the object of the..."
+      },
+      {
+        "project": "purpose-of-schools",
+        "doc": "exospecture-in-contexture",
+        "snippet": "...or, meanwhile, approaches the threshold with a different Endosphere. His prior ..."
       },
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-2-complete-terminology-with-examples-noemata",
-        "snippet": "...re into the Perifield). (2) Through the Threshold, noema become noemata in the Exofield—c..."
+        "doc": "od-noemata",
+        "snippet": "...e Perifield). (2) Through the Threshold, noema become noemata in the Exofield—c..."
       },
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-2-the-noemascape",
-        "snippet": "...between Endosphere and Perifield); The Threshold (boundary between Noemascape and Exofie..."
+        "doc": "od-the-noemascape",
+        "snippet": "...ndosphere and Perifield); The Threshold (boundary between Noemascape and Exofie..."
       },
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-2-the-noemascape-the-threshold",
-        "snippet": "Definition: The Threshold is the boundary between the Noemascape..."
+        "doc": "od-the-threshold",
+        "snippet": "Definition: The Threshold is the boundary between the Noemascape ..."
       }
     ]
   },
@@ -1896,34 +2201,44 @@ const LINKED_TERMS = {
     "color": "#8B5C3E",
     "refs": [
       {
-        "project": "axiometric-calculus",
-        "doc": "ac-part-2-2-5-the-causal-substrate-gravity-and-ins",
-        "snippet": "...ng it. Instinct is what makes awareness trace through the loaf."
-      },
-      {
-        "project": "axiometric-calculus",
-        "doc": "ac-part-3-3-1-the-moment-slice-model",
-        "snippet": "T₁ (Awareness): ω is the trace of awareness through moment-slices."
-      },
-      {
-        "project": "axiometric-calculus",
-        "doc": "ac-part-3-3-2-why-awareness-moves-the-causal-answe",
-        "snippet": "...ure does not explain motion. Why does ω trace through {μ} at all? Why not be the whol..."
+        "project": "ontological-dictionary",
+        "doc": "od-the-core-ontological-claim",
+        "snippet": "...contained within other noema, trace to the same noema it contains, and exis..."
       },
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-2-the-core-ontological-claim",
-        "snippet": "...noema, be contained within other noema, trace to the same noema it contains, and exis..."
+        "doc": "od-noema",
+        "snippet": "...contained by other units, and trace to units it already contains."
       },
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-2-noema-properties",
-        "snippet": "...noema, be contained by other noema, and trace to noema it contains—simultaneously"
+        "doc": "od-to-schematize",
+        "snippet": "...iscient verification; to endo(trace) foundational beliefs and consciously a..."
       },
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-2-complete-terminology-with-examples-noema",
-        "snippet": "...units, be contained by other units, and trace to units it already contains."
+        "doc": "od-trace",
+        "snippet": "Passive Trace: A trace that exists but is not current..."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-bond",
+        "snippet": "Definition: A trace that has been solidified through cognis..."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-nebula",
+        "snippet": "Nebula vs. Trace: A trace is the line connecting noema (..."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-core-questions-2",
+        "snippet": "...What happens if I follow this trace?\" \"What would happen if I let myself wa..."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-notes-for-future-terminology-work",
+        "snippet": "...\" — Consider: to crystallize (traces crystallize into bonds), to solidify (..."
       }
     ]
   },
@@ -1935,18 +2250,33 @@ const LINKED_TERMS = {
     "refs": [
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-5-introduction-to-versation",
-        "snippet": "...abits into communicative form. When you versate, you are not merely speaking or writing..."
+        "doc": "od-introduction-to-versation",
+        "snippet": "... communicative form. When you versate, you are not merely speaking or writing..."
       },
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-5-versation-and-the-vers-tor-to-versate",
-        "snippet": "...g a versōr to create a versūm. When you versate, you are cognescing the versōr's functi..."
+        "doc": "od-to-versate",
+        "snippet": "... to create a versūm. When you versate, you are cognescing the versōr's functi..."
       },
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-5-versation-and-the-vers-tor-vers-tor",
-        "snippet": "Necessarily cogniscient (you cannot versate without metacognitive awareness); Engag..."
+        "doc": "od-verstor",
+        "snippet": "...arily cogniscient (you cannot versate without metacognitive awareness); Engag..."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-verso",
+        "snippet": "...rlies all versation. When you versate, you engage in verso—the transmission o..."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-the-three-elements-encoded-in-every-versm",
+        "snippet": "...elf (the versātor)—you cannot versate from someone else's position."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-when-to-use-each",
+        "snippet": "... your endosphere. You want to versate about self-directed attention without i..."
       }
     ]
   },
@@ -1958,18 +2288,43 @@ const LINKED_TERMS = {
     "refs": [
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-2-schemata-and-schema-the-trust-distinctio-schema",
+        "doc": "od-schema",
         "snippet": "Note on the versation: \"endo(trusted\" uses an open parenthesi..."
       },
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-5-introduction-to-versation",
+        "doc": "od-introduction-to-versation",
         "snippet": "Versation is the synthesis of all metacognitive h..."
       },
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-5-vers-ra",
-        "snippet": "...The act of a human applying a versōr = versation (see below)."
+        "doc": "od-versra",
+        "snippet": "...f a human applying a versōr = versation (see below)."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-versation",
+        "snippet": "...ng versōra to create versūma. Versation is the synthesis of all metacognitive h..."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-verso",
+        "snippet": "...munication that underlies all versation. When you versate, you engage in verso—..."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-versologue",
+        "snippet": "... communicative exchange using versation. As endologue is to endospection, verso..."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-endo-self-directed-awareness",
+        "snippet": "... to or characterized by endo( versation."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-exo-other-directed-awareness",
+        "snippet": "...g to or characterized by exo( versation."
       }
     ]
   },
@@ -1981,18 +2336,13 @@ const LINKED_TERMS = {
     "refs": [
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-5-versation-and-the-vers-tor-verso",
-        "snippet": "...sation. When you versate, you engage in verso—the transmission of cogniscient meaning..."
+        "doc": "od-verso",
+        "snippet": "...en you versate, you engage in verso—the transmission of cogniscient meaning..."
       },
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-5-versation-and-the-vers-tor-versologue",
-        "snippet": "Definition: A specific episode of verso—a discrete communicative exchange using..."
-      },
-      {
-        "project": "ontological-dictionary",
-        "doc": "od-part-6-appendix-a-quick-reference-for-all-terms-vers-r-system",
-        "snippet": "Term: Verso | Definition: The fundamental act of me..."
+        "doc": "od-versologue",
+        "snippet": "...nition: A specific episode of verso—a discrete communicative exchange using..."
       }
     ]
   },
@@ -2004,18 +2354,8 @@ const LINKED_TERMS = {
     "refs": [
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-5-versation-and-the-vers-tor-versologue",
-        "snippet": "...ation. As endologue is to endospection, versologue is to versation."
-      },
-      {
-        "project": "ontological-dictionary",
-        "doc": "od-part-5-versation-and-the-vers-tor-versologue",
-        "snippet": "Example: \"The versologue between them was rich with koinoversive..."
-      },
-      {
-        "project": "ontological-dictionary",
-        "doc": "od-part-6-appendix-a-quick-reference-for-all-terms-vers-r-system",
-        "snippet": "Term: Versologue | Definition: A specific episode of ver..."
+        "doc": "od-versologue",
+        "snippet": "...endologue is to endospection, versologue is to versation."
       }
     ]
   },
@@ -2027,18 +2367,13 @@ const LINKED_TERMS = {
     "refs": [
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-5-versation-and-the-vers-tor-vers-tor",
-        "snippet": "...nsform verbs into versūma, you become a versātor."
+        "doc": "od-verstor",
+        "snippet": "...bs into versūma, you become a versātor."
       },
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-5-versation-and-the-vers-tor-vers-tor",
-        "snippet": "Properties of a Versātor:"
-      },
-      {
-        "project": "ontological-dictionary",
-        "doc": "od-part-5-enclosure-patterns-the-grammar-of-direct-the-three-elements-encoded-in-every-vers",
-        "snippet": "1. Origin: Always from oneself (the versātor)—you cannot versate from someone else's..."
+        "doc": "od-the-three-elements-encoded-in-every-versm",
+        "snippet": "...gin: Always from oneself (the versātor)—you cannot versate from someone else's..."
       }
     ]
   },
@@ -2050,18 +2385,43 @@ const LINKED_TERMS = {
     "refs": [
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-1-the-axiomatics-of-this-system",
-        "snippet": "...om endospection itself (see Part V: The Versōr System for this crucial distinction)."
+        "doc": "od-the-axiomatics-of-this-system",
+        "snippet": "...ction itself (see Part V: The Versōr System for this crucial distinction)."
       },
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-5-introduction-to-versation",
+        "doc": "od-the-nuloscape",
+        "snippet": "Relation to NULO( versōr (Part V): The two terms share a prefix ..."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-introduction-to-versation",
         "snippet": "The Versōr System is a grammatical architecture fo..."
       },
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-5-the-vers-r",
+        "doc": "od-the-versr",
         "snippet": "Definition: The versōr is a prefix-function that turns meaning..."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-the-versm",
+        "snippet": "... versūra (transformation by a versōr)—any endo(verb), exo(verb, koino(verb),..."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-versra",
+        "snippet": "...at happens to the word when a versōr is applied—not what you do, but what oc..."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-to-versate",
+        "snippet": "...gniscient act of harnessing a versōr to create a versūm. When you versate, y..."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-endo-self-directed-awareness",
+        "snippet": "Definition: The versōr for self-reflexive metacognitive commun..."
       }
     ]
   },
@@ -2073,18 +2433,28 @@ const LINKED_TERMS = {
     "refs": [
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-5-the-vers-m",
-        "snippet": "Definition: A versūm is any verb that has undergone versūra..."
+        "doc": "od-the-versm",
+        "snippet": "Definition: A versūm is any verb that has undergone versūra ..."
       },
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-5-the-vers-m",
-        "snippet": "Key Properties of a Versūm:"
+        "doc": "od-versra",
+        "snippet": "...derwent transformation into a versūm.\""
       },
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-5-the-vers-m",
-        "snippet": "Can be noema (a versūm-as-noema exists in the Perifield); Impl..."
+        "doc": "od-to-versate",
+        "snippet": "...rnessing a versōr to create a versūm. When you versate, you are cognescing t..."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-the-two-patterns",
+        "snippet": "...nclosure pattern (whether the versūm ends with a closing parenthesis or not)..."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-endoreflect-a-versm",
+        "snippet": "... A specific endoversive act—a versūm created by applying the endo( versōr to..."
       }
     ]
   },
@@ -2096,18 +2466,291 @@ const LINKED_TERMS = {
     "refs": [
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-5-the-vers-m",
-        "snippet": "...A versūm is any verb that has undergone versūra (transformation by a versōr)—any endo(v..."
+        "doc": "od-the-versm",
+        "snippet": "...s any verb that has undergone versūra (transformation by a versōr)—any endo(v..."
       },
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-5-vers-ra",
+        "doc": "od-versra",
         "snippet": "Etymology: From Latin versūra (a turning, a shift of direction)."
+      }
+    ]
+  },
+  "schematic": {
+    "symbol": "",
+    "definition": "Term from the Ontological Dictionary (substance).",
+    "project": "ontological-dictionary",
+    "color": "#9E5A2A",
+    "refs": [
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-to-schematize",
+        "snippet": "Schematic (adj.) = pertaining to schema (cognisce..."
+      }
+    ]
+  },
+  "schematatic": {
+    "symbol": "",
+    "definition": "Term from the Ontological Dictionary (substance).",
+    "project": "ontological-dictionary",
+    "color": "#9E5A2A",
+    "refs": [
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-to-schematize",
+        "snippet": "Schematatic (adj.) = pertaining to schemata (unveri..."
+      }
+    ]
+  },
+  "nuloscape": {
+    "symbol": "N0",
+    "definition": "The Nuloscape is the structured, internally-consistent reality of a thing that does not think.",
+    "project": "ontological-dictionary",
+    "color": "#2D6B5A",
+    "refs": [
+      {
+        "project": "purpose-of-schools",
+        "doc": "the-first-turn-outward",
+        "snippet": "... to you in specific ways: the Nuloscape.[58]"
+      },
+      {
+        "project": "purpose-of-schools",
+        "doc": "the-architecture-exosphere-exologue-threshold",
+        "snippet": "...ce between a Noemascape and a Nuloscape, because it is a noema in your own Peri..."
+      },
+      {
+        "project": "purpose-of-schools",
+        "doc": "demonstration-watching-the-architecture-run",
+        "snippet": "...t have a Noemascape; it has a Nuloscape, structure without interior, and yet sh..."
+      },
+      {
+        "project": "purpose-of-schools",
+        "doc": "what-exospecture-is-not",
+        "snippet": "...or a consciousness modeling a Nuloscape. Refracture turns the lens on itself. E..."
+      },
+      {
+        "project": "purpose-of-schools",
+        "doc": "exospecture-in-contexture",
+        "snippet": "...ng, she models the recorder’s Nuloscape as a manual seed dibber, or as she migh..."
       },
       {
         "project": "ontological-dictionary",
-        "doc": "od-part-5-vers-ra",
-        "snippet": "Definition: Versūra is what happens to the word when a vers..."
+        "doc": "od-the-noemascape",
+        "snippet": "Distinction from Nuloscape: A Noemascape has an interior able to m..."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-the-nuloscape",
+        "snippet": "Definition: The Nuloscape is the structured, internally-consisten..."
+      }
+    ]
+  },
+  "endospective": {
+    "symbol": "",
+    "definition": "Term from the Ontological Dictionary (habits).",
+    "project": "ontological-dictionary",
+    "color": "#6B3A6E",
+    "refs": [
+      {
+        "project": "purpose-of-schools",
+        "doc": "fracturing-factorials",
+        "snippet": "...th freedom, with wander, with endospective exploration. But here is the strange pa..."
+      },
+      {
+        "project": "purpose-of-schools",
+        "doc": "edospecture-in-contexture",
+        "snippet": "... light on entire foundations. Endospective practice makes this explicit for studen..."
+      },
+      {
+        "project": "purpose-of-schools",
+        "doc": "constellare-in-an-opportunity-centered-curriculum",
+        "snippet": "...graphical data, and their own Endospective reflections about place."
+      },
+      {
+        "project": "purpose-of-schools",
+        "doc": "designing-constellare-first-opportunities",
+        "snippet": "...ing clusters of noema through Endospective and Omnipere activities: journaling, di..."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-cogniscence",
+        "snippet": "...rocess itself. Cogniscence is endospective, metacognitive learning: not merely lea..."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-endoreflect-a-versm",
+        "snippet": "...ure. More omniperegrinal than endospective."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-when-to-use-each",
+        "snippet": "...eregrinal than systematically endospective."
+      },
+      {
+        "project": "axiometric-calculus",
+        "doc": "ac-part-2-2-6-the-cognitive-ladder-from-instinct-t",
+        "snippet": "...rges when thought applies the endospective habit to itself. This is what allows a ..."
+      }
+    ]
+  },
+  "omniperegrinal": {
+    "symbol": "",
+    "definition": "Term from the Ontological Dictionary (habits).",
+    "project": "ontological-dictionary",
+    "color": "#6B3A6E",
+    "refs": [
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-endoreflect-a-versm",
+        "snippet": "...l habit of Endospecture. More omniperegrinal than endospective."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-when-to-use-each",
+        "snippet": "...eflection is more exploratory/omniperegrinal than systematically endospective."
+      }
+    ]
+  },
+  "constellative": {
+    "symbol": "",
+    "definition": "Term from the Ontological Dictionary (habits).",
+    "project": "ontological-dictionary",
+    "color": "#6B3A6E",
+    "refs": []
+  },
+  "refractive": {
+    "symbol": "",
+    "definition": "Term from the Ontological Dictionary (habits).",
+    "project": "ontological-dictionary",
+    "color": "#6B3A6E",
+    "refs": []
+  },
+  "exospective": {
+    "symbol": "",
+    "definition": "Term from the Ontological Dictionary (habits).",
+    "project": "ontological-dictionary",
+    "color": "#6B3A6E",
+    "refs": [
+      {
+        "project": "purpose-of-schools",
+        "doc": "refraction-in-contexture",
+        "snippet": "These are exospective and content moves: they expand what a s..."
+      },
+      {
+        "project": "purpose-of-schools",
+        "doc": "the-first-turn-outward",
+        "snippet": "...as a part of it, is itself an exospective decision. You are choosing what your mo..."
+      },
+      {
+        "project": "purpose-of-schools",
+        "doc": "what-exospecture-is-not",
+        "snippet": "...utral. What renders any given exospective act ethical or unethical is the exospec..."
+      },
+      {
+        "project": "axiometric-calculus",
+        "doc": "ac-part-5-5-3-frame-operators",
+        "snippet": "Symbol: ~ ~ | Name: exospective invitation | Meaning: Invites receiver ..."
+      },
+      {
+        "project": "axiometric-calculus",
+        "doc": "ac-part-5-5-4-substance-markers",
+        "snippet": "Symbol: ~ξ~ | Name: exospective | Meaning: Marker inviting receiver to ..."
+      }
+    ]
+  },
+  "synthesure": {
+    "symbol": "Sy",
+    "definition": "The metacognitive habit of maintaining the integrity and alignment of the entire Noemascape, integrating internal identity and external modeling into singular agency through the Axiometric Calculus.",
+    "project": "ontological-dictionary",
+    "color": "#6B3A6E",
+    "refs": [
+      {
+        "project": "purpose-of-schools",
+        "doc": "what-exospecture-is-not",
+        "snippet": "...he subject of the next habit: Synthesure, the habit of holding the whole context..."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-habit-6-synthesure",
+        "snippet": "Synthesure is the habit of integrating internal id..."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-definition-6",
+        "snippet": "Synthesure is the metacognitive habit of maintaini..."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-the-critical-ontological-insight-2",
+        "snippet": "...ring, filtering, or modeling, Synthesure recognizes that identity and reality ar..."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-what-synthesure-is-and-is-not",
+        "snippet": "Synthesure IS:"
+      }
+    ]
+  },
+  "synthesis": {
+    "symbol": "Sy*",
+    "definition": "Term from the Ontological Dictionary (habits).",
+    "project": "ontological-dictionary",
+    "color": "#6B3A6E",
+    "refs": [
+      {
+        "project": "purpose-of-schools",
+        "doc": "taxonomy-ladders-mistaken-for-maps",
+        "snippet": "... prior knowledge. There is no synthesis without drawing on stored experiences. ..."
+      },
+      {
+        "project": "purpose-of-schools",
+        "doc": "knowledge-orrery-orbiting-a-moving-center",
+        "snippet": "...al of instruction is holistic synthesis, or cultivating a complex construct tha..."
+      },
+      {
+        "project": "purpose-of-schools",
+        "doc": "where-to-intervene",
+        "snippet": "...w meanings through deliberate synthesis rather than unconscious inheritance. It..."
+      },
+      {
+        "project": "purpose-of-schools",
+        "doc": "practicing-metacognition",
+        "snippet": "... Refraction, Exospection, and Synthesis, as the core practices of Cogniscence. ..."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-the-critical-ontological-insight-2",
+        "snippet": "...bject but a continuous act of synthesis. While the other habits specialize in e..."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-introduction-to-versation",
+        "snippet": "Versation is the synthesis of all metacognitive habits into commun..."
+      },
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-versation",
+        "snippet": "...ate versūma. Versation is the synthesis of all metacognitive habits into commun..."
+      }
+    ]
+  },
+  "synthesuric": {
+    "symbol": "",
+    "definition": "Term from the Ontological Dictionary (habits).",
+    "project": "ontological-dictionary",
+    "color": "#6B3A6E",
+    "refs": []
+  },
+  "holos": {
+    "symbol": "H",
+    "definition": "Term from the Ontological Dictionary (habits).",
+    "project": "ontological-dictionary",
+    "color": "#6B3A6E",
+    "refs": [
+      {
+        "project": "ontological-dictionary",
+        "doc": "od-definition-6",
+        "snippet": "...ity and external action); The Holos (the state of the entire system as a si..."
       }
     ]
   }

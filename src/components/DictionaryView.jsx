@@ -1,322 +1,212 @@
 import React, { useState, useMemo, useCallback, useRef, useEffect } from "react";
-import {
-  ReactFlow,
-  Background,
-  Controls,
-  MiniMap,
-  useNodesState,
-  useEdgesState,
-  useReactFlow,
-  ReactFlowProvider,
-} from "@xyflow/react";
-import "@xyflow/react/dist/style.css";
-import { ExternalLink, X, BookOpen, ArrowRight } from "lucide-react";
+import ForceGraph3D from "react-force-graph-3d";
+import SpriteText from "three-spritetext";
+import * as THREE from "three";
+import { ExternalLink, X } from "lucide-react";
 import { PALETTE as P } from "../data/constants.js";
 
-// — Colors —
-const OD = "#9E5A2A";
-const AC = "#2D6B5A";
+// ── Colors & Categories ──────────────────────────────────────
 
-// — Category definitions with colors and ring placement —
+const OD = "#9E5A2A";
+
 const CATEGORIES = {
-  substance: { label: "Substance", color: "#9E5A2A", ring: 0 },
-  spatial:   { label: "Spatial",   color: "#7A5230", ring: 1 },
-  habits:    { label: "Habits",    color: "#6B3A6E", ring: 2 },
-  axiomatics:{ label: "Axiomatics",color: "#AA6644", ring: 3 },
-  versor:    { label: "Versōr",    color: "#8B5C3E", ring: 3 },
-  calculus:  { label: "Calculus",  color: "#2D6B5A", ring: 4 },
+  substance:  { label: "Substance",  color: "#D4845A", emissive: "#9E5A2A" },
+  spatial:    { label: "Spatial",    color: "#5AAA88", emissive: "#2D6B5A" },
+  habits:     { label: "Habits",     color: "#A86AAD", emissive: "#6B3A6E" },
+  axiomatics: { label: "Axiomatics", color: "#CC8855", emissive: "#AA6644" },
+  versor:     { label: "Versor",     color: "#B88866", emissive: "#8B5C3E" },
+  calculus:   { label: "Calculus",   color: "#5A99B3", emissive: "#2D6B5A" },
 };
 
-// — Term → category mapping —
 const TERM_CATEGORIES = {
-  // Substance (OD Part II core terms)
   noema: "substance", noemata: "substance", noematic: "substance",
   schema: "substance", schemata: "substance", schematize: "substance",
+  schematic: "substance", schematatic: "substance",
   trace: "substance", bond: "substance", fluxion: "substance",
   nebula: "substance", axis: "substance", constellation: "substance",
   exologue: "substance", cogniscence: "substance", cognesce: "substance",
   cogniscent: "substance", contexture: "substance",
-  // Spatial (OD Part II spaces)
   noemascape: "spatial", perifield: "spatial", "outer lens": "spatial",
   threshold: "spatial", exofield: "spatial", noemagraph: "spatial",
   exosphere: "spatial", projection: "spatial", refractal: "spatial",
-  endosphere: "spatial",
-  // Habits (OD Part III)
+  endosphere: "spatial", nuloscape: "spatial",
   endospecture: "habits", omnipere: "habits", constellare: "habits",
-  refracture: "habits", exospecture: "habits",
+  refracture: "habits", exospecture: "habits", synthesure: "habits",
   endospection: "habits", omniperegrination: "habits", constellaration: "habits",
   refraction: "habits", exospection: "habits", endologue: "habits",
-  metacognition: "habits",
-  // Axiomatics (OD Part IV)
+  metacognition: "habits", endospective: "habits", omniperegrinal: "habits",
+  constellative: "habits", refractive: "habits", exospective: "habits",
+  synthesis: "habits", synthesuric: "habits", holos: "habits",
   axiomatics: "axiomatics", axiomatica: "axiomatics", axiomation: "axiomatics",
   axiomatist: "axiomatics", axiomatize: "axiomatics",
-  // Versōr (OD Part V)
-  "versōr": "versor", "versūm": "versor", "versūra": "versor",
-  versation: "versor", "versātor": "versor", verso: "versor",
-  versologue: "versor", versate: "versor",
-  // Calculus-origin terms
+  versation: "versor", verso: "versor", versologue: "versor", versate: "versor",
   gravity: "calculus", instinct: "calculus", thought: "calculus",
   consciousness: "calculus", emotion: "calculus", life: "calculus",
   memory: "calculus", tesseractic: "calculus", oppression: "calculus",
 };
 
-// ============================================================
-// Custom React Flow Node — Term pill
-// ============================================================
-function TermNodeComponent({ data }) {
-  const isSelected = data.isSelected;
-  const isDimmed = data.isDimmed;
-  const color = data.color || OD;
+// ── Build graph data ─────────────────────────────────────────
 
-  return (
-    <div
-      onClick={data.onClick}
-      style={{
-        display: "flex",
-        alignItems: "center",
-        gap: 6,
-        padding: "8px 14px",
-        borderRadius: 20,
-        background: isSelected ? `${color}18` : isDimmed ? `${P.bg}90` : `${color}08`,
-        border: `1.5px solid ${isSelected ? color : isDimmed ? `${P.bd}60` : `${color}30`}`,
-        cursor: "pointer",
-        transition: "all 0.35s ease",
-        opacity: isDimmed ? 0.3 : 1,
-        boxShadow: isSelected ? `0 2px 12px ${color}20` : "none",
-        minWidth: 80,
-        whiteSpace: "nowrap",
-      }}
-    >
-      {/* Symbol */}
-      {data.symbol && (
-        <span style={{
-          fontFamily: "serif",
-          fontSize: 16,
-          fontStyle: "italic",
-          color: isSelected ? color : isDimmed ? P.tf : color,
-          fontWeight: 500,
-          transition: "color 0.3s",
-        }}>
-          {data.symbol}
-        </span>
-      )}
-      {/* Name */}
-      <span style={{
-        fontFamily: "'IBM Plex Mono', monospace",
-        fontSize: 10,
-        fontWeight: isSelected ? 600 : 400,
-        color: isSelected ? P.tx : isDimmed ? P.tf : P.tm,
-        letterSpacing: "0.02em",
-        transition: "color 0.3s",
-      }}>
-        {data.label}
-      </span>
-    </div>
-  );
-}
-
-// ============================================================
-// Category label node
-// ============================================================
-function CategoryLabelComponent({ data }) {
-  return (
-    <div style={{
-      fontFamily: "'IBM Plex Mono', monospace",
-      fontSize: 9,
-      letterSpacing: "0.14em",
-      textTransform: "uppercase",
-      color: `${data.color}80`,
-      fontWeight: 500,
-      pointerEvents: "none",
-      whiteSpace: "nowrap",
-    }}>
-      {data.label}
-    </div>
-  );
-}
-
-const nodeTypes = {
-  termNode: TermNodeComponent,
-  categoryLabel: CategoryLabelComponent,
-};
-
-// ============================================================
-// Build the constellation graph
-// ============================================================
-function buildConstellation(linkedTerms, projects, selectedKey) {
-  const termEntries = Object.entries(linkedTerms);
+function buildGraphData(linkedTerms, projects) {
   const termKeys = new Set(Object.keys(linkedTerms));
   const nodes = [];
-  const edges = [];
+  const links = [];
+  const linkSet = new Set();
 
-  // Determine connected terms for selection state
-  const connectedToSelected = new Set();
-  if (selectedKey) connectedToSelected.add(selectedKey);
-
-  // Categorize terms
-  const categorized = {};
-  for (const cat of Object.keys(CATEGORIES)) categorized[cat] = [];
-
-  for (const [name, data] of termEntries) {
+  // Create nodes
+  for (const [name, data] of Object.entries(linkedTerms)) {
     const cat = TERM_CATEGORIES[name] || "substance";
-    categorized[cat].push({ name, ...data });
+    const catDef = CATEGORIES[cat] || CATEGORIES.substance;
+    nodes.push({
+      id: name,
+      symbol: data.symbol || "",
+      definition: data.definition,
+      category: cat,
+      color: catDef.color,
+      emissive: catDef.emissive,
+      refs: data.refs || [],
+      connectionCount: 0,
+    });
   }
 
-  // Extract edges from OD project paragraph linkedTerms
+  // Extract edges from OD + AC sections
   const odProject = projects.find(p => p.id === "ontological-dictionary");
   const acProject = projects.find(p => p.id === "axiometric-calculus");
-  const edgeSet = new Set();
 
-  function extractEdgesFromSections(sections, sourceProject) {
+  function extractEdges(sections) {
     for (const sec of sections) {
-      // Match section title to a term
-      const secTermName = matchSectionToTerm(sec.title, termKeys);
-      if (secTermName && sec.paragraphs) {
+      const secTerm = matchSectionToTerm(sec.title, termKeys);
+      if (secTerm && sec.paragraphs) {
         for (const para of sec.paragraphs) {
           for (const ref of (para.linkedTerms || [])) {
-            if (ref !== secTermName && termKeys.has(ref)) {
-              const edgeId = [secTermName, ref].sort().join("--");
-              if (!edgeSet.has(edgeId)) {
-                edgeSet.add(edgeId);
-                edges.push({
-                  id: `e-${edgeId}`,
-                  source: `term-${secTermName}`,
-                  target: `term-${ref}`,
-                  type: "straight",
-                  style: { stroke: `${P.tx}10`, strokeWidth: 0.8 },
-                  data: { source: secTermName, target: ref },
-                });
-                // Track connections for selection highlighting
-                if (selectedKey === secTermName || selectedKey === ref) {
-                  connectedToSelected.add(secTermName);
-                  connectedToSelected.add(ref);
-                }
+            if (ref !== secTerm && termKeys.has(ref)) {
+              const edgeId = [secTerm, ref].sort().join("--");
+              if (!linkSet.has(edgeId)) {
+                linkSet.add(edgeId);
+                links.push({ source: secTerm, target: ref });
               }
             }
           }
         }
       }
-      if (sec.children) extractEdgesFromSections(sec.children, sourceProject);
+      if (sec.children) extractEdges(sec.children);
     }
   }
 
-  if (odProject) {
-    for (const part of odProject.parts) {
-      extractEdgesFromSections(part.children, "ontological-dictionary");
-    }
-  }
-  if (acProject) {
-    for (const part of acProject.parts) {
-      extractEdgesFromSections(part.children, "axiometric-calculus");
-    }
-  }
+  if (odProject) for (const part of odProject.parts) extractEdges(part.children);
+  if (acProject) for (const part of acProject.parts) extractEdges(part.children);
 
-  // Radial layout
-  const centerX = 700;
-  const centerY = 500;
-  const rings = [
-    { radius: 220, cats: ["substance"] },
-    { radius: 370, cats: ["spatial"] },
-    { radius: 490, cats: ["habits"] },
-    { radius: 600, cats: ["axiomatics", "versor"] },
-    { radius: 720, cats: ["calculus"] },
-  ];
-
-  for (const ring of rings) {
-    // Collect all terms in this ring
-    const ringTerms = [];
-    for (const cat of ring.cats) {
-      ringTerms.push(...(categorized[cat] || []).map(t => ({ ...t, cat })));
-    }
-    if (ringTerms.length === 0) continue;
-
-    const angleStep = (2 * Math.PI) / ringTerms.length;
-    // Offset each ring slightly to avoid alignment
-    const startAngle = ring.radius * 0.01;
-
-    ringTerms.forEach((term, i) => {
-      const angle = startAngle + i * angleStep - Math.PI / 2; // Start from top
-      const x = centerX + ring.radius * Math.cos(angle);
-      const y = centerY + ring.radius * Math.sin(angle);
-      const catDef = CATEGORIES[term.cat] || CATEGORIES.substance;
-
-      const isSelected = selectedKey === term.name;
-      const isDimmed = selectedKey && !connectedToSelected.has(term.name);
-
-      nodes.push({
-        id: `term-${term.name}`,
-        type: "termNode",
-        position: { x, y },
-        draggable: true,
-        data: {
-          label: term.name,
-          symbol: term.symbol,
-          color: catDef.color,
-          category: term.cat,
-          isSelected,
-          isDimmed,
-          onClick: () => {}, // Will be set via callback
-        },
-      });
-    });
-
-    // Category label at the ring's edge
-    if (ring.cats.length === 1) {
-      const cat = ring.cats[0];
-      const catDef = CATEGORIES[cat];
-      nodes.push({
-        id: `label-${cat}`,
-        type: "categoryLabel",
-        position: { x: centerX + ring.radius + 30, y: centerY - 8 },
-        draggable: false,
-        selectable: false,
-        data: { label: catDef.label, color: catDef.color },
-      });
-    }
+  // Count connections per node
+  for (const link of links) {
+    const src = nodes.find(n => n.id === link.source);
+    const tgt = nodes.find(n => n.id === link.target);
+    if (src) src.connectionCount++;
+    if (tgt) tgt.connectionCount++;
   }
 
-  // Update edge styles for selection
-  if (selectedKey) {
-    const selectedColor = linkedTerms[selectedKey]?.color || OD;
-    for (const edge of edges) {
-      const isConnected = edge.data.source === selectedKey || edge.data.target === selectedKey;
-      edge.style = isConnected
-        ? { stroke: `${selectedColor}80`, strokeWidth: 2 }
-        : { stroke: `${P.tx}06`, strokeWidth: 0.5 };
-      edge.animated = isConnected;
-    }
-  }
-
-  return { nodes, edges };
+  return { nodes, links };
 }
 
-// ============================================================
-// Term Detail Panel
-// ============================================================
-function TermDetailPanel({ termKey, termData, projects, onClose, onEditSection, linkedTerms }) {
+// ── Three.js object cache ────────────────────────────────────
+
+const nodeObjectCache = new Map();
+const GLOW_TEXTURE = (() => {
+  const size = 128;
+  const canvas = document.createElement("canvas");
+  canvas.width = size;
+  canvas.height = size;
+  const ctx = canvas.getContext("2d");
+  const gradient = ctx.createRadialGradient(size/2, size/2, 0, size/2, size/2, size/2);
+  gradient.addColorStop(0, "rgba(255,255,255,0.6)");
+  gradient.addColorStop(0.3, "rgba(255,255,255,0.15)");
+  gradient.addColorStop(1, "rgba(255,255,255,0)");
+  ctx.fillStyle = gradient;
+  ctx.fillRect(0, 0, size, size);
+  const tex = new THREE.CanvasTexture(canvas);
+  return tex;
+})();
+
+function createNodeObject(node, selectedId) {
+  const isSelected = node.id === selectedId;
+  const isConnected = node._isConnected;
+  const isDimmed = selectedId && !isSelected && !isConnected;
+
+  const group = new THREE.Group();
+
+  // Sphere
+  const radius = Math.max(1.8, 1.2 + Math.sqrt(node.connectionCount) * 0.5);
+  const color = new THREE.Color(node.color);
+  const geo = new THREE.SphereGeometry(radius, 24, 16);
+  const mat = new THREE.MeshPhongMaterial({
+    color: isDimmed ? 0x333333 : color,
+    emissive: isDimmed ? 0x111111 : new THREE.Color(node.emissive),
+    emissiveIntensity: isSelected ? 0.9 : isConnected ? 0.6 : 0.35,
+    shininess: 80,
+    transparent: true,
+    opacity: isDimmed ? 0.3 : 1,
+  });
+  const sphere = new THREE.Mesh(geo, mat);
+  group.add(sphere);
+
+  // Glow sprite
+  const glowMat = new THREE.SpriteMaterial({
+    map: GLOW_TEXTURE,
+    color: isDimmed ? 0x222222 : color,
+    transparent: true,
+    opacity: isSelected ? 0.5 : isConnected ? 0.3 : isDimmed ? 0.05 : 0.15,
+    depthWrite: false,
+    blending: THREE.AdditiveBlending,
+  });
+  const glow = new THREE.Sprite(glowMat);
+  glow.scale.set(radius * 4, radius * 4, 1);
+  group.add(glow);
+
+  // Symbol text
+  if (node.symbol) {
+    const symbolSprite = new SpriteText(node.symbol, isSelected ? 3 : 2.2, isSelected ? "#FFFFFF" : node.color);
+    symbolSprite.fontFace = "Georgia, serif";
+    symbolSprite.fontWeight = "bold";
+    symbolSprite.position.set(0, radius + 2.5, 0);
+    symbolSprite.material.depthWrite = false;
+    symbolSprite.material.transparent = true;
+    symbolSprite.material.opacity = isDimmed ? 0.15 : 1;
+    group.add(symbolSprite);
+  }
+
+  // Name label
+  const labelSprite = new SpriteText(
+    node.id,
+    isSelected ? 2.2 : isDimmed ? 1.2 : 1.6,
+    isDimmed ? "#666655" : (isSelected ? "#FFFFFF" : "#C4B9A8")
+  );
+  labelSprite.fontFace = "'IBM Plex Mono', Consolas, monospace";
+  labelSprite.fontWeight = isSelected ? "600" : "400";
+  labelSprite.position.set(0, -(radius + 2.2), 0);
+  labelSprite.material.depthWrite = false;
+  labelSprite.material.transparent = true;
+  labelSprite.material.opacity = isDimmed ? 0.2 : (isSelected ? 1 : 0.8);
+  group.add(labelSprite);
+
+  return group;
+}
+
+// ── Term Detail Panel ────────────────────────────────────────
+
+function TermDetailPanel({ termKey, termData, projects, onClose, onEditSection }) {
   if (!termKey || !termData) return null;
 
-  // Find the defining section in OD
   const odProject = projects.find(p => p.id === "ontological-dictionary");
   const termSection = odProject ? findTermSection(odProject, termKey) : null;
   const termParas = termSection ? collectAllParagraphs(termSection) : [];
 
-  // Categorize paragraphs
   const definition = termParas.find(p => p.text.toLowerCase().startsWith("definition:"));
   const partOfSpeech = termParas.find(p => p.text.toLowerCase().startsWith("part of speech:"));
-  const isItems = termParas.filter(p => {
-    const t = p.text.toLowerCase();
-    return t.includes(" is ") && t.includes(" is not ");
-  });
-  const otherParas = termParas.filter(p =>
-    p !== definition && p !== partOfSpeech && !isItems.includes(p)
-  ).slice(0, 6);
+  const otherParas = termParas.filter(p => p !== definition && p !== partOfSpeech).slice(0, 5);
 
   const catKey = TERM_CATEGORIES[termKey] || "substance";
   const catDef = CATEGORIES[catKey] || CATEGORIES.substance;
   const color = catDef.color;
 
-  // Count refs per project
   const refsByProject = {};
   for (const ref of (termData.refs || [])) {
     refsByProject[ref.project] = (refsByProject[ref.project] || 0) + 1;
@@ -324,120 +214,69 @@ function TermDetailPanel({ termKey, termData, projects, onClose, onEditSection, 
 
   return (
     <div style={{
-      width: 320,
-      borderLeft: `1px solid ${P.bd}`,
-      background: P.sb,
-      overflowY: "auto",
-      flexShrink: 0,
-      padding: 0,
+      position: "absolute", top: 0, right: 0, bottom: 0, width: 340,
+      background: `${P.sb}F8`, backdropFilter: "blur(12px)",
+      borderLeft: `1px solid ${P.bd}60`, overflowY: "auto", zIndex: 10,
+      boxShadow: "-8px 0 32px rgba(0,0,0,0.15)",
     }}>
-      {/* Close button */}
-      <div style={{
-        display: "flex",
-        justifyContent: "flex-end",
-        padding: "8px 12px 0",
-      }}>
-        <button
-          onClick={onClose}
-          style={{
-            background: "none", border: "none", cursor: "pointer",
-            color: P.tf, padding: 4,
-          }}
-        >
+      <div style={{ display: "flex", justifyContent: "flex-end", padding: "8px 12px 0" }}>
+        <button onClick={onClose} style={{
+          background: "none", border: "none", cursor: "pointer", color: P.tf, padding: 4,
+        }}>
           <X size={14} />
         </button>
       </div>
 
-      {/* Term header */}
       <div style={{ padding: "4px 24px 20px" }}>
+        {termData.symbol && (
+          <div style={{ fontFamily: "serif", fontSize: 30, fontStyle: "italic", color, marginBottom: 4 }}>
+            {termData.symbol}
+          </div>
+        )}
         <div style={{
-          fontFamily: "serif",
-          fontSize: 30,
-          fontStyle: "italic",
-          color,
-          marginBottom: 4,
-        }}>
-          {termData.symbol || ""}
-        </div>
-        <div style={{
-          fontFamily: "'Cormorant Garamond', serif",
-          fontSize: 24,
-          fontWeight: 500,
-          color,
-          marginBottom: 8,
-          lineHeight: 1.2,
-          textTransform: "capitalize",
+          fontFamily: "'Cormorant Garamond', serif", fontSize: 24, fontWeight: 500,
+          color, marginBottom: 8, lineHeight: 1.2, textTransform: "capitalize",
         }}>
           {termKey}
         </div>
 
-        {/* Category badge */}
         <div style={{
-          display: "inline-block",
-          fontFamily: "'IBM Plex Mono', monospace",
-          fontSize: 9,
-          letterSpacing: "0.1em",
-          textTransform: "uppercase",
-          color: `${color}`,
-          background: `${color}10`,
-          border: `1px solid ${color}25`,
-          borderRadius: 10,
-          padding: "2px 8px",
-          marginBottom: 12,
+          display: "inline-block", fontFamily: "'IBM Plex Mono', monospace", fontSize: 10,
+          letterSpacing: "0.1em", textTransform: "uppercase", color,
+          background: `${color}15`, border: `1px solid ${color}25`,
+          borderRadius: 10, padding: "2px 8px", marginBottom: 12,
         }}>
           {catDef.label}
         </div>
 
-        {/* Part of speech */}
         {partOfSpeech && (
           <div style={{
-            fontFamily: "'Spectral', serif",
-            fontSize: 12,
-            fontStyle: "italic",
-            color: P.tm,
-            marginBottom: 8,
+            fontFamily: "'Spectral', serif", fontSize: 12, fontStyle: "italic",
+            color: P.tm, marginBottom: 8,
           }}>
             {partOfSpeech.text.replace(/^Part of Speech:\s*/i, "")}
           </div>
         )}
 
-        {/* Definition */}
-        <div style={{
-          fontFamily: "'Spectral', serif",
-          fontSize: 14,
-          lineHeight: 1.65,
-          color: P.tx,
-        }}>
-          {definition
-            ? definition.text.replace(/^Definition:\s*/i, "")
-            : termData.definition
-          }
+        <div style={{ fontFamily: "'Spectral', serif", fontSize: 14, lineHeight: 1.65, color: P.tx }}>
+          {definition ? definition.text.replace(/^Definition:\s*/i, "") : termData.definition}
         </div>
       </div>
 
-      {/* Separator */}
       <div style={{ height: 1, background: P.bd, margin: "0 24px" }} />
 
-      {/* Additional content from OD */}
       {otherParas.length > 0 && (
         <div style={{ padding: "16px 24px" }}>
           <div style={{
-            fontFamily: "'IBM Plex Mono', monospace",
-            fontSize: 9,
-            letterSpacing: "0.1em",
-            textTransform: "uppercase",
-            color: P.tf,
-            marginBottom: 10,
+            fontFamily: "'IBM Plex Mono', monospace", fontSize: 10, letterSpacing: "0.1em",
+            textTransform: "uppercase", color: P.tf, marginBottom: 10,
           }}>
             Details
           </div>
           {otherParas.map((p, i) => (
             <p key={i} style={{
-              fontFamily: "'Spectral', serif",
-              fontSize: 12.5,
-              lineHeight: 1.6,
-              color: P.tm,
-              margin: "0 0 8px 0",
+              fontFamily: "'Spectral', serif", fontSize: 12.5, lineHeight: 1.6,
+              color: P.tm, margin: "0 0 8px 0",
             }}>
               {p.text}
             </p>
@@ -445,61 +284,38 @@ function TermDetailPanel({ termKey, termData, projects, onClose, onEditSection, 
         </div>
       )}
 
-      {/* Cross-references */}
       {(termData.refs || []).length > 0 && (
         <div style={{ padding: "8px 24px 20px" }}>
           <div style={{ height: 1, background: P.bd, marginBottom: 16 }} />
           <div style={{
-            fontFamily: "'IBM Plex Mono', monospace",
-            fontSize: 9,
-            letterSpacing: "0.1em",
-            textTransform: "uppercase",
-            color: P.tf,
-            marginBottom: 10,
+            fontFamily: "'IBM Plex Mono', monospace", fontSize: 10, letterSpacing: "0.1em",
+            textTransform: "uppercase", color: P.tf, marginBottom: 10,
           }}>
             {(termData.refs || []).length} References
           </div>
-
           {Object.entries(refsByProject).map(([projId, count]) => {
             const proj = projects.find(p => p.id === projId);
-            const projColor = proj?.color || P.tm;
             return (
               <div key={projId} style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 6,
-                marginBottom: 6,
-                fontFamily: "'IBM Plex Mono', monospace",
-                fontSize: 10,
-                color: P.tm,
+                display: "flex", alignItems: "center", gap: 6, marginBottom: 6,
+                fontFamily: "'IBM Plex Mono', monospace", fontSize: 10, color: P.tm,
               }}>
-                <div style={{
-                  width: 5, height: 5, borderRadius: "50%",
-                  background: projColor,
-                }} />
+                <div style={{ width: 5, height: 5, borderRadius: "50%", background: proj?.color || P.tm }} />
                 <span>{proj?.name || projId}</span>
                 <span style={{ color: P.tf, marginLeft: "auto" }}>{count}</span>
               </div>
             );
           })}
-
-          {/* Sample snippets */}
           {(termData.refs || []).slice(0, 3).map((ref, i) => {
             const proj = projects.find(p => p.id === ref.project);
             return (
               <div key={i} style={{
-                marginTop: 8,
-                padding: "8px 10px",
-                background: P.bg,
-                borderRadius: 4,
-                borderLeft: `2px solid ${proj?.color || P.bd}`,
+                marginTop: 8, padding: "8px 10px", background: P.bg,
+                borderRadius: 4, borderLeft: `2px solid ${proj?.color || P.bd}`,
               }}>
                 <div style={{
-                  fontFamily: "'Spectral', serif",
-                  fontSize: 11,
-                  fontStyle: "italic",
-                  color: P.tm,
-                  lineHeight: 1.5,
+                  fontFamily: "'Spectral', serif", fontSize: 11, fontStyle: "italic",
+                  color: P.tm, lineHeight: 1.5,
                 }}>
                   {ref.snippet}
                 </div>
@@ -509,25 +325,15 @@ function TermDetailPanel({ termKey, termData, projects, onClose, onEditSection, 
         </div>
       )}
 
-      {/* View in Editor button */}
       {termSection && (
         <div style={{ padding: "8px 24px 24px" }}>
           <button
             onClick={() => onEditSection("ontological-dictionary", termSection.id)}
             style={{
-              display: "flex",
-              alignItems: "center",
-              gap: 6,
-              width: "100%",
-              padding: "8px 12px",
-              background: `${color}08`,
-              border: `1px solid ${color}25`,
-              borderRadius: 4,
-              cursor: "pointer",
-              fontFamily: "'IBM Plex Mono', monospace",
-              fontSize: 10,
-              color,
-              transition: "all 0.2s",
+              display: "flex", alignItems: "center", gap: 6, width: "100%",
+              padding: "8px 12px", background: `${color}08`, border: `1px solid ${color}25`,
+              borderRadius: 4, cursor: "pointer", fontFamily: "'IBM Plex Mono', monospace",
+              fontSize: 10, color, transition: "all 0.2s",
             }}
             onMouseOver={e => e.currentTarget.style.background = `${color}15`}
             onMouseOut={e => e.currentTarget.style.background = `${color}08`}
@@ -541,15 +347,78 @@ function TermDetailPanel({ termKey, termData, projects, onClose, onEditSection, 
   );
 }
 
-// ============================================================
-// Inner component (needs ReactFlowProvider context)
-// ============================================================
-function DictionaryViewInner({ projects, linkedTerms, onSelectSection, onSelectTerm, onSetView }) {
-  const [selectedKey, setSelectedKey] = useState(null);
-  const reactFlowInstance = useReactFlow();
+// ── Main Dictionary View ─────────────────────────────────────
 
-  const handleTermClick = useCallback((termName) => {
-    setSelectedKey(prev => prev === termName ? null : termName);
+export default function DictionaryView({ projects, linkedTerms, onSelectSection, onSelectTerm, onSetView }) {
+  const [selectedId, setSelectedId] = useState(null);
+  const fgRef = useRef();
+  const containerRef = useRef();
+  const [dimensions, setDimensions] = useState({ width: 800, height: 600 });
+
+  // Measure container
+  useEffect(() => {
+    const measure = () => {
+      if (containerRef.current) {
+        const rect = containerRef.current.getBoundingClientRect();
+        setDimensions({ width: rect.width, height: rect.height });
+      }
+    };
+    measure();
+    const observer = new ResizeObserver(measure);
+    if (containerRef.current) observer.observe(containerRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  // Build graph data
+  const graphData = useMemo(
+    () => buildGraphData(linkedTerms, projects),
+    [linkedTerms, projects]
+  );
+
+  // Track connected nodes for highlighting
+  const connectedNodes = useMemo(() => {
+    if (!selectedId) return new Set();
+    const connected = new Set([selectedId]);
+    for (const link of graphData.links) {
+      const src = typeof link.source === "object" ? link.source.id : link.source;
+      const tgt = typeof link.target === "object" ? link.target.id : link.target;
+      if (src === selectedId) connected.add(tgt);
+      if (tgt === selectedId) connected.add(src);
+    }
+    return connected;
+  }, [selectedId, graphData.links]);
+
+  // Mark nodes with connection state for rendering
+  const nodesWithState = useMemo(() => {
+    return graphData.nodes.map(n => ({
+      ...n,
+      _isConnected: connectedNodes.has(n.id),
+    }));
+  }, [graphData.nodes, connectedNodes]);
+
+  const graphDataWithState = useMemo(() => ({
+    nodes: nodesWithState,
+    links: graphData.links,
+  }), [nodesWithState, graphData.links]);
+
+  // Node click handler
+  const handleNodeClick = useCallback((node) => {
+    setSelectedId(prev => prev === node.id ? null : node.id);
+
+    // Fly camera toward node neighborhood — stay far enough to see connected nodes
+    if (fgRef.current) {
+      const dist = 100;
+      const angle = Math.atan2(node.z, node.x);
+      fgRef.current.cameraPosition(
+        { x: node.x + dist * Math.cos(angle + 0.5), y: node.y + 40, z: node.z + dist * Math.sin(angle + 0.5) },
+        { x: node.x, y: node.y, z: node.z },
+        1200
+      );
+    }
+  }, []);
+
+  const handleBackgroundClick = useCallback(() => {
+    setSelectedId(null);
   }, []);
 
   const handleEditSection = useCallback((projectId, sectionId) => {
@@ -557,233 +426,234 @@ function DictionaryViewInner({ projects, linkedTerms, onSelectSection, onSelectT
     onSetView("editor");
   }, [onSelectSection, onSetView]);
 
-  const handleClose = useCallback(() => {
-    setSelectedKey(null);
+  // Configure scene + forces on mount
+  useEffect(() => {
+    if (!fgRef.current) return;
+
+    // Configure d3 forces — moderate repulsion, tight link distance
+    fgRef.current.d3Force("charge").strength(-60).distanceMax(250);
+    fgRef.current.d3Force("link").distance(25);
+
+    const scene = fgRef.current.scene();
+    const renderer = fgRef.current.renderer();
+
+    // Background
+    scene.background = new THREE.Color("#1a1510");
+    scene.fog = new THREE.FogExp2("#1a1510", 0.0008);
+
+    // Lighting
+    scene.children = scene.children.filter(c =>
+      !(c instanceof THREE.AmbientLight || c instanceof THREE.DirectionalLight || c instanceof THREE.PointLight)
+    );
+
+    const ambient = new THREE.AmbientLight(0xfaf7f2, 0.4);
+    scene.add(ambient);
+
+    const key = new THREE.DirectionalLight(0xffeedd, 0.6);
+    key.position.set(100, 200, 150);
+    scene.add(key);
+
+    const fill = new THREE.PointLight(0x9E5A2A, 0.5, 500);
+    fill.position.set(-100, -50, 100);
+    scene.add(fill);
+
+    const rim = new THREE.PointLight(0x6B3A6E, 0.3, 400);
+    rim.position.set(50, -100, -150);
+    scene.add(rim);
+
+    // Renderer settings
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.1;
+
+    // Starfield / dust particles
+    const particleCount = 2000;
+    const particleGeo = new THREE.BufferGeometry();
+    const positions = new Float32Array(particleCount * 3);
+    for (let i = 0; i < particleCount * 3; i++) {
+      positions[i] = (Math.random() - 0.5) * 800;
+    }
+    particleGeo.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+    const particleMat = new THREE.PointsMaterial({
+      color: 0x9E5A2A,
+      size: 0.5,
+      transparent: true,
+      opacity: 0.25,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false,
+    });
+    const particles = new THREE.Points(particleGeo, particleMat);
+    particles.name = "starfield";
+    scene.add(particles);
+
+    // Orbit controls damping
+    const controls = fgRef.current.controls();
+    if (controls) {
+      controls.enableDamping = true;
+      controls.dampingFactor = 0.08;
+      controls.rotateSpeed = 0.6;
+      controls.autoRotate = true;
+      controls.autoRotateSpeed = 0.3;
+    }
   }, []);
 
-  // Build graph
-  const { nodes: graphNodes, edges: graphEdges } = useMemo(
-    () => buildConstellation(linkedTerms, projects, selectedKey),
-    [linkedTerms, projects, selectedKey]
-  );
-
-  // Inject click handlers into nodes
-  const nodesWithHandlers = useMemo(() =>
-    graphNodes.map(n => {
-      if (n.type === "termNode") {
-        return {
-          ...n,
-          data: { ...n.data, onClick: () => handleTermClick(n.data.label) },
-        };
-      }
-      return n;
-    }),
-    [graphNodes, handleTermClick]
-  );
-
-  const [nodes, setNodes, onNodesChange] = useNodesState(nodesWithHandlers);
-  const [edges, setEdges, onEdgesChange] = useEdgesState(graphEdges);
-
-  // Update nodes/edges when selection changes
+  // Stop auto-rotate on selection
   useEffect(() => {
-    setNodes(nodesWithHandlers);
-    setEdges(graphEdges);
-  }, [nodesWithHandlers, graphEdges, setNodes, setEdges]);
-
-  // Fit to selected term's neighborhood
-  useEffect(() => {
-    if (!selectedKey || !reactFlowInstance) return;
-    const selectedNode = nodes.find(n => n.id === `term-${selectedKey}`);
-    if (!selectedNode) return;
-
-    // Collect connected node IDs
-    const connectedIds = new Set([`term-${selectedKey}`]);
-    for (const edge of graphEdges) {
-      if (edge.data?.source === selectedKey) connectedIds.add(`term-${edge.data.target}`);
-      if (edge.data?.target === selectedKey) connectedIds.add(`term-${edge.data.source}`);
+    if (!fgRef.current) return;
+    const controls = fgRef.current.controls();
+    if (controls) {
+      controls.autoRotate = !selectedId;
     }
+  }, [selectedId]);
 
-    const fitNodes = nodes.filter(n => connectedIds.has(n.id));
-    if (fitNodes.length > 0) {
-      setTimeout(() => {
-        reactFlowInstance.fitView({
-          nodes: fitNodes,
-          padding: 0.4,
-          duration: 600,
-        });
-      }, 50);
+  // Custom node rendering
+  const nodeThreeObject = useCallback((node) => {
+    return createNodeObject(node, selectedId);
+  }, [selectedId]);
+
+  // Link styling
+  const linkColor = useCallback((link) => {
+    if (!selectedId) return "rgba(139, 69, 19, 0.08)";
+    const src = typeof link.source === "object" ? link.source.id : link.source;
+    const tgt = typeof link.target === "object" ? link.target.id : link.target;
+    if (src === selectedId || tgt === selectedId) {
+      const node = graphData.nodes.find(n => n.id === (src === selectedId ? tgt : src));
+      return node?.color || "rgba(212, 132, 90, 0.6)";
     }
-  }, [selectedKey, reactFlowInstance]);
+    return "rgba(139, 69, 19, 0.02)";
+  }, [selectedId, graphData.nodes]);
 
-  const selectedTermData = selectedKey ? linkedTerms[selectedKey] : null;
+  const linkWidth = useCallback((link) => {
+    if (!selectedId) return 0.2;
+    const src = typeof link.source === "object" ? link.source.id : link.source;
+    const tgt = typeof link.target === "object" ? link.target.id : link.target;
+    return (src === selectedId || tgt === selectedId) ? 0.6 : 0.08;
+  }, [selectedId]);
+
+  const selectedTermData = selectedId ? linkedTerms[selectedId] : null;
 
   return (
-    <div style={{ flex: 1, display: "flex", height: "100%", overflow: "hidden" }}>
-      {/* Graph canvas */}
-      <div style={{ flex: 1, position: "relative" }}>
-        {/* Title overlay */}
+    <div ref={containerRef} style={{ flex: 1, position: "relative", height: "100%", overflow: "hidden" }}>
+      {/* Title overlay */}
+      <div style={{
+        position: "absolute", top: 16, left: 20, zIndex: 5, pointerEvents: "none",
+      }}>
         <div style={{
-          position: "absolute",
-          top: 16,
-          left: 20,
-          zIndex: 5,
-          pointerEvents: "none",
+          fontFamily: "'IBM Plex Mono', monospace", fontSize: 10,
+          letterSpacing: "0.16em", textTransform: "uppercase", color: "#D4845A",
+          marginBottom: 4,
         }}>
-          <div style={{
-            fontFamily: "'IBM Plex Mono', monospace",
-            fontSize: 9,
-            letterSpacing: "0.16em",
-            textTransform: "uppercase",
-            color: OD,
-            marginBottom: 4,
-          }}>
-            Relational Constellation
-          </div>
-          <div style={{
-            fontFamily: "'Cormorant Garamond', serif",
-            fontSize: 22,
-            fontWeight: 300,
-            color: P.tx,
-          }}>
-            <span style={{ color: OD, fontWeight: 400 }}>Ontological</span>{" "}
-            Dictionary
-          </div>
-          <div style={{
-            fontFamily: "'IBM Plex Mono', monospace",
-            fontSize: 9,
-            color: P.tf,
-            marginTop: 4,
-          }}>
-            {Object.keys(linkedTerms).length} terms &middot; click to explore connections
-          </div>
+          3D Knowledge Graph
         </div>
-
-        {/* Legend */}
         <div style={{
-          position: "absolute",
-          bottom: 16,
-          left: 20,
-          zIndex: 5,
-          display: "flex",
-          flexWrap: "wrap",
-          gap: 12,
-          pointerEvents: "none",
+          fontFamily: "'Cormorant Garamond', serif", fontSize: 22, fontWeight: 300,
+          color: "#E8E0D4",
         }}>
-          {Object.entries(CATEGORIES).map(([key, cat]) => (
-            <div key={key} style={{
-              display: "flex",
-              alignItems: "center",
-              gap: 4,
-            }}>
-              <div style={{
-                width: 8, height: 8, borderRadius: "50%",
-                background: `${cat.color}50`,
-                border: `1px solid ${cat.color}40`,
-              }} />
-              <span style={{
-                fontFamily: "'IBM Plex Mono', monospace",
-                fontSize: 8,
-                letterSpacing: "0.06em",
-                textTransform: "uppercase",
-                color: P.tf,
-              }}>
-                {cat.label}
-              </span>
-            </div>
-          ))}
+          <span style={{ color: "#D4845A", fontWeight: 400 }}>Ontological</span> Dictionary
         </div>
-
-        <ReactFlow
-          nodes={nodes}
-          edges={edges}
-          onNodesChange={onNodesChange}
-          onEdgesChange={onEdgesChange}
-          nodeTypes={nodeTypes}
-          fitView
-          fitViewOptions={{ padding: 0.15 }}
-          minZoom={0.1}
-          maxZoom={2.5}
-          proOptions={{ hideAttribution: true }}
-          onPaneClick={handleClose}
-        >
-          <Background color={`${P.bd}60`} gap={30} size={1} variant="dots" />
-          <Controls
-            style={{
-              background: P.sf,
-              border: `1px solid ${P.bd}`,
-              borderRadius: 6,
-            }}
-            showInteractive={false}
-          />
-          <MiniMap
-            style={{
-              background: P.sf,
-              border: `1px solid ${P.bd}`,
-              borderRadius: 6,
-            }}
-            nodeColor={(n) => {
-              const cat = n.data?.category;
-              return cat ? (CATEGORIES[cat]?.color || P.bd) : `${P.bd}40`;
-            }}
-            maskColor={`${P.bg}90`}
-            pannable
-            zoomable
-          />
-        </ReactFlow>
+        <div style={{
+          fontFamily: "'IBM Plex Mono', monospace", fontSize: 10, color: "#8A7E6E", marginTop: 4,
+        }}>
+          {graphData.nodes.length} terms, {graphData.links.length} connections
+        </div>
       </div>
 
+      {/* Legend */}
+      <div style={{
+        position: "absolute", bottom: 16, left: 20, zIndex: 5,
+        display: "flex", flexWrap: "wrap", gap: 12, pointerEvents: "none",
+      }}>
+        {Object.entries(CATEGORIES).map(([key, cat]) => (
+          <div key={key} style={{ display: "flex", alignItems: "center", gap: 4 }}>
+            <div style={{
+              width: 8, height: 8, borderRadius: "50%",
+              background: cat.color, boxShadow: `0 0 6px ${cat.color}60`,
+            }} />
+            <span style={{
+              fontFamily: "'IBM Plex Mono', monospace", fontSize: 10,
+              letterSpacing: "0.06em", textTransform: "uppercase", color: "#8A7E6E",
+            }}>
+              {cat.label}
+            </span>
+          </div>
+        ))}
+      </div>
+
+      {/* Controls hint */}
+      <div style={{
+        position: "absolute", bottom: 16, right: selectedId ? 360 : 20, zIndex: 5,
+        pointerEvents: "none", transition: "right 0.3s",
+      }}>
+        <div style={{
+          fontFamily: "'IBM Plex Mono', monospace", fontSize: 9, color: "#5A5244",
+          letterSpacing: "0.08em",
+        }}>
+          drag to orbit, scroll to zoom, click node to inspect
+        </div>
+      </div>
+
+      {/* 3D Graph */}
+      <ForceGraph3D
+        ref={fgRef}
+        width={dimensions.width}
+        height={dimensions.height}
+        graphData={graphDataWithState}
+        nodeThreeObject={nodeThreeObject}
+        nodeThreeObjectExtend={false}
+        onNodeClick={handleNodeClick}
+        onBackgroundClick={handleBackgroundClick}
+        linkColor={linkColor}
+        linkWidth={linkWidth}
+        linkOpacity={0.6}
+        linkDirectionalParticles={link => {
+          if (!selectedId) return 0;
+          const src = typeof link.source === "object" ? link.source.id : link.source;
+          const tgt = typeof link.target === "object" ? link.target.id : link.target;
+          return (src === selectedId || tgt === selectedId) ? 3 : 0;
+        }}
+        linkDirectionalParticleWidth={0.5}
+        linkDirectionalParticleSpeed={0.005}
+        linkDirectionalParticleColor={link => {
+          const src = typeof link.source === "object" ? link.source.id : link.source;
+          const node = graphData.nodes.find(n => n.id === src);
+          return node?.color || "#D4845A";
+        }}
+        d3AlphaDecay={0.02}
+        d3VelocityDecay={0.3}
+        d3AlphaMin={0.005}
+        warmupTicks={120}
+        cooldownTicks={300}
+        enableNodeDrag={true}
+        nodeLabel=""
+        backgroundColor="#1a1510"
+      />
+
       {/* Detail panel */}
-      {selectedKey && selectedTermData && (
+      {selectedId && selectedTermData && (
         <TermDetailPanel
-          termKey={selectedKey}
+          termKey={selectedId}
           termData={selectedTermData}
           projects={projects}
-          onClose={handleClose}
+          onClose={() => setSelectedId(null)}
           onEditSection={handleEditSection}
-          linkedTerms={linkedTerms}
         />
       )}
     </div>
   );
 }
 
-// ============================================================
-// Main export (wraps with ReactFlowProvider)
-// ============================================================
-export default function DictionaryView(props) {
-  return (
-    <ReactFlowProvider>
-      <DictionaryViewInner {...props} />
-    </ReactFlowProvider>
-  );
-}
+// ── Helpers ──────────────────────────────────────────────────
 
-// ============================================================
-// Helpers
-// ============================================================
-
-/** Match a section title to a term name */
 function matchSectionToTerm(title, termKeys) {
-  const cleaned = title
-    .toLowerCase()
-    .replace(/^(the\s+|to\s+)/i, "")
-    .trim();
-
-  // Direct match
+  const cleaned = title.toLowerCase().replace(/^(the\s+|to\s+)/i, "").trim();
   if (termKeys.has(cleaned)) return cleaned;
-
-  // Try without "the"
   for (const key of termKeys) {
     if (cleaned === key || cleaned === `the ${key}`) return key;
   }
-
   return null;
 }
 
-/** Find a term's defining section in the OD project */
 function findTermSection(odProject, termName) {
   const target = termName.toLowerCase();
-
   function search(sections) {
     for (const sec of sections) {
       const title = sec.title.toLowerCase().replace(/^(the\s+|to\s+)/i, "").trim();
@@ -795,7 +665,6 @@ function findTermSection(odProject, termName) {
     }
     return null;
   }
-
   for (const part of odProject.parts) {
     const found = search(part.children);
     if (found) return found;
@@ -803,13 +672,10 @@ function findTermSection(odProject, termName) {
   return null;
 }
 
-/** Collect all paragraphs from a section and its children */
 function collectAllParagraphs(section) {
   const paras = [...(section.paragraphs || [])];
   if (section.children) {
-    for (const child of section.children) {
-      paras.push(...collectAllParagraphs(child));
-    }
+    for (const child of section.children) paras.push(...collectAllParagraphs(child));
   }
   return paras;
 }

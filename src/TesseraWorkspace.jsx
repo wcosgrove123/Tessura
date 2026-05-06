@@ -12,6 +12,8 @@ import DictionaryView from "./components/DictionaryView.jsx";
 import DiagramBuilder from "./components/DiagramBuilder.jsx";
 import { importDocxAsDocument } from "./components/DocImporter.jsx";
 import PrintPreview from "./components/PrintPreview.jsx";
+import CommentReview from "./components/CommentReview.jsx";
+import IMPORT_PAYLOAD from "./data/imported-pos-data.json";
 
 // ── Resize Handle ─────────────────────────────────────────
 
@@ -319,6 +321,8 @@ function ResizableLayout({ zen, state }) {
 export default function TesseraWorkspace() {
   const state = useWorkspaceState();
   const fileInputRef = useRef(null);
+  const [showCommentReview, setShowCommentReview] = useState(false);
+  const [pendingComments, setPendingComments] = useState([]);
 
   const handleImport = useCallback(() => {
     fileInputRef.current?.click();
@@ -379,6 +383,55 @@ export default function TesseraWorkspace() {
     e.target.value = "";
   }, [state]);
 
+  // ── Reimport from pre-generated JSON payload ──
+  const handleReimport = useCallback(() => {
+    if (!IMPORT_PAYLOAD?.project) {
+      alert("No import payload found. Run: node scripts/import-same-means.cjs first.");
+      return;
+    }
+    if (!confirm("This will clear all Purpose of Schools content (paragraphs, notes, citations, sources) and reimport from the latest script output. Calculus and Dictionary will be preserved. Continue?")) {
+      return;
+    }
+
+    const { project, sources, citations, notes } = IMPORT_PAYLOAD;
+
+    // 1. Update the Purpose of Schools project with new content, preserve others
+    state.setProjects((prev) =>
+      prev.map((p) => (p.id === "purpose-of-schools" ? project : p))
+    );
+
+    // 2. Replace sources and citations
+    state.setSources(sources || []);
+    state.setCitations(citations || []);
+
+    // 3. Set non-comment notes (footnote notes, meta-commentary)
+    const nonCommentNotes = (notes || []).filter((n) => !n.tags?.includes("word-comment"));
+    state.setNotes(nonCommentNotes);
+
+    // 4. Show comment review UI for Word comments
+    const commentNotes = (notes || []).filter((n) => n.tags?.includes("word-comment"));
+    if (commentNotes.length > 0) {
+      setPendingComments(commentNotes);
+      setShowCommentReview(true);
+    }
+
+    // 5. Navigate to first section
+    state.setActiveProjectId("purpose-of-schools");
+    state.setView("editor");
+
+    console.log(`Reimport complete: ${sources?.length} sources, ${citations?.length} citations, ${nonCommentNotes.length} notes, ${commentNotes.length} comments pending review`);
+  }, [state]);
+
+  const handleCommentReviewSave = useCallback((acceptedNotes) => {
+    // Add accepted comment notes to the notes array
+    for (const note of acceptedNotes) {
+      state.addNote(note);
+    }
+    setShowCommentReview(false);
+    setPendingComments([]);
+    console.log(`Saved ${acceptedNotes.length} comment notes`);
+  }, [state]);
+
   // Keyboard shortcuts: Zen mode + Undo/Redo
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -390,11 +443,12 @@ export default function TesseraWorkspace() {
       if (e.key === "Escape" && state.zenMode) {
         state.setZenMode(false);
       }
-      // App-level undo/redo: only when NOT inside a TipTap editor
+      // App-level undo/redo: only when NOT inside a TipTap editor or diagram builder
       if (e.ctrlKey && !e.shiftKey && e.key === "z") {
         const active = document.activeElement;
         const inEditor = active?.closest?.(".ProseMirror") || active?.classList?.contains("ProseMirror");
-        if (!inEditor) {
+        const inDiagram = state.view === "diagrams";
+        if (!inEditor && !inDiagram) {
           e.preventDefault();
           state.undo();
         }
@@ -402,7 +456,8 @@ export default function TesseraWorkspace() {
       if (e.ctrlKey && (e.key === "y" || (e.shiftKey && e.key === "Z"))) {
         const active = document.activeElement;
         const inEditor = active?.closest?.(".ProseMirror") || active?.classList?.contains("ProseMirror");
-        if (!inEditor) {
+        const inDiagram = state.view === "diagrams";
+        if (!inEditor && !inDiagram) {
           e.preventDefault();
           state.redo();
         }
@@ -440,9 +495,19 @@ export default function TesseraWorkspace() {
           onTermClick={state.selectTerm}
           onSelectDoc={state.selectSection}
           onImport={handleImport}
+          onReimport={handleReimport}
           onPreview={() => setShowPreview(true)}
           saveStatus={state.saveStatus}
           onZenMode={() => state.setZenMode(true)}
+          onQcReport={() => {
+            const commentNotes = (IMPORT_PAYLOAD?.notes || []).filter((n) => n.tags?.includes("word-comment"));
+            if (commentNotes.length > 0) {
+              setPendingComments(commentNotes);
+              setShowCommentReview(true);
+            } else {
+              alert("No imported comments to review. Run the import script first.");
+            }
+          }}
         />
       )}
 
@@ -467,6 +532,15 @@ export default function TesseraWorkspace() {
         >
           Exit Zen
         </div>
+      )}
+
+      {/* Comment Review overlay */}
+      {showCommentReview && pendingComments.length > 0 && (
+        <CommentReview
+          comments={pendingComments}
+          onSave={handleCommentReviewSave}
+          onCancel={() => { setShowCommentReview(false); setPendingComments([]); }}
+        />
       )}
 
       {/* Print Preview overlay */}

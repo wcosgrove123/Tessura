@@ -20,7 +20,7 @@ function NoteCard({ note, onEdit, onDelete, onLink, allTags, isEditing, onSave, 
           {Object.entries(NOTE_CATEGORIES).filter(([k]) => k !== "comment").map(([key, c]) => (
             <button key={key} onClick={() => setEditCategory(key)}
               style={{
-                fontSize: 9, fontFamily: "'IBM Plex Mono', monospace", padding: "3px 8px",
+                fontSize: 10, fontFamily: "'IBM Plex Mono', monospace", padding: "3px 8px",
                 borderRadius: 3, cursor: "pointer", border: `1px solid ${c.color}30`,
                 background: editCategory === key ? `${c.color}20` : "transparent",
                 color: c.color, fontWeight: editCategory === key ? 600 : 400,
@@ -64,25 +64,29 @@ function NoteCard({ note, onEdit, onDelete, onLink, allTags, isEditing, onSave, 
     <div style={{
       padding: "12px 14px", borderRadius: 8, background: P.bg,
       border: `1px solid ${P.bl}`, borderLeft: `3px solid ${cat.color}`,
-      transition: "all 0.2s", cursor: "default",
+      transition: "transform 0.2s ease, box-shadow 0.2s ease", cursor: "default",
     }}
-      onMouseOver={(e) => (e.currentTarget.style.boxShadow = "0 2px 8px rgba(44,36,24,0.06)")}
-      onMouseOut={(e) => (e.currentTarget.style.boxShadow = "none")}
+      onMouseOver={(e) => { e.currentTarget.style.boxShadow = "0 4px 12px rgba(44,36,24,0.08)"; e.currentTarget.style.transform = "translateY(-1px)"; }}
+      onMouseOut={(e) => { e.currentTarget.style.boxShadow = "none"; e.currentTarget.style.transform = "translateY(0)"; }}
     >
       <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", marginBottom: 6 }}>
         <span style={{
-          fontSize: 8, fontFamily: "'IBM Plex Mono', monospace", padding: "2px 7px",
+          fontSize: 10, fontFamily: "'IBM Plex Mono', monospace", padding: "2px 7px",
           borderRadius: 3, background: `${cat.color}12`, color: cat.color,
           letterSpacing: 1, textTransform: "uppercase", fontWeight: 600,
         }}>
           {cat.icon} {cat.label}
         </span>
-        <div style={{ display: "flex", gap: 4 }}>
-          <button onClick={() => onEdit(note.id)} style={{ background: "none", border: "none", cursor: "pointer", color: P.tf, padding: 2 }}>
-            <Edit3 size={11} />
+        <div style={{ display: "flex", gap: 2 }}>
+          <button onClick={() => onEdit(note.id)} style={{ background: "none", border: "none", cursor: "pointer", color: P.tf, padding: 6, borderRadius: 4, display: "flex", alignItems: "center", justifyContent: "center" }}
+            onMouseOver={(e) => (e.currentTarget.style.background = `${P.ac}10`)}
+            onMouseOut={(e) => (e.currentTarget.style.background = "none")}>
+            <Edit3 size={12} />
           </button>
-          <button onClick={() => onDelete(note.id)} style={{ background: "none", border: "none", cursor: "pointer", color: "#943D3D", padding: 2 }}>
-            <Trash2 size={11} />
+          <button onClick={() => onDelete(note.id)} style={{ background: "none", border: "none", cursor: "pointer", color: "#943D3D", padding: 6, borderRadius: 4, display: "flex", alignItems: "center", justifyContent: "center" }}
+            onMouseOver={(e) => (e.currentTarget.style.background = "#943D3D10")}
+            onMouseOut={(e) => (e.currentTarget.style.background = "none")}>
+            <Trash2 size={12} />
           </button>
         </div>
       </div>
@@ -92,7 +96,7 @@ function NoteCard({ note, onEdit, onDelete, onLink, allTags, isEditing, onSave, 
       <div style={{ display: "flex", gap: 4, flexWrap: "wrap", alignItems: "center" }}>
         {note.tags?.map((tag) => (
           <span key={tag} style={{
-            fontSize: 9, fontFamily: "'IBM Plex Mono', monospace", padding: "1px 6px",
+            fontSize: 10, fontFamily: "'IBM Plex Mono', monospace", padding: "1px 6px",
             borderRadius: 10, background: `${cat.color}08`, color: cat.color,
             border: `1px solid ${cat.color}20`,
           }}>
@@ -101,7 +105,7 @@ function NoteCard({ note, onEdit, onDelete, onLink, allTags, isEditing, onSave, 
         ))}
         {sectionId && (
           <span onClick={() => onLink(note.linkedProjectId || "purpose-of-schools", sectionId)} style={{
-            fontSize: 9, fontFamily: "'IBM Plex Mono', monospace", padding: "1px 6px",
+            fontSize: 10, fontFamily: "'IBM Plex Mono', monospace", padding: "1px 6px",
             borderRadius: 10, background: `${P.ac}08`, color: P.ac,
             border: `1px solid ${P.ac}20`, cursor: "pointer",
             display: "flex", alignItems: "center", gap: 3,
@@ -111,7 +115,7 @@ function NoteCard({ note, onEdit, onDelete, onLink, allTags, isEditing, onSave, 
         )}
         {!sectionId && (
           <span style={{
-            fontSize: 9, fontFamily: "'IBM Plex Mono', monospace", padding: "1px 6px",
+            fontSize: 10, fontFamily: "'IBM Plex Mono', monospace", padding: "1px 6px",
             borderRadius: 10, background: `${P.tf}08`, color: P.tf,
             border: `1px solid ${P.tf}20`,
             display: "flex", alignItems: "center", gap: 3,
@@ -257,19 +261,19 @@ export default function Brainstorm({ notes, addNote, updateNote, deleteNote, onN
           }}>
             <button onClick={handleSelectAll}
               style={{
-                fontSize: 9, fontFamily: "'IBM Plex Mono', monospace", padding: "3px 8px",
+                fontSize: 10, fontFamily: "'IBM Plex Mono', monospace", padding: "3px 8px",
                 background: "transparent", border: `1px solid ${P.bd}`, borderRadius: 3,
                 cursor: "pointer", color: P.tm,
               }}>
               {selected.size === filtered.length ? "Deselect all" : "Select all"}
             </button>
-            <span style={{ fontSize: 9, fontFamily: "'IBM Plex Mono', monospace", color: P.tf }}>
+            <span style={{ fontSize: 10, fontFamily: "'IBM Plex Mono', monospace", color: P.tf }}>
               {selected.size} selected
             </span>
             {selected.size > 0 && (
               <button onClick={handleBulkDelete}
                 style={{
-                  fontSize: 9, fontFamily: "'IBM Plex Mono', monospace", padding: "3px 8px",
+                  fontSize: 10, fontFamily: "'IBM Plex Mono', monospace", padding: "3px 8px",
                   background: "#943D3D", color: "#fff", border: "none", borderRadius: 3,
                   cursor: "pointer", marginLeft: "auto",
                 }}>
@@ -321,7 +325,7 @@ export default function Brainstorm({ notes, addNote, updateNote, deleteNote, onN
           {["all", "linked", "loose"].map((f) => (
             <button key={f} onClick={() => setLinkFilter(f)}
               style={{
-                fontSize: 9, fontFamily: "'IBM Plex Mono', monospace", padding: "4px 10px",
+                fontSize: 10, fontFamily: "'IBM Plex Mono', monospace", padding: "4px 10px",
                 borderRadius: 4, cursor: "pointer",
                 background: linkFilter === f ? `${P.ac}15` : "transparent",
                 color: linkFilter === f ? P.ac : P.tf,
@@ -333,7 +337,7 @@ export default function Brainstorm({ notes, addNote, updateNote, deleteNote, onN
           ))}
           <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}
             style={{
-              fontSize: 9, fontFamily: "'IBM Plex Mono', monospace", padding: "4px 6px",
+              fontSize: 10, fontFamily: "'IBM Plex Mono', monospace", padding: "4px 6px",
               borderRadius: 4, background: P.sf, color: P.tm, border: `1px solid ${P.bd}`,
               cursor: "pointer", outline: "none",
             }}>
@@ -402,7 +406,7 @@ export default function Brainstorm({ notes, addNote, updateNote, deleteNote, onN
           {/* Tags sidebar */}
           <div style={{ width: 180, flexShrink: 0 }}>
             <div style={{
-              fontFamily: "'IBM Plex Mono', monospace", fontSize: 9, letterSpacing: 2,
+              fontFamily: "'IBM Plex Mono', monospace", fontSize: 10, letterSpacing: 2,
               textTransform: "uppercase", color: P.tf, marginBottom: 10,
               display: "flex", alignItems: "center", gap: 5,
             }}>
@@ -425,7 +429,7 @@ export default function Brainstorm({ notes, addNote, updateNote, deleteNote, onN
                     <span style={{ fontSize: 10, color: activeTag === tag ? P.ac : P.tm, fontFamily: "'IBM Plex Mono', monospace" }}>
                       {tag}
                     </span>
-                    <span style={{ fontSize: 9, color: P.tf }}>{count}</span>
+                    <span style={{ fontSize: 10, color: P.tf }}>{count}</span>
                   </div>
                 );
               })}

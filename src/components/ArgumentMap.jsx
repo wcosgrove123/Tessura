@@ -54,7 +54,7 @@ function SectionNode({ data }) {
           {data.label}
         </span>
         <span style={{
-          fontSize: 7, fontFamily: "'IBM Plex Mono', monospace", flexShrink: 0,
+          fontSize: 10, fontFamily: "'IBM Plex Mono', monospace", flexShrink: 0,
           color: STATUS[data.status]?.text, padding: "1px 4px", borderRadius: 2,
           background: STATUS[data.status]?.bg,
         }}>
@@ -62,7 +62,7 @@ function SectionNode({ data }) {
         </span>
       </div>
       {data.paraCount > 0 && (
-        <span style={{ fontSize: 8, color: P.tf, fontFamily: "'IBM Plex Mono', monospace" }}>
+        <span style={{ fontSize: 10, color: P.tf, fontFamily: "'IBM Plex Mono', monospace" }}>
           {data.paraCount}¶{data.childCount > 0 ? ` · ${data.childCount} sub` : ""}
         </span>
       )}

@@ -9,7 +9,7 @@ export const STATUS = {
 // Spine role styles
 export const SPINE_ROLES = {
   spine: { i: "◆", c: "#943D3D", l: "Spine" },
-  setup: { i: "○", c: "#8A8E96", l: "Setup" },
+  setup: { i: "○", c: "#6D7078", l: "Setup" },
   claim: { i: "●", c: "#2A5F7C", l: "Claim" },
   evidence: { i: "◇", c: "#2D6B5A", l: "Evidence" },
   bridge: { i: "→", c: "#9E5A2A", l: "Bridge" },
@@ -27,7 +27,8 @@ export const PALETTE = {
   bl: "#EDE5D8",
   tx: "#2C2418",
   tm: "#6B6052",
-  tf: "#A09580",
+  tf: "#7D6E5D",
+  t3: "#958978",
   ac: "#8B4513",
   tb: "#2C2418",
 };

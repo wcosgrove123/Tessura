@@ -5,6 +5,8 @@ import { DIAGRAM_CATEGORIES } from "../data/diagrams.js";
 
 // ── Template Definitions ──────────────────────────────────
 
+const ARROW = { type: "arrowclosed" };
+
 const TEMPLATES = [
   // ═══ SEQUENTIAL ═══
   {
@@ -12,15 +14,15 @@ const TEMPLATES = [
     label: "Staircase Hierarchy", description: "Ascending stages or levels",
     examples: "Piaget, Tyler, Bruner",
     nodes: [
-      { id: "h1", type: "diagram", position: { x: 0, y: 180 }, data: { label: "Stage 1", subtitle: "", color: "#2A5F7C", shape: "rounded", fontSize: 12 } },
-      { id: "h2", type: "diagram", position: { x: 180, y: 120 }, data: { label: "Stage 2", subtitle: "", color: "#2A5F7C", shape: "rounded", fontSize: 12 } },
-      { id: "h3", type: "diagram", position: { x: 360, y: 60 }, data: { label: "Stage 3", subtitle: "", color: "#2A5F7C", shape: "rounded", fontSize: 12 } },
-      { id: "h4", type: "diagram", position: { x: 540, y: 0 }, data: { label: "Stage 4", subtitle: "", color: "#2A5F7C", shape: "rounded", fontSize: 12 } },
+      { id: "h1", type: "diagram", position: { x: 0, y: 180 }, data: { label: "Stage 1", subtitle: "", color: "#2A5F7C", shape: "rounded", fontSize: 13 } },
+      { id: "h2", type: "diagram", position: { x: 180, y: 120 }, data: { label: "Stage 2", subtitle: "", color: "#2A5F7C", shape: "rounded", fontSize: 13 } },
+      { id: "h3", type: "diagram", position: { x: 360, y: 60 }, data: { label: "Stage 3", subtitle: "", color: "#2A5F7C", shape: "rounded", fontSize: 13 } },
+      { id: "h4", type: "diagram", position: { x: 540, y: 0 }, data: { label: "Stage 4", subtitle: "", color: "#2A5F7C", shape: "rounded", fontSize: 13 } },
     ],
     edges: [
-      { id: "he1", source: "h1", target: "h2", type: "smoothstep", style: { stroke: "#B0CCE0", strokeWidth: 2 } },
-      { id: "he2", source: "h2", target: "h3", type: "smoothstep", style: { stroke: "#B0CCE0", strokeWidth: 2 } },
-      { id: "he3", source: "h3", target: "h4", type: "smoothstep", style: { stroke: "#B0CCE0", strokeWidth: 2 } },
+      { id: "he1", source: "h1", target: "h2", type: "smoothstep", markerEnd: ARROW, style: { stroke: "#2A5F7C40", strokeWidth: 2 } },
+      { id: "he2", source: "h2", target: "h3", type: "smoothstep", markerEnd: ARROW, style: { stroke: "#2A5F7C40", strokeWidth: 2 } },
+      { id: "he3", source: "h3", target: "h4", type: "smoothstep", markerEnd: ARROW, style: { stroke: "#2A5F7C40", strokeWidth: 2 } },
     ],
   },
   {
@@ -35,10 +37,10 @@ const TEMPLATES = [
       { id: "p5", type: "diagram", position: { x: 520, y: 140 }, data: { label: "Path B", color: "#2A5F7C", shape: "rounded", fontSize: 12 } },
     ],
     edges: [
-      { id: "pe1", source: "p1", target: "p2", type: "smoothstep", style: { stroke: "#D4C9B8", strokeWidth: 1.5 } },
-      { id: "pe2", source: "p2", target: "p3", type: "smoothstep", style: { stroke: "#D4C9B8", strokeWidth: 1.5 } },
-      { id: "pe3", source: "p3", target: "p4", type: "smoothstep", label: "Yes", style: { stroke: "#2D6B5A", strokeWidth: 1.5 } },
-      { id: "pe4", source: "p3", target: "p5", type: "smoothstep", label: "No", style: { stroke: "#943D3D", strokeWidth: 1.5 } },
+      { id: "pe1", source: "p1", target: "p2", type: "smoothstep", markerEnd: ARROW, style: { stroke: "#2D6B5A40", strokeWidth: 2 } },
+      { id: "pe2", source: "p2", target: "p3", type: "smoothstep", markerEnd: ARROW, style: { stroke: "#2A5F7C40", strokeWidth: 2 } },
+      { id: "pe3", source: "p3", target: "p4", type: "smoothstep", markerEnd: ARROW, label: "Yes", style: { stroke: "#2D6B5A", strokeWidth: 2 } },
+      { id: "pe4", source: "p3", target: "p5", type: "smoothstep", markerEnd: ARROW, label: "No", style: { stroke: "#943D3D", strokeWidth: 2 } },
     ],
   },
   {
@@ -54,10 +56,10 @@ const TEMPLATES = [
       { id: "em-b", type: "diagram", position: { x: 420, y: 200 }, data: { label: "Branch", subtitle: "Splits from Level 3", color: "#943D3D", shape: "pill", fontSize: 11 } },
     ],
     edges: [
-      { id: "eme1", source: "em1", target: "em2", type: "smoothstep", style: { stroke: "#D4C9B8", strokeWidth: 2 } },
-      { id: "eme2", source: "em2", target: "em3", type: "smoothstep", style: { stroke: "#D4C9B8", strokeWidth: 2 } },
-      { id: "eme3", source: "em3", target: "em4", type: "smoothstep", style: { stroke: "#D4C9B8", strokeWidth: 2 } },
-      { id: "eme4", source: "em4", target: "em5", type: "smoothstep", style: { stroke: "#D4C9B8", strokeWidth: 2 } },
+      { id: "eme1", source: "em1", target: "em2", type: "smoothstep", markerEnd: ARROW, style: { stroke: "#7C6A2A40", strokeWidth: 2 } },
+      { id: "eme2", source: "em2", target: "em3", type: "smoothstep", markerEnd: ARROW, style: { stroke: "#2D6B5A40", strokeWidth: 2 } },
+      { id: "eme3", source: "em3", target: "em4", type: "smoothstep", markerEnd: ARROW, style: { stroke: "#2A5F7C40", strokeWidth: 2 } },
+      { id: "eme4", source: "em4", target: "em5", type: "smoothstep", markerEnd: ARROW, style: { stroke: "#6B3A6E40", strokeWidth: 2 } },
       { id: "eme-b", source: "em3", target: "em-b", type: "smoothstep", style: { stroke: "#943D3D80", strokeWidth: 1.5, strokeDasharray: "4 4" } },
     ],
   },
@@ -72,9 +74,9 @@ const TEMPLATES = [
       { id: "t4", type: "diagram", position: { x: 540, y: 80 }, data: { label: "2013", subtitle: "Fink", color: "#943D3D", shape: "rounded", fontSize: 12 } },
     ],
     edges: [
-      { id: "te1", source: "t1", target: "t2", type: "smoothstep", style: { stroke: "#D4C9B8", strokeWidth: 2 } },
-      { id: "te2", source: "t2", target: "t3", type: "smoothstep", style: { stroke: "#D4C9B8", strokeWidth: 2 } },
-      { id: "te3", source: "t3", target: "t4", type: "smoothstep", style: { stroke: "#D4C9B8", strokeWidth: 2 } },
+      { id: "te1", source: "t1", target: "t2", type: "smoothstep", markerEnd: ARROW, style: { stroke: "#943D3D40", strokeWidth: 2 } },
+      { id: "te2", source: "t2", target: "t3", type: "smoothstep", markerEnd: ARROW, style: { stroke: "#943D3D40", strokeWidth: 2 } },
+      { id: "te3", source: "t3", target: "t4", type: "smoothstep", markerEnd: ARROW, style: { stroke: "#943D3D40", strokeWidth: 2 } },
     ],
   },
 
@@ -84,21 +86,25 @@ const TEMPLATES = [
     label: "Taxonomy Pyramid", description: "Tiered pyramid with substrate layer",
     examples: "Bloom's taxonomy, memory-as-substrate",
     nodes: [
-      { id: "tx1", type: "diagram", position: { x: 250, y: 0 }, data: { label: "Create", color: "#6B3A6E", shape: "rounded", fontSize: 12 } },
-      { id: "tx2", type: "diagram", position: { x: 160, y: 80 }, data: { label: "Evaluate", color: "#2D6B5A", shape: "rounded", fontSize: 12 } },
-      { id: "tx3", type: "diagram", position: { x: 340, y: 80 }, data: { label: "Analyze", color: "#2D6B5A", shape: "rounded", fontSize: 12 } },
-      { id: "tx4", type: "diagram", position: { x: 80, y: 160 }, data: { label: "Apply", color: "#2A5F7C", shape: "rounded", fontSize: 12 } },
-      { id: "tx5", type: "diagram", position: { x: 250, y: 160 }, data: { label: "Understand", color: "#2A5F7C", shape: "rounded", fontSize: 12 } },
-      { id: "tx6", type: "diagram", position: { x: 420, y: 160 }, data: { label: "Remember", color: "#2A5F7C", shape: "rounded", fontSize: 12 } },
-      { id: "tx-sub", type: "diagram", position: { x: 100, y: 260 }, data: { label: "SUBSTRATE: This layer permeates all levels above", color: "#7C6A2A", shape: "substrate", fontSize: 10 } },
+      // Tier 1: apex
+      { id: "tx1", type: "diagram", position: { x: 248, y: 10 }, data: { label: "Tier 1", color: "#6B3A6E", shape: "rounded", fontSize: 14 } },
+      // Tier 2: middle
+      { id: "tx2", type: "diagram", position: { x: 165, y: 80 }, data: { label: "Tier 2a", color: "#2D6B5A", shape: "rounded", fontSize: 13 } },
+      { id: "tx3", type: "diagram", position: { x: 330, y: 80 }, data: { label: "Tier 2b", color: "#2D6B5A", shape: "rounded", fontSize: 13 } },
+      // Tier 3: base
+      { id: "tx4", type: "diagram", position: { x: 80, y: 150 }, data: { label: "Tier 3a", color: "#2A5F7C", shape: "rounded", fontSize: 13 } },
+      { id: "tx5", type: "diagram", position: { x: 245, y: 150 }, data: { label: "Tier 3b", color: "#2A5F7C", shape: "rounded", fontSize: 13 } },
+      { id: "tx6", type: "diagram", position: { x: 410, y: 150 }, data: { label: "Tier 3c", color: "#2A5F7C", shape: "rounded", fontSize: 13 } },
+      // Substrate
+      { id: "tx-sub", type: "diagram", position: { x: 65, y: 240 }, data: { label: "SUBSTRATE: This layer permeates all levels above", color: "#7C6A2A", shape: "substrate", fontSize: 11 } },
     ],
     edges: [
-      { id: "txe1", source: "tx2", target: "tx1", type: "smoothstep", style: { stroke: "#D4C9B8", strokeWidth: 1.5 } },
-      { id: "txe2", source: "tx3", target: "tx1", type: "smoothstep", style: { stroke: "#D4C9B8", strokeWidth: 1.5 } },
-      { id: "txe3", source: "tx4", target: "tx2", type: "smoothstep", style: { stroke: "#D4C9B8", strokeWidth: 1 } },
-      { id: "txe4", source: "tx5", target: "tx2", type: "smoothstep", style: { stroke: "#D4C9B8", strokeWidth: 1 } },
-      { id: "txe5", source: "tx5", target: "tx3", type: "smoothstep", style: { stroke: "#D4C9B8", strokeWidth: 1 } },
-      { id: "txe6", source: "tx6", target: "tx3", type: "smoothstep", style: { stroke: "#D4C9B8", strokeWidth: 1 } },
+      { id: "txe1", source: "tx4", target: "tx2", type: "smoothstep", markerEnd: ARROW, style: { stroke: "#2A5F7C40", strokeWidth: 2 } },
+      { id: "txe2", source: "tx5", target: "tx2", type: "smoothstep", markerEnd: ARROW, style: { stroke: "#2A5F7C40", strokeWidth: 2 } },
+      { id: "txe3", source: "tx5", target: "tx3", type: "smoothstep", markerEnd: ARROW, style: { stroke: "#2A5F7C40", strokeWidth: 2 } },
+      { id: "txe4", source: "tx6", target: "tx3", type: "smoothstep", markerEnd: ARROW, style: { stroke: "#2A5F7C40", strokeWidth: 2 } },
+      { id: "txe5", source: "tx2", target: "tx1", type: "smoothstep", markerEnd: ARROW, style: { stroke: "#2D6B5A40", strokeWidth: 2 } },
+      { id: "txe6", source: "tx3", target: "tx1", type: "smoothstep", markerEnd: ARROW, style: { stroke: "#2D6B5A40", strokeWidth: 2 } },
     ],
   },
   {
@@ -128,12 +134,12 @@ const TEMPLATES = [
       { id: "cb2", type: "diagram", position: { x: 350, y: 180 }, data: { label: "Feature 2", color: "#9E5A2A", shape: "pill", fontSize: 11 } },
     ],
     edges: [
-      { id: "cae1", source: "ca", target: "ca1", type: "smoothstep", style: { stroke: "#B0CCE0", strokeWidth: 1 } },
-      { id: "cae2", source: "ca", target: "ca2", type: "smoothstep", style: { stroke: "#B0CCE0", strokeWidth: 1 } },
-      { id: "cbe1", source: "cb", target: "cb1", type: "smoothstep", style: { stroke: "#D4B89C", strokeWidth: 1 } },
-      { id: "cbe2", source: "cb", target: "cb2", type: "smoothstep", style: { stroke: "#D4B89C", strokeWidth: 1 } },
-      { id: "cx1", source: "ca1", target: "cb1", type: "straight", label: "differs", animated: true, style: { stroke: "#D4C9B8", strokeWidth: 1, strokeDasharray: "4 4" } },
-      { id: "cx2", source: "ca2", target: "cb2", type: "straight", label: "inverts", animated: true, style: { stroke: "#D4C9B8", strokeWidth: 1, strokeDasharray: "4 4" } },
+      { id: "cae1", source: "ca", target: "ca1", type: "smoothstep", style: { stroke: "#2A5F7C40", strokeWidth: 2 } },
+      { id: "cae2", source: "ca", target: "ca2", type: "smoothstep", style: { stroke: "#2A5F7C40", strokeWidth: 2 } },
+      { id: "cbe1", source: "cb", target: "cb1", type: "smoothstep", style: { stroke: "#9E5A2A40", strokeWidth: 2 } },
+      { id: "cbe2", source: "cb", target: "cb2", type: "smoothstep", style: { stroke: "#9E5A2A40", strokeWidth: 2 } },
+      { id: "cx1", source: "ca1", target: "cb1", type: "straight", label: "differs", animated: true, style: { stroke: "#7C6A2A40", strokeWidth: 1.5, strokeDasharray: "4 4" } },
+      { id: "cx2", source: "ca2", target: "cb2", type: "straight", label: "inverts", animated: true, style: { stroke: "#7C6A2A40", strokeWidth: 1.5, strokeDasharray: "4 4" } },
     ],
   },
 
@@ -154,10 +160,10 @@ const TEMPLATES = [
       ];
     })(),
     edges: [
-      { id: "cye0", source: "cy0", target: "cy1", type: "smoothstep", animated: true, style: { stroke: "#943D3D80", strokeWidth: 2 } },
-      { id: "cye1", source: "cy1", target: "cy2", type: "smoothstep", animated: true, style: { stroke: "#943D3D80", strokeWidth: 2 } },
-      { id: "cye2", source: "cy2", target: "cy3", type: "smoothstep", animated: true, style: { stroke: "#943D3D80", strokeWidth: 2 } },
-      { id: "cye3", source: "cy3", target: "cy0", type: "smoothstep", animated: true, style: { stroke: "#943D3D80", strokeWidth: 2 } },
+      { id: "cye0", source: "cy0", target: "cy1", type: "smoothstep", animated: true, markerEnd: ARROW, style: { stroke: "#943D3D60", strokeWidth: 2 } },
+      { id: "cye1", source: "cy1", target: "cy2", type: "smoothstep", animated: true, markerEnd: ARROW, style: { stroke: "#943D3D60", strokeWidth: 2 } },
+      { id: "cye2", source: "cy2", target: "cy3", type: "smoothstep", animated: true, markerEnd: ARROW, style: { stroke: "#943D3D60", strokeWidth: 2 } },
+      { id: "cye3", source: "cy3", target: "cy0", type: "smoothstep", animated: true, markerEnd: ARROW, style: { stroke: "#943D3D60", strokeWidth: 2 } },
       { id: "cye-int", source: "cy-int", target: "cy1", type: "straight", style: { stroke: "#2D6B5A", strokeWidth: 2, strokeDasharray: "6 4" } },
     ],
   },
@@ -192,7 +198,7 @@ const TEMPLATES = [
         for (let i = 0; i < 4; i++) {
           edges.push({
             id: `${prefix}e${i}`, source: `${prefix}${i}`, target: `${prefix}${(i + 1) % 4}`,
-            type: "smoothstep", animated: true, style: { stroke: `${color}70`, strokeWidth: 1.5 },
+            type: "smoothstep", animated: true, markerEnd: ARROW, style: { stroke: `${color}60`, strokeWidth: 2 },
           });
         }
       }
@@ -221,7 +227,7 @@ const TEMPLATES = [
       for (let i = 0; i < 6; i++) {
         edges.push({
           id: `spe${i}`, source: `sp${i}`, target: `sp${i + 1}`,
-          type: "smoothstep", animated: true, style: { stroke: "#D4C9B8", strokeWidth: 1.5 },
+          type: "smoothstep", animated: true, markerEnd: ARROW, style: { stroke: ["#2A5F7C", "#2D6B5A", "#9E5A2A"][i % 3] + "40", strokeWidth: 2 },
         });
       }
       return edges;
@@ -247,7 +253,7 @@ const TEMPLATES = [
     edges: (() => {
       const edges = [];
       for (let i = 1; i <= 6; i++) {
-        edges.push({ id: `ore${i}`, source: "or0", target: `or${i}`, type: "straight", animated: true, style: { stroke: "#D4C9B8", strokeWidth: 1.5 } });
+        edges.push({ id: `ore${i}`, source: "or0", target: `or${i}`, type: "straight", animated: true, style: { stroke: "#9E5A2A40", strokeWidth: 2 } });
       }
       // Inter-satellite connections
       edges.push({ id: "ore-s1", source: "or1", target: "or2", type: "straight", style: { stroke: "#D4C9B820", strokeWidth: 1 } });
@@ -269,15 +275,15 @@ const TEMPLATES = [
       { id: "kg7", type: "diagram", position: { x: 450, y: 200 }, data: { label: "New Node", subtitle: "Add me to see ripple", color: "#2A5F7C", shape: "circle", fontSize: 11 } },
     ],
     edges: [
-      { id: "kge1", source: "kg1", target: "kg2", type: "straight", animated: true, style: { stroke: "#D4C9B8", strokeWidth: 1.5 } },
-      { id: "kge2", source: "kg1", target: "kg5", type: "straight", animated: true, style: { stroke: "#D4C9B8", strokeWidth: 1.5 } },
-      { id: "kge3", source: "kg2", target: "kg4", type: "straight", animated: true, style: { stroke: "#D4C9B8", strokeWidth: 1.5 } },
-      { id: "kge4", source: "kg3", target: "kg5", type: "straight", animated: true, style: { stroke: "#D4C9B8", strokeWidth: 1.5 } },
-      { id: "kge5", source: "kg3", target: "kg6", type: "straight", animated: true, style: { stroke: "#D4C9B8", strokeWidth: 1.5 } },
-      { id: "kge6", source: "kg4", target: "kg5", type: "straight", animated: true, style: { stroke: "#D4C9B8", strokeWidth: 1.5 } },
-      { id: "kge7", source: "kg5", target: "kg7", type: "straight", animated: true, style: { stroke: "#2A5F7C60", strokeWidth: 1 } },
-      { id: "kge8", source: "kg6", target: "kg1", type: "straight", animated: true, style: { stroke: "#D4C9B8", strokeWidth: 1.5 } },
-      { id: "kge9", source: "kg7", target: "kg2", type: "straight", animated: true, style: { stroke: "#2A5F7C60", strokeWidth: 1 } },
+      { id: "kge1", source: "kg1", target: "kg2", type: "straight", animated: true, style: { stroke: "#2A5F7C40", strokeWidth: 2 } },
+      { id: "kge2", source: "kg1", target: "kg5", type: "straight", animated: true, style: { stroke: "#2A5F7C40", strokeWidth: 2 } },
+      { id: "kge3", source: "kg2", target: "kg4", type: "straight", animated: true, style: { stroke: "#2D6B5A40", strokeWidth: 2 } },
+      { id: "kge4", source: "kg3", target: "kg5", type: "straight", animated: true, style: { stroke: "#9E5A2A40", strokeWidth: 2 } },
+      { id: "kge5", source: "kg3", target: "kg6", type: "straight", animated: true, style: { stroke: "#9E5A2A40", strokeWidth: 2 } },
+      { id: "kge6", source: "kg4", target: "kg5", type: "straight", animated: true, style: { stroke: "#6B3A6E40", strokeWidth: 2 } },
+      { id: "kge7", source: "kg5", target: "kg7", type: "straight", animated: true, style: { stroke: "#943D3D30", strokeWidth: 1.5, strokeDasharray: "4 4" } },
+      { id: "kge8", source: "kg6", target: "kg1", type: "straight", animated: true, style: { stroke: "#7C6A2A40", strokeWidth: 2 } },
+      { id: "kge9", source: "kg7", target: "kg2", type: "straight", animated: true, style: { stroke: "#2A5F7C30", strokeWidth: 1.5, strokeDasharray: "4 4" } },
     ],
   },
   {
@@ -322,11 +328,11 @@ const TEMPLATES = [
       ];
     })(),
     edges: [
-      { id: "cce1", source: "cc0", target: "cc1a", type: "straight", style: { stroke: "#D4C9B840", strokeWidth: 1 } },
-      { id: "cce2", source: "cc0", target: "cc1b", type: "straight", style: { stroke: "#D4C9B840", strokeWidth: 1 } },
-      { id: "cce3", source: "cc1a", target: "cc2a", type: "straight", style: { stroke: "#D4C9B830", strokeWidth: 1, strokeDasharray: "3 3" } },
-      { id: "cce4", source: "cc1b", target: "cc2b", type: "straight", style: { stroke: "#D4C9B830", strokeWidth: 1, strokeDasharray: "3 3" } },
-      { id: "cce5", source: "cc1b", target: "cc2c", type: "straight", style: { stroke: "#D4C9B830", strokeWidth: 1, strokeDasharray: "3 3" } },
+      { id: "cce1", source: "cc0", target: "cc1a", type: "straight", style: { stroke: "#6B3A6E30", strokeWidth: 1.5 } },
+      { id: "cce2", source: "cc0", target: "cc1b", type: "straight", style: { stroke: "#6B3A6E30", strokeWidth: 1.5 } },
+      { id: "cce3", source: "cc1a", target: "cc2a", type: "straight", style: { stroke: "#2A5F7C25", strokeWidth: 1.5, strokeDasharray: "3 3" } },
+      { id: "cce4", source: "cc1b", target: "cc2b", type: "straight", style: { stroke: "#2A5F7C25", strokeWidth: 1.5, strokeDasharray: "3 3" } },
+      { id: "cce5", source: "cc1b", target: "cc2c", type: "straight", style: { stroke: "#2A5F7C25", strokeWidth: 1.5, strokeDasharray: "3 3" } },
     ],
   },
 ];

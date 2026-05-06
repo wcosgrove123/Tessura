@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useRef, useEffect, useMemo } from "react";
-import { ChevronRight, ChevronDown, FileText, Link2, Plus, FolderOpen, Folder, BookOpen, Trash2, GripVertical } from "lucide-react";
+import { ChevronRight, FileText, Link2, Plus, FolderOpen, Folder, BookOpen, Trash2, GripVertical } from "lucide-react";
 import { PALETTE as P, STATUS } from "../data/constants.js";
 import ConfirmModal from "./ConfirmModal.jsx";
 import {
@@ -54,14 +54,15 @@ function SortableSectionNode({
       <div
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
+        className={`sidebar-section-item${isActive ? " active" : ""}`}
         style={{
           display: "flex", alignItems: "center", gap: 5,
           padding: `4px 12px 4px ${indent}px`,
-          cursor: "pointer", transition: "background 0.15s",
+          cursor: "pointer",
           background: isOver ? `${projectColor}15` : isActive ? `${projectColor}0C` : "transparent",
-          borderLeft: isActive ? `2px solid ${projectColor}` : "2px solid transparent",
+          borderLeft: isActive ? `2.5px solid ${projectColor}` : "2.5px solid transparent",
           borderTop: isOver ? `2px solid ${projectColor}60` : "2px solid transparent",
-          minHeight: 28,
+          minHeight: 30,
         }}
         onMouseOver={(e) => { if (!isActive && !isOver) e.currentTarget.style.background = P.sh; }}
         onMouseOut={(e) => { if (!isActive && !isOver) e.currentTarget.style.background = isOver ? `${projectColor}15` : isActive ? `${projectColor}0C` : "transparent"; }}
@@ -71,19 +72,20 @@ function SortableSectionNode({
           {...attributes}
           {...listeners}
           style={{
-            cursor: "grab", display: "flex", alignItems: "center",
-            opacity: hovered ? 0.5 : 0, transition: "opacity 0.15s",
-            marginLeft: -8, flexShrink: 0,
+            cursor: "grab", display: "flex", alignItems: "center", justifyContent: "center",
+            opacity: hovered ? 0.5 : 0, transition: "opacity 0.18s ease",
+            marginLeft: -8, flexShrink: 0, padding: "4px 2px", borderRadius: 3,
           }}
         >
-          <GripVertical size={9} style={{ color: P.tf }} />
+          <GripVertical size={11} style={{ color: P.tf }} />
         </div>
 
         {hasChildren ? (
           <span onClick={(e) => { e.stopPropagation(); onToggle(section.id); }} style={{ display: "flex", alignItems: "center" }}>
-            {expandedNodes[section.id]
-              ? <ChevronDown size={11} style={{ color: P.tf }} />
-              : <ChevronRight size={11} style={{ color: P.tf }} />}
+            <ChevronRight size={11} className="chevron-toggle" style={{
+              color: P.tf,
+              transform: expandedNodes[section.id] ? "rotate(90deg)" : "rotate(0deg)",
+            }} />
           </span>
         ) : (
           <span style={{ width: 11 }} />
@@ -103,12 +105,12 @@ function SortableSectionNode({
         </span>
         <div style={{ display: "flex", alignItems: "center", gap: 4, flexShrink: 0 }}>
           {hasParagraphs && (
-            <span style={{ fontSize: 8, color: P.tf, fontFamily: "'IBM Plex Mono', monospace" }}>
+            <span style={{ fontSize: 10, color: P.tf, fontFamily: "'IBM Plex Mono', monospace" }}>
               {section.paragraphs.length}¶
             </span>
           )}
           {noteCount > 0 && (
-            <span style={{ fontSize: 7, color: "#8B4513", fontFamily: "'IBM Plex Mono', monospace", opacity: 0.7 }} title={`${noteCount} note${noteCount > 1 ? "s" : ""}`}>
+            <span style={{ fontSize: 10, color: "#8B4513", fontFamily: "'IBM Plex Mono', monospace", opacity: 0.7 }} title={`${noteCount} note${noteCount > 1 ? "s" : ""}`}>
               {noteCount}✎
             </span>
           )}
@@ -119,14 +121,16 @@ function SortableSectionNode({
                 onDeleteSection(projectId, section.id, section.title);
               }}
               title="Delete section"
+              className="action-btn-danger"
               style={{
                 background: "none", border: "none", cursor: "pointer", color: "#943D3D",
-                padding: 1, display: "flex", alignItems: "center", opacity: 0.6,
+                padding: 5, borderRadius: 4, display: "flex", alignItems: "center", justifyContent: "center",
+                opacity: 0.6,
               }}
-              onMouseOver={(e) => (e.currentTarget.style.opacity = 1)}
-              onMouseOut={(e) => (e.currentTarget.style.opacity = 0.6)}
+              onMouseOver={(e) => { e.currentTarget.style.opacity = 1; e.currentTarget.style.background = "#943D3D10"; }}
+              onMouseOut={(e) => { e.currentTarget.style.opacity = 0.6; e.currentTarget.style.background = "none"; }}
             >
-              <Trash2 size={10} />
+              <Trash2 size={11} />
             </button>
           )}
           <div style={{
@@ -156,16 +160,17 @@ function SortableSectionNode({
           ))}
           <div
             onClick={() => onAddChild(projectId, section.id)}
+            className="dashed-add-btn"
             style={{
               display: "flex", alignItems: "center", gap: 5,
               padding: `3px 12px 3px ${indent + 16}px`,
-              cursor: "pointer", opacity: 0.4, transition: "all 0.15s",
+              cursor: "pointer", opacity: 0.4,
             }}
             onMouseOver={(e) => { e.currentTarget.style.opacity = 0.8; e.currentTarget.style.background = P.sh; }}
             onMouseOut={(e) => { e.currentTarget.style.opacity = 0.4; e.currentTarget.style.background = "transparent"; }}
           >
             <Plus size={9} style={{ color: P.tf }} />
-            <span style={{ fontSize: 9, color: P.tf, fontFamily: "'IBM Plex Mono', monospace" }}>Add subsection</span>
+            <span style={{ fontSize: 10, color: P.tf, fontFamily: "'IBM Plex Mono', monospace" }}>Add subsection</span>
           </div>
         </>
       )}
@@ -179,14 +184,16 @@ function DragOverlayContent({ section, projectColor }) {
   if (!section) return null;
   return (
     <div style={{
-      padding: "6px 14px", background: P.bg,
+      padding: "8px 14px", background: P.bg,
       border: `1.5px solid ${projectColor}60`,
-      borderRadius: 6, boxShadow: "0 8px 24px rgba(44,36,24,0.15)",
+      borderRadius: 8, boxShadow: "0 12px 36px rgba(44,36,24,0.2)",
       fontSize: 12, color: P.tx, fontWeight: 500,
       display: "flex", alignItems: "center", gap: 6,
-      maxWidth: 220, opacity: 0.95,
+      maxWidth: 240, opacity: 0.95,
+      transform: "rotate(1.5deg) scale(1.02)",
+      cursor: "grabbing",
     }}>
-      <GripVertical size={10} style={{ color: P.tf }} />
+      <GripVertical size={11} style={{ color: P.tf }} />
       <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
         {section.title}
       </span>
@@ -292,8 +299,8 @@ export default function Sidebar({
   }, [activeProjectId, onMoveSection]);
 
   return (
-    <div ref={scrollRef} onScroll={(e) => { scrollPosRef.current = e.target.scrollTop; }} style={{ width: 268, borderRight: `1px solid ${P.bd}`, overflowY: "auto", background: P.sb, flexShrink: 0, padding: "10px 0" }}>
-      <div style={{ padding: "6px 16px 10px", fontFamily: "'IBM Plex Mono', monospace", fontSize: 9, letterSpacing: 2.5, textTransform: "uppercase", color: P.tf }}>
+    <div ref={scrollRef} className="smooth-scroll" onScroll={(e) => { scrollPosRef.current = e.target.scrollTop; }} style={{ height: "100%", overflowY: "auto", background: P.sb, padding: "10px 0" }}>
+      <div style={{ padding: "6px 16px 10px", fontFamily: "'IBM Plex Mono', monospace", fontSize: 10, letterSpacing: 2.5, textTransform: "uppercase", color: P.tf }}>
         Projects
       </div>
 
@@ -304,7 +311,7 @@ export default function Sidebar({
         onDragEnd={handleDragEnd}
       >
         <SortableContext items={allVisibleIds} strategy={verticalListSortingStrategy}>
-          {projects.map((project) => (
+          {projects.filter(p => p.id === "purpose-of-schools").map((project) => (
             <div key={project.id}>
               {/* Project header */}
               <div
@@ -318,9 +325,10 @@ export default function Sidebar({
                 onMouseOver={(e) => { if (activeProjectId !== project.id) e.currentTarget.style.background = P.sh; }}
                 onMouseOut={(e) => { if (activeProjectId !== project.id) e.currentTarget.style.background = "transparent"; }}
               >
-                {expandedNodes[project.id]
-                  ? <ChevronDown size={12} style={{ color: P.tf }} />
-                  : <ChevronRight size={12} style={{ color: P.tf }} />}
+                <ChevronRight size={12} className="chevron-toggle" style={{
+                  color: P.tf,
+                  transform: expandedNodes[project.id] ? "rotate(90deg)" : "rotate(0deg)",
+                }} />
                 <span style={{ fontSize: 15 }}>{project.icon}</span>
                 <span style={{
                   fontSize: 13, fontWeight: activeProjectId === project.id ? 600 : 400,
@@ -343,9 +351,10 @@ export default function Sidebar({
                     onMouseOver={(e) => (e.currentTarget.style.background = P.sh)}
                     onMouseOut={(e) => (e.currentTarget.style.background = "transparent")}
                   >
-                    {expandedNodes[part.id]
-                      ? <ChevronDown size={10} style={{ color: P.tf }} />
-                      : <ChevronRight size={10} style={{ color: P.tf }} />}
+                    <ChevronRight size={10} className="chevron-toggle" style={{
+                      color: P.tf,
+                      transform: expandedNodes[part.id] ? "rotate(90deg)" : "rotate(0deg)",
+                    }} />
                     <BookOpen size={10} style={{ color: project.color, opacity: 0.7 }} />
                     <span style={{
                       fontSize: 11, fontWeight: 600, color: project.color,
@@ -356,7 +365,7 @@ export default function Sidebar({
                     </span>
                   </div>
                   {part.subtitle && expandedNodes[part.id] && (
-                    <div style={{ padding: "0 16px 4px 54px", fontSize: 9, color: P.tf, fontStyle: "italic" }}>
+                    <div style={{ padding: "0 16px 4px 54px", fontSize: 10, color: P.tf, fontStyle: "italic" }}>
                       {part.subtitle}
                     </div>
                   )}
@@ -395,7 +404,7 @@ export default function Sidebar({
 
       {/* Linked Terms */}
       <div style={{ marginTop: 16, borderTop: `1px solid ${P.bd}`, paddingTop: 10 }}>
-        <div style={{ padding: "6px 16px 8px", fontFamily: "'IBM Plex Mono', monospace", fontSize: 9, letterSpacing: 2.5, textTransform: "uppercase", color: P.tf, display: "flex", alignItems: "center", gap: 6 }}>
+        <div style={{ padding: "6px 16px 8px", fontFamily: "'IBM Plex Mono', monospace", fontSize: 10, letterSpacing: 2.5, textTransform: "uppercase", color: P.tf, display: "flex", alignItems: "center", gap: 6 }}>
           <Link2 size={10} /> Linked Terms
         </div>
         {Object.entries(linkedTerms).map(([t, d]) => (
@@ -412,7 +421,7 @@ export default function Sidebar({
           >
             <span style={{ fontFamily: "serif", fontSize: 14, color: d.color, width: 18, textAlign: "center", fontStyle: "italic" }}>{d.symbol}</span>
             <span style={{ fontSize: 12, color: selectedTerm === t ? d.color : P.tm, fontWeight: selectedTerm === t ? 600 : 400 }}>{t}</span>
-            <span style={{ marginLeft: "auto", fontSize: 9, color: P.tf, fontFamily: "'IBM Plex Mono', monospace" }}>{d.refs.length}</span>
+            <span style={{ marginLeft: "auto", fontSize: 10, color: P.tf, fontFamily: "'IBM Plex Mono', monospace" }}>{d.refs.length}</span>
           </div>
         ))}
       </div>

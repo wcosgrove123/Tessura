@@ -320,24 +320,39 @@ function DiagramCanvas({
           <ToolbarBtn icon={Plus} label="Add node" onClick={handleAddNode} />
           <ToolbarBtn icon={Maximize2} label="Fit view" onClick={() => fitView({ padding: 0.2 })} />
 
-          {diagram.sectionId && (
-            <>
-              <div style={{ width: 1, background: P.bd, margin: "2px 4px" }} />
-              <button
-                onClick={() => {
-                  onSelectSection(diagram.projectId, diagram.sectionId);
-                  onSetView("editor");
-                }}
-                style={{
-                  padding: "4px 8px", background: "transparent", border: `1px solid ${P.ac}30`,
-                  borderRadius: 4, color: P.ac, cursor: "pointer", fontSize: 10,
-                  fontFamily: "'IBM Plex Mono', monospace",
-                }}
-              >
-                View in Editor →
-              </button>
-            </>
-          )}
+          {diagram.sectionId && (() => {
+            // Derive section title from projects data
+            const findTitle = (parts, id) => {
+              for (const s of parts || []) {
+                if (s.id === id) return s.title;
+                const found = findTitle(s.children, id);
+                if (found) return found;
+              }
+              return null;
+            };
+            const proj = projects?.find((p) => p.id === diagram.projectId);
+            const secTitle = proj ? findTitle(proj.parts, diagram.sectionId) : null;
+            return (
+              <>
+                <div style={{ width: 1, background: P.bd, margin: "2px 4px" }} />
+                <button
+                  onClick={() => {
+                    onSelectSection(diagram.projectId, diagram.sectionId);
+                    onSetView("editor");
+                  }}
+                  style={{
+                    padding: "4px 8px", background: "transparent", border: `1px solid ${P.ac}30`,
+                    borderRadius: 4, color: P.ac, cursor: "pointer", fontSize: 10,
+                    fontFamily: "'IBM Plex Mono', monospace",
+                    display: "flex", alignItems: "center", gap: 4,
+                  }}
+                  title={secTitle ? `Go to: ${secTitle}` : "View in Editor"}
+                >
+                  {secTitle ? `${secTitle.length > 30 ? secTitle.slice(0, 30) + "…" : secTitle} →` : "View in Editor →"}
+                </button>
+              </>
+            );
+          })()}
         </div>
 
         <ReactFlow

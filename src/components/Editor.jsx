@@ -10,6 +10,20 @@ import DiagramInline from "./DiagramInline.jsx";
 import { loadZoteroSettings, searchLibrary as zoteroSearchLibrary } from "../lib/zoteroClient.js";
 import { collectParagraphs, findSection } from "../hooks/useWorkspaceState.js";
 
+// Render paragraph text with term links AND citation superscripts (non-selected view)
+function renderTextWithCitations(text, linkedTerms, allTerms, onTermClick, paraCitations, noteIndexMap) {
+  const base = renderTermLinks(text, linkedTerms, allTerms, onTermClick);
+  if (!paraCitations?.length) return base;
+  const markers = paraCitations
+    .sort((a, b) => (noteIndexMap[a.id] || 999) - (noteIndexMap[b.id] || 999))
+    .map((c) => (
+      <sup key={c.id} className="cite-marker" title={`Footnote ${noteIndexMap[c.id] || "?"}`}>
+        {noteIndexMap[c.id] || "?"}
+      </sup>
+    ));
+  return <>{base}{markers}</>;
+}
+
 function findSiblings(children, parentId) {
   for (const child of children) {
     if (child.id === parentId) return child.children || [];
@@ -1061,7 +1075,9 @@ function FullTextSection({
       )}
 
       {/* Collapsible body */}
-      <div className={`fulltext-body ${isCollapsed ? "collapsed" : ""}`} style={{ maxHeight: isCollapsed ? 0 : "none" }}>
+      <div className={`fulltext-body ${isCollapsed ? "collapsed" : ""}`} style={{ maxHeight: isCollapsed ? 0 : "none" }}
+        onClick={(e) => { if (!e.target.closest('.para-block') && !e.target.closest('.dashed-add-btn')) onSelectPara(null); }}
+      >
         {/* Paragraphs */}
         {section.paragraphs?.map((para, i) => {
           const isSel = selectedPara === para.id;
@@ -1070,55 +1086,50 @@ function FullTextSection({
             <React.Fragment key={para.id}>
             <div
               data-para-id={para.id}
+              className={`para-block${isSel ? " para-selected" : ""}`}
               onClick={() => onSelectPara(isSel ? null : para.id)}
               style={{
                 position: "relative",
-                padding: isSel ? "12px 16px" : "0",
-                marginBottom: isSel ? 12 : 4,
-                borderRadius: isSel ? 5 : 0,
+                padding: "6px 14px",
+                marginBottom: 2,
+                borderRadius: 3,
                 cursor: "pointer",
-                transition: "background 0.2s, border-color 0.2s",
-                background: isSel ? `${P.sf}` : "transparent",
-                border: isSel ? `1px solid ${P.bd}` : "1px solid transparent",
               }}
-              onMouseOver={(e) => { if (!isSel) e.currentTarget.style.background = `${P.ac}06`; }}
-              onMouseOut={(e) => { if (!isSel) e.currentTarget.style.background = "transparent"; }}
             >
-              {/* Note indicator */}
+              {/* Note badge */}
               {paraNoteCt > 0 && !isSel && (
-                <div
+                <span
+                  className="para-note-badge"
                   title={`${paraNoteCt} note${paraNoteCt > 1 ? "s" : ""}`}
+                  style={{ right: -20, top: 6 }}
                   onClick={(e) => { e.stopPropagation(); onSelectPara(para.id); if (onSetRightPanel) onSetRightPanel("notes"); if (onSetShowRightPanel) onSetShowRightPanel(true); }}
-                  style={{
-                    position: "absolute", right: -24, top: 6,
-                    width: 6, height: 6, borderRadius: "50%", background: P.ac, opacity: 0.5,
-                    cursor: "pointer", transition: "opacity 0.2s, transform 0.2s",
-                  }}
-                  onMouseOver={(e) => { e.currentTarget.style.opacity = "1"; e.currentTarget.style.transform = "scale(1.5)"; }}
-                  onMouseOut={(e) => { e.currentTarget.style.opacity = "0.5"; e.currentTarget.style.transform = "scale(1)"; }}
-                />
+                >
+                  {paraNoteCt}
+                </span>
               )}
 
               {isSel ? (
-                <div onClick={(e) => e.stopPropagation()}>
+                <div className="toolbar-enter" onClick={(e) => e.stopPropagation()}>
                   <ParagraphEditor
                     content={para.text}
                     onChange={(text) => onUpdateText(projectId, section.id, para.id, text)}
                     placeholder="Write..."
                   />
-                  <div style={{ display: "flex", gap: 4, marginTop: 6, flexWrap: "wrap", alignItems: "center" }}>
+                  <div className="toolbar-enter" style={{ display: "flex", gap: 4, marginTop: 6, flexWrap: "wrap", alignItems: "center" }}>
                     <StatusSelect value={para.status} onChange={(s) => onUpdateMeta(projectId, section.id, para.id, { status: s })} />
                     <RoleSelect value={para.spineRole} onChange={(r) => onUpdateMeta(projectId, section.id, para.id, { spineRole: r })} />
                     <div style={{ flex: 1 }} />
                     <button onClick={(e) => { e.stopPropagation(); onAddParagraph(projectId, section.id, para.id); }}
                       title="Add paragraph below"
-                      style={{ background: "none", border: `1px solid ${P.bd}`, borderRadius: 3, padding: "3px 6px", cursor: "pointer", color: P.tm, display: "flex", alignItems: "center", gap: 3, fontSize: 10, fontFamily: "'IBM Plex Mono', monospace" }}>
+                      className="action-btn"
+                      style={{ background: "none", border: `1px solid ${P.bd}`, borderRadius: 4, padding: "4px 8px", cursor: "pointer", color: P.tm, display: "flex", alignItems: "center", gap: 3, fontSize: 10, fontFamily: "'IBM Plex Mono', monospace" }}>
                       <Plus size={10} /> Add
                     </button>
                     {section.paragraphs.length > 1 && (
                       <button onClick={(e) => { e.stopPropagation(); setConfirmAction({ title: "Delete paragraph?", message: "This will remove the paragraph and its content.", danger: true, confirmLabel: "Delete", onConfirm: () => { onDeleteParagraph(projectId, section.id, para.id); setConfirmAction(null); } }); }}
                         title="Delete paragraph"
-                        style={{ background: "none", border: `1px solid #E8B4B4`, borderRadius: 3, padding: "3px 6px", cursor: "pointer", color: "#943D3D", display: "flex", alignItems: "center" }}>
+                        className="action-btn-danger"
+                        style={{ background: "none", border: `1px solid #E8B4B4`, borderRadius: 4, padding: "4px 8px", cursor: "pointer", color: "#943D3D", display: "flex", alignItems: "center" }}>
                         <Trash2 size={10} />
                       </button>
                     )}
@@ -1126,7 +1137,7 @@ function FullTextSection({
                 </div>
               ) : (
                 <div style={{
-                  fontSize: 16.5, lineHeight: 1.85, color: P.tx,
+                  fontSize: 15.5, lineHeight: 1.8, color: P.tx,
                   fontFamily: "'Spectral', serif",
                   textIndent: i > 0 ? "2em" : 0,
                 }}>
@@ -1138,7 +1149,7 @@ function FullTextSection({
             </div>
             {/* Inline diagrams after this paragraph */}
             {sectionDiagrams.filter((d) => d.sectionId === section.id && d.afterParagraphId === para.id).map((diag, di) => (
-              <DiagramInline key={diag.id} diagram={diag} figureIndex={di + 1} onEdit={onEditDiagram} onRemove={onRemoveDiagram} />
+              <DiagramInline key={diag.id} diagram={diag} figureIndex={di + 1} onEdit={onEditDiagram} onRemove={onRemoveDiagram} sectionTitle={section.title} />
             ))}
           </React.Fragment>
           );
@@ -1180,11 +1191,11 @@ function FullTextSection({
           <div style={{ marginTop: 8, marginBottom: 16 }}>
             <button
               onClick={(e) => { e.stopPropagation(); onAddChildSection(projectId, section.id); }}
+              className="dashed-add-btn"
               style={{
                 background: "none", border: `1px dashed ${P.bd}`, borderRadius: 4,
-                padding: "4px 10px", cursor: "pointer", color: P.tf, fontSize: 10,
+                padding: "5px 12px", cursor: "pointer", color: P.tf, fontSize: 10,
                 fontFamily: "'IBM Plex Mono', monospace", display: "flex", alignItems: "center", gap: 4,
-                transition: "color 0.15s, border-color 0.15s",
               }}
               onMouseOver={(e) => { e.currentTarget.style.color = P.ac; e.currentTarget.style.borderColor = P.ac; }}
               onMouseOut={(e) => { e.currentTarget.style.color = P.tf; e.currentTarget.style.borderColor = P.bd; }}
@@ -1245,7 +1256,9 @@ function ExpandedSection({
   const topLevel = depth === 0;
 
   return (
-    <div style={{ marginBottom: topLevel ? 48 : 32 }}>
+    <div style={{ marginBottom: topLevel ? 48 : 32 }}
+      onClick={(e) => { if (!e.target.closest('.para-block') && !e.target.closest('.dashed-add-btn')) onSelectPara(null); }}
+    >
       {/* Section divider for non-root sections */}
       {depth > 0 && (
         <div style={{
@@ -1300,42 +1313,43 @@ function ExpandedSection({
           <React.Fragment key={para.id}>
           <div
             data-para-id={para.id}
+            className={`para-block${isSel ? " para-selected" : ""}`}
             onClick={() => onSelectPara(isSel ? null : para.id)}
             style={{
-              position: "relative", padding: "10px 16px 10px 36px", marginBottom: 8,
-              borderRadius: 5, cursor: "pointer",
-              transition: "background 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.2s",
-              background: isSel ? P.sf : "transparent",
-              border: isSel ? `1px solid ${P.bd}` : "1px solid transparent",
+              position: "relative", padding: "8px 14px 8px 34px", marginBottom: 4,
+              borderRadius: 3, cursor: "pointer",
             }}
-            onMouseOver={(e) => { if (!isSel) e.currentTarget.style.background = `${P.sf}80`; }}
-            onMouseOut={(e) => { if (!isSel) e.currentTarget.style.background = isSel ? P.sf : "transparent"; }}
           >
-            {/* Role indicator */}
-            <div style={{ position: "absolute", left: 10, top: 12, width: 16, textAlign: "center", fontFamily: "serif", fontSize: 12, color: role?.c || P.tf }}>
+            {/* Role indicator — centered */}
+            <div style={{
+              position: "absolute", left: 8, top: 8,
+              width: 20, textAlign: "center", fontFamily: "serif", fontSize: 12, color: role?.c || P.tf,
+            }}>
               {role?.i}
             </div>
 
             {isSel ? (
-              <div onClick={(e) => e.stopPropagation()}>
+              <div className="toolbar-enter" onClick={(e) => e.stopPropagation()}>
                 <ParagraphEditor
                   content={para.text}
                   onChange={(text) => onUpdateText(projectId, section.id, para.id, text)}
                   placeholder="Write..."
                 />
-                <div style={{ display: "flex", gap: 4, marginTop: 6, flexWrap: "wrap", alignItems: "center" }}>
+                <div className="toolbar-enter" style={{ display: "flex", gap: 4, marginTop: 6, flexWrap: "wrap", alignItems: "center" }}>
                   <StatusSelect value={para.status} onChange={(s) => onUpdateMeta(projectId, section.id, para.id, { status: s })} />
                   <RoleSelect value={para.spineRole} onChange={(r) => onUpdateMeta(projectId, section.id, para.id, { spineRole: r })} />
                   <div style={{ flex: 1 }} />
                   <button onClick={(e) => { e.stopPropagation(); onAddParagraph(projectId, section.id, para.id); }}
                     title="Add paragraph below"
-                    style={{ background: "none", border: `1px solid ${P.bd}`, borderRadius: 3, padding: "3px 6px", cursor: "pointer", color: P.tm, display: "flex", alignItems: "center", gap: 3, fontSize: 10, fontFamily: "'IBM Plex Mono', monospace" }}>
+                    className="action-btn"
+                    style={{ background: "none", border: `1px solid ${P.bd}`, borderRadius: 4, padding: "4px 8px", cursor: "pointer", color: P.tm, display: "flex", alignItems: "center", gap: 3, fontSize: 10, fontFamily: "'IBM Plex Mono', monospace" }}>
                     <Plus size={10} /> Add
                   </button>
                   {section.paragraphs.length > 1 && (
                     <button onClick={(e) => { e.stopPropagation(); setConfirmAction({ title: "Delete paragraph?", message: "This will remove the paragraph and its content.", danger: true, confirmLabel: "Delete", onConfirm: () => { onDeleteParagraph(projectId, section.id, para.id); setConfirmAction(null); } }); }}
                       title="Delete paragraph"
-                      style={{ background: "none", border: `1px solid #E8B4B4`, borderRadius: 3, padding: "3px 6px", cursor: "pointer", color: "#943D3D", display: "flex", alignItems: "center" }}>
+                      className="action-btn-danger"
+                      style={{ background: "none", border: `1px solid #E8B4B4`, borderRadius: 4, padding: "4px 8px", cursor: "pointer", color: "#943D3D", display: "flex", alignItems: "center" }}>
                       <Trash2 size={10} />
                     </button>
                   )}
@@ -1343,7 +1357,7 @@ function ExpandedSection({
               </div>
             ) : (
               <div style={{
-                fontSize: 16, lineHeight: 1.75, color: P.tx,
+                fontSize: 15, lineHeight: 1.75, color: P.tx,
                 fontFamily: "'Spectral', serif",
               }}>
                 {para.text
@@ -1404,12 +1418,12 @@ function OutlineRow({ section, depth, projectId, onSelectSection, setEditorMode,
   return (
     <>
       <div
+        className="outline-row"
         style={{
           display: "flex", alignItems: "flex-start", gap: 8,
           padding: "10px 14px", paddingLeft: 14 + depth * 24,
           borderLeft: `3px solid ${st.text}40`,
           background: "transparent", cursor: "pointer",
-          transition: "background 0.15s, transform 0.15s ease",
         }}
         onMouseOver={(e) => { e.currentTarget.style.background = P.sf; e.currentTarget.style.transform = "translateX(2px)"; }}
         onMouseOut={(e) => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.transform = "translateX(0)"; }}
@@ -1571,10 +1585,11 @@ function OutlineView({ section, projectId, onSelectSection, setEditorMode, onAdd
       {/* Add subsection */}
       <div
         onClick={() => onAddChildSection(projectId, section.id)}
+        className="dashed-add-btn"
         style={{
           display: "flex", alignItems: "center", justifyContent: "center", gap: 6,
           padding: "10px", marginTop: 12, borderRadius: 6, cursor: "pointer",
-          border: `1.5px dashed ${P.bd}`, color: P.tf, transition: "all 0.2s",
+          border: `1.5px dashed ${P.bd}`, color: P.tf,
         }}
         onMouseOver={(e) => { e.currentTarget.style.borderColor = P.ac; e.currentTarget.style.color = P.ac; }}
         onMouseOut={(e) => { e.currentTarget.style.borderColor = P.bd; e.currentTarget.style.color = P.tf; }}
@@ -1608,7 +1623,15 @@ export default function Editor({
   const [editingTitle, setEditingTitle] = useState(false);
   const [titleText, setTitleText] = useState("");
   const [notesCollapsed, setNotesCollapsed] = useState(false);
-  const [editorMode, setEditorMode] = useState("draft"); // "draft" | "outline" | "expanded"
+  const [editorMode, setEditorMode] = useState(() => {
+    try { const ui = JSON.parse(localStorage.getItem("tessera-ui-state") || "{}"); return ui.editorMode || "draft"; } catch { return "draft"; }
+  }); // "draft" | "outline" | "expanded"
+  useEffect(() => {
+    try {
+      const ui = JSON.parse(localStorage.getItem("tessera-ui-state") || "{}");
+      localStorage.setItem("tessera-ui-state", JSON.stringify({ ...ui, editorMode }));
+    } catch {}
+  }, [editorMode]);
   const [confirmAction, setConfirmAction] = useState(null); // { title, message, danger, onConfirm }
   const [citationPopover, setCitationPopover] = useState(null); // { paraId, x, y, from, to }
 
@@ -1761,7 +1784,7 @@ export default function Editor({
 
   // ── Text-based modes (drafting / revised / done) ──
   return (
-    <div style={{ display: "flex", height: "100%" }}>
+    <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
       {/* Zen mode nav rail — fixed overlay on left edge */}
       {zenMode && project && (
         <ZenNavRail
@@ -1771,35 +1794,35 @@ export default function Editor({
           onAddChildSection={onAddChildSection}
         />
       )}
-      {/* Main editor content */}
-      <div className="smooth-scroll" style={{ flex: 1, overflowY: "auto" }}>
-        <div style={{ maxWidth: zenMode ? 820 : status === "done" ? 640 : 720, margin: "0 auto", padding: zenMode ? "24px 48px 100px" : status === "done" ? "48px 64px 120px" : "32px 48px 100px" }}>
-          {/* Breadcrumb (hidden in zen mode) */}
-          {project && !zenMode && (
-            <div style={{ display: "flex", alignItems: "center", gap: 4, flexWrap: "wrap", marginBottom: 8 }}>
-              <span style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: 10, color: project.color, letterSpacing: 1.5, textTransform: "uppercase", fontWeight: 500 }}>
-                {project.name}
+      {/* Sticky breadcrumb bar (hidden in zen mode) */}
+      {project && !zenMode && (
+        <div style={{
+          display: "flex", alignItems: "center", gap: 4, flexWrap: "wrap",
+          padding: "8px 48px", borderBottom: `1px solid ${P.bd}`, background: P.sf, flexShrink: 0,
+        }}>
+          <span style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: 10, color: project.color, letterSpacing: 1.5, textTransform: "uppercase", fontWeight: 500 }}>
+            {project.name}
+          </span>
+          {path.slice(1).map((id, i) => (
+            <React.Fragment key={id}>
+              <ChevronRight size={9} style={{ color: P.tf }} />
+              <span
+                onClick={() => onSelectSection(project.id, id)}
+                style={{
+                  fontFamily: "'IBM Plex Mono', monospace", fontSize: 10, color: i === path.length - 2 ? P.tx : P.tf,
+                  cursor: "pointer", letterSpacing: 1, transition: "color 0.15s",
+                  textDecoration: "none", borderBottom: "1px solid transparent",
+                }}
+                onMouseOver={(e) => { e.target.style.color = P.ac; e.target.style.borderBottomColor = P.ac; }}
+                onMouseOut={(e) => { e.target.style.color = i === path.length - 2 ? P.tx : P.tf; e.target.style.borderBottomColor = "transparent"; }}
+              >
+                {id === section.id ? section.title : (findSection(project.parts, id)?.section?.title || id)}
               </span>
-              {path.slice(1).map((id, i) => (
-                <React.Fragment key={id}>
-                  <ChevronRight size={9} style={{ color: P.tf }} />
-                  <span
-                    onClick={() => onSelectSection(project.id, id)}
-                    style={{
-                      fontFamily: "'IBM Plex Mono', monospace", fontSize: 10, color: i === path.length - 2 ? P.tx : P.tf,
-                      cursor: "pointer", letterSpacing: 1, transition: "color 0.15s",
-                      textDecoration: "none", borderBottom: "1px solid transparent",
-                    }}
-                    onMouseOver={(e) => { e.target.style.color = P.ac; e.target.style.borderBottomColor = P.ac; }}
-                    onMouseOut={(e) => { e.target.style.color = i === path.length - 2 ? P.tx : P.tf; e.target.style.borderBottomColor = "transparent"; }}
-                  >
-                    {id === section.id ? section.title : (findSection(project.parts, id)?.section?.title || id)}
-                  </span>
-                </React.Fragment>
-              ))}
-              <span style={{ marginLeft: 8 }}>
-                <StatusSelect value={section.status} onChange={(s) => onUpdateSection(project.id, section.id, { status: s })} />
-              </span>
+            </React.Fragment>
+          ))}
+          <span style={{ marginLeft: 8 }}>
+            <StatusSelect value={section.status} onChange={(s) => onUpdateSection(project.id, section.id, { status: s })} />
+          </span>
               {/* Draft / Outline toggle */}
               <div style={{ marginLeft: "auto", display: "flex", gap: 0, border: `1px solid ${P.bd}`, borderRadius: 4, overflow: "hidden" }}>
                 {[
@@ -1824,8 +1847,19 @@ export default function Editor({
                   </button>
                 ))}
               </div>
-            </div>
-          )}
+        </div>
+      )}
+
+      {/* Main editor content */}
+      <div className="smooth-scroll" style={{ flex: 1, overflowY: "auto" }}
+        onClick={(e) => {
+          // Click-outside deselection: deselect paragraph when clicking empty space
+          if (selectedPara && !e.target.closest('.para-block') && !e.target.closest('.dashed-add-btn') && !e.target.closest('.action-btn') && !e.target.closest('.action-btn-danger') && !e.target.closest('select') && !e.target.closest('input') && !e.target.closest('textarea') && !e.target.closest('.ProseMirror') && !e.target.closest('.citation-tooltip') && !e.target.closest('.popover-enter')) {
+            onSelectPara(null);
+          }
+        }}
+      >
+        <div style={{ maxWidth: zenMode ? 820 : status === "done" ? 640 : 720, margin: "0 auto", padding: zenMode ? "24px 48px 100px" : status === "done" ? "48px 64px 120px" : "32px 48px 100px" }}>
 
           {/* Title */}
           <div style={{ marginBottom: 24 }}>
@@ -2100,10 +2134,11 @@ export default function Editor({
                   </div>
                   <div
                     onClick={() => onAddChildSection(project.id, section.id)}
+                    className="dashed-add-btn"
                     style={{
                       display: "flex", alignItems: "center", justifyContent: "center", gap: 6,
                       padding: "8px", marginTop: 6, borderRadius: 6, cursor: "pointer",
-                      border: `1.5px dashed ${P.bd}`, color: P.tf, transition: "all 0.2s",
+                      border: `1.5px dashed ${P.bd}`, color: P.tf,
                     }}
                     onMouseOver={(e) => { e.currentTarget.style.borderColor = P.ac; e.currentTarget.style.color = P.ac; }}
                     onMouseOut={(e) => { e.currentTarget.style.borderColor = P.bd; e.currentTarget.style.color = P.tf; }}
@@ -2126,39 +2161,46 @@ export default function Editor({
                     const role = SPINE_ROLES[para.spineRole];
                     const isSel = selectedPara === para.id;
                     const paraNoteCt = notesByPara[para.id] || 0;
+                    const paraCitations = sectionCitations.filter((c) => c.paragraphId === para.id);
                     return (
                       <React.Fragment key={para.id}>
                       <div
                         data-para-id={para.id}
+                        className={`para-block${isSel ? " para-selected" : ""}`}
                         onClick={() => onSelectPara(isSel ? null : para.id)}
                         style={{
-                          position: "relative", padding: "14px 16px 14px 44px", marginBottom: 4,
-                          borderRadius: 5, cursor: "pointer",
-                          transition: "background 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.2s, opacity 0.3s",
-                          background: isSel ? P.sf : "transparent",
-                          border: isSel ? `1px solid ${P.bd}` : "1px solid transparent",
+                          position: "relative", padding: "8px 14px 8px 34px", marginBottom: 2,
+                          borderRadius: 3, cursor: "pointer",
                           opacity: zenMode && selectedPara && !isSel ? 0.35 : 1,
+                          transition: "opacity 0.3s ease",
                         }}
-                        onMouseOver={(e) => { if (!isSel) e.currentTarget.style.background = `${P.sf}80`; }}
-                        onMouseOut={(e) => { if (!isSel) e.currentTarget.style.background = isSel ? P.sf : "transparent"; }}
                       >
-                        <div style={{ position: "absolute", left: 14, top: 16, width: 20, textAlign: "center", fontFamily: "serif", fontSize: 14, color: role?.c || P.tf }}>
-                          {role?.i}
+                        {/* Gutter: role icon + number */}
+                        <div style={{
+                          position: "absolute", left: 6, top: 8,
+                          display: "flex", flexDirection: "column", alignItems: "center",
+                          width: 22, gap: 0,
+                        }}>
+                          <span style={{ fontFamily: "serif", fontSize: 12, color: role?.c || P.tf, lineHeight: 1.2 }}>
+                            {role?.i}
+                          </span>
+                          <span style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: 9, color: P.t3, lineHeight: 1.2 }}>
+                            {i + 1}
+                          </span>
                         </div>
-                        <div style={{ position: "absolute", left: 15, top: 32, fontFamily: "'IBM Plex Mono', monospace", fontSize: 10, color: P.t3 }}>
-                          {i + 1}
-                        </div>
-                        {paraNoteCt > 0 && (
-                          <div title={`${paraNoteCt} note${paraNoteCt > 1 ? "s" : ""}`}
+                        {/* Note badge */}
+                        {!isSel && paraNoteCt > 0 && (
+                          <span className="para-note-badge"
+                            title={`${paraNoteCt} note${paraNoteCt > 1 ? "s" : ""}`}
+                            style={{ left: 7, bottom: 4 }}
                             onClick={(e) => { e.stopPropagation(); onSelectPara(para.id); if (onSetRightPanel) onSetRightPanel("notes"); if (onSetShowRightPanel) onSetShowRightPanel(true); }}
-                            style={{ position: "absolute", left: 30, top: 34, width: 6, height: 6, borderRadius: "50%", background: P.ac, opacity: 0.7, cursor: "pointer", transition: "opacity 0.2s, transform 0.2s" }}
-                            onMouseOver={(e) => { e.currentTarget.style.opacity = "1"; e.currentTarget.style.transform = "scale(1.5)"; }}
-                            onMouseOut={(e) => { e.currentTarget.style.opacity = "0.7"; e.currentTarget.style.transform = "scale(1)"; }}
-                          />
+                          >
+                            {paraNoteCt}
+                          </span>
                         )}
 
                         {isSel ? (
-                          <div onClick={(e) => e.stopPropagation()}>
+                          <div className="toolbar-enter" onClick={(e) => e.stopPropagation()}>
                           <ParagraphEditor
                             content={para.text}
                             onChange={(text) => onUpdateText(project.id, section.id, para.id, text)}
@@ -2196,15 +2238,15 @@ export default function Editor({
                           />
                           </div>
                         ) : (
-                          <div style={{ fontSize: 16, lineHeight: 1.75, color: para.text ? P.tx : P.tf, fontFamily: "'Spectral', serif" }}>
+                          <div style={{ fontSize: 15, lineHeight: 1.75, color: para.text ? P.tx : P.tf, fontFamily: "'Spectral', serif" }}>
                             {para.text
-                              ? renderTermLinks(para.text, para.linkedTerms, linkedTerms, onTermClick)
+                              ? renderTextWithCitations(para.text, para.linkedTerms, linkedTerms, onTermClick, paraCitations, noteIndexMap)
                               : "Click to start writing..."}
                           </div>
                         )}
 
                         {isSel && (
-                          <div style={{ display: "flex", gap: 6, marginTop: 12, flexWrap: "wrap", alignItems: "center" }}>
+                          <div className="toolbar-enter" style={{ display: "flex", gap: 4, marginTop: 8, flexWrap: "wrap", alignItems: "center" }}>
                             <StatusSelect value={para.status} onChange={(s) => onUpdateMeta(project.id, section.id, para.id, { status: s })} />
                             <RoleSelect value={para.spineRole} onChange={(r) => onUpdateMeta(project.id, section.id, para.id, { spineRole: r })} />
                             {para.linkedTerms?.map((t) => (
@@ -2222,19 +2264,22 @@ export default function Editor({
                               {onAddNote && (
                                 <button onClick={(e) => { e.stopPropagation(); handleAddParaNote(para.id); }}
                                   title="Add note for this paragraph"
-                                  style={{ background: "none", border: `1px solid ${P.ac}40`, borderRadius: 3, padding: "3px 6px", cursor: "pointer", color: P.ac, display: "flex", alignItems: "center", gap: 3, fontSize: 10, fontFamily: "'IBM Plex Mono', monospace" }}>
+                                  className="action-btn"
+                                  style={{ background: "none", border: `1px solid ${P.ac}40`, borderRadius: 4, padding: "4px 8px", cursor: "pointer", color: P.ac, display: "flex", alignItems: "center", gap: 3, fontSize: 10, fontFamily: "'IBM Plex Mono', monospace" }}>
                                   <MessageSquare size={10} /> Note
                                 </button>
                               )}
                               <button onClick={(e) => { e.stopPropagation(); onAddParagraph(project.id, section.id, para.id); }}
                                 title="Add paragraph below"
-                                style={{ background: "none", border: `1px solid ${P.bd}`, borderRadius: 3, padding: "3px 6px", cursor: "pointer", color: P.tm, display: "flex", alignItems: "center", gap: 3, fontSize: 10, fontFamily: "'IBM Plex Mono', monospace" }}>
+                                className="action-btn"
+                                style={{ background: "none", border: `1px solid ${P.bd}`, borderRadius: 4, padding: "4px 8px", cursor: "pointer", color: P.tm, display: "flex", alignItems: "center", gap: 3, fontSize: 10, fontFamily: "'IBM Plex Mono', monospace" }}>
                                 <Plus size={10} /> Add ¶
                               </button>
                               {section.paragraphs.length > 1 && (
                                 <button onClick={(e) => { e.stopPropagation(); setConfirmAction({ title: "Delete paragraph?", message: "This will remove the paragraph and its content.", danger: true, confirmLabel: "Delete", onConfirm: () => { onDeleteParagraph(project.id, section.id, para.id); setConfirmAction(null); } }); }}
                                   title="Delete paragraph"
-                                  style={{ background: "none", border: `1px solid #E8B4B4`, borderRadius: 3, padding: "3px 6px", cursor: "pointer", color: "#943D3D", display: "flex", alignItems: "center" }}>
+                                  className="action-btn-danger"
+                                  style={{ background: "none", border: `1px solid #E8B4B4`, borderRadius: 4, padding: "4px 8px", cursor: "pointer", color: "#943D3D", display: "flex", alignItems: "center" }}>
                                   <Trash2 size={10} />
                                 </button>
                               )}
@@ -2244,7 +2289,7 @@ export default function Editor({
                       </div>
                       {/* Inline diagrams after this paragraph */}
                       {sectionDiagrams.filter((d) => d.sectionId === section.id && d.afterParagraphId === para.id).map((diag, di) => (
-                        <DiagramInline key={diag.id} diagram={diag} figureIndex={di + 1} onEdit={onEditDiagram} onRemove={onRemoveDiagram} />
+                        <DiagramInline key={diag.id} diagram={diag} figureIndex={di + 1} onEdit={onEditDiagram} onRemove={onRemoveDiagram} sectionTitle={section.title} />
                       ))}
                       </React.Fragment>
                     );
@@ -2255,10 +2300,11 @@ export default function Editor({
               {/* Add paragraph button */}
               {(section.paragraphs?.length > 0 || !section.children?.length) && (
                 <div onClick={() => onAddParagraph(project.id, section.id, null)}
+                  className="dashed-add-btn"
                   style={{
                     display: "flex", alignItems: "center", justifyContent: "center", gap: 6,
                     padding: "10px", marginTop: 8, borderRadius: 6, cursor: "pointer",
-                    border: `1.5px dashed ${P.bd}`, color: P.tf, transition: "all 0.2s",
+                    border: `1.5px dashed ${P.bd}`, color: P.tf,
                   }}
                   onMouseOver={(e) => { e.currentTarget.style.borderColor = P.ac; e.currentTarget.style.color = P.ac; }}
                   onMouseOut={(e) => { e.currentTarget.style.borderColor = P.bd; e.currentTarget.style.color = P.tf; }}>
@@ -2270,10 +2316,11 @@ export default function Editor({
               {/* Add subsection button — always visible */}
               {(
                 <div onClick={() => onAddChildSection(project.id, section.id)}
+                  className="dashed-add-btn"
                   style={{
                     display: "flex", alignItems: "center", justifyContent: "center", gap: 6,
                     padding: "10px", marginTop: 6, borderRadius: 6, cursor: "pointer",
-                    border: `1.5px dashed ${P.bd}`, color: P.tf, transition: "all 0.2s",
+                    border: `1.5px dashed ${P.bd}`, color: P.tf,
                   }}
                   onMouseOver={(e) => { e.currentTarget.style.borderColor = P.ac; e.currentTarget.style.color = P.ac; }}
                   onMouseOut={(e) => { e.currentTarget.style.borderColor = P.bd; e.currentTarget.style.color = P.tf; }}>

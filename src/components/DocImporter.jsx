@@ -3,8 +3,76 @@ import mammoth from "mammoth";
 /**
  * Parse a .docx file into Tessera's section tree structure.
  * Detects headings and uses them to create subsections automatically.
+ * Filters out meta-commentary, section summaries, and editorial scaffolding.
+ * Extracts footnotes and preserves inline [N] markers.
  * Returns { title, children[], paragraphs[], notes[] }
  */
+
+// ── Meta-commentary detection ───────────────────────────────────
+
+const META_EXACT = new Set([
+  "working draft",
+  "section summary",
+]);
+
+const META_PREFIXES = [
+  "draft for:",
+  "what comes next",
+  "this draft covers",
+  "comments from your outline",
+  "remaining open comments",
+  "remaining items deferred",
+  "transition into section",
+  "section b fixes",
+  "section c fixes",
+  "section d fixes",
+  "section e fixes",
+  "two changes to make",
+  "approximate paragraph count",
+  "no instances of",
+];
+
+const META_PATTERNS = [
+  /^comments?\s+\d+[\-–]\d+\s*:/i,            // "Comments 5–6: ..."
+  /^comment\s+\d+\s*:/i,                       // "Comment 4: ..."
+  /^comment\s+\d+\s+fix/i,                     // "Comment 7 fix ..."
+  /^draft comment\s+\d+/i,                     // "Draft Comment 0 (from v3): ..."
+  /^d\+e\.\d/i,                                // "D+E.1 (The Root System): ..."
+  /^section [a-z] ends with/i,                 // "Section B ends with the question..."
+  /^the transition sentence between/i,         // "The transition sentence between B and C..."
+  /^axiometrica calculus/i,                     // deferred items list
+  /^formal introduction of the six/i,
+  /^assessment architecture for/i,
+  /^communication as a core/i,
+  /^banking logic embedded/i,
+];
+
+function isMetaCommentary(text) {
+  const lower = text.toLowerCase().trim();
+  if (META_EXACT.has(lower)) return true;
+  if (META_PREFIXES.some((p) => lower.startsWith(p))) return true;
+  if (META_PATTERNS.some((p) => p.test(text))) return true;
+  if (lower.includes("purple-bordered notes throughout")) return true;
+  return false;
+}
+
+// ── Footnote detection ──────────────────────────────────────────
+
+function isFootnoteBody(el) {
+  // Mammoth renders footnotes as <li id="footnote-N">
+  if (el.tagName === "LI" && el.id?.startsWith("footnote-")) return true;
+  return false;
+}
+
+function extractFootnoteText(el) {
+  let text = el.textContent.trim();
+  // Remove back-link arrow (↑)
+  text = text.replace(/\s*↑\s*$/, "").trim();
+  return text;
+}
+
+// ── Main parser ─────────────────────────────────────────────────
+
 export async function parseDocx(file) {
   const arrayBuffer = await file.arrayBuffer();
   const result = await mammoth.convertToHtml({ arrayBuffer });
@@ -12,7 +80,7 @@ export async function parseDocx(file) {
 
   const parser = new DOMParser();
   const dom = parser.parseFromString(html, "text/html");
-  const elements = dom.body.querySelectorAll("p, h1, h2, h3, h4, h5, h6, li");
+  const elements = dom.body.querySelectorAll("p, h1, h2, h3, h4, h5, h6, li, ol > li");
 
   const notes = [];
   const now = Date.now();
@@ -20,18 +88,40 @@ export async function parseDocx(file) {
   let title = file.name.replace(/\.docx$/i, "");
 
   // First pass: collect all elements with their types
-  // We track a "current section id" so notes know which section they belong to
   const items = [];
-  let pendingNotes = []; // notes waiting to be assigned a section
   let lastParaId = null;
 
   elements.forEach((el, i) => {
     const text = el.textContent.trim();
     if (!text) return;
 
+    // ── Footnote bodies → extract as notes, skip as paragraphs ──
+    if (isFootnoteBody(el)) {
+      const fnText = extractFootnoteText(el);
+      if (fnText) {
+        const fnNum = el.id.replace("footnote-", "");
+        noteCounter++;
+        notes.push({
+          id: `imp-note-${now}-${noteCounter}`,
+          category: "idea",
+          text: fnText,
+          tags: ["imported", "footnote", `fn${fnNum}`],
+          linkedProjectId: null,
+          linkedSectionId: null,
+          linkedParagraphId: null,
+          inlineRange: null,
+          resolved: false,
+          createdAt: now,
+          updatedAt: now,
+          _needsSection: true,
+        });
+      }
+      return;
+    }
+
     const headingMatch = el.tagName.match(/^H([1-6])$/);
 
-    // Detect NOTE: blocks → extract as notes, skip as paragraphs
+    // ── NOTE: blocks → extract as notes, skip as paragraphs ──
     const noteMatch = text.match(/^NOTE:\s*(.+)$/s);
     if (noteMatch) {
       noteCounter++;
@@ -41,7 +131,7 @@ export async function parseDocx(file) {
         text: noteMatch[1].trim(),
         tags: ["imported", "editorial"],
         linkedProjectId: null,
-        linkedSectionId: null, // will be set in second pass
+        linkedSectionId: null,
         linkedParagraphId: lastParaId,
         inlineRange: null,
         resolved: false,
@@ -52,7 +142,7 @@ export async function parseDocx(file) {
       return;
     }
 
-    // Detect standalone comment reference blocks
+    // ── Standalone comment reference blocks → notes ──
     const commentBlockMatch = text.match(/^Comments?\s*[\d,\-–]+\s*:\s*(.+)$/s);
     if (commentBlockMatch) {
       noteCounter++;
@@ -73,20 +163,55 @@ export async function parseDocx(file) {
       return;
     }
 
-    // Skip meta-paragraphs
-    const lower = text.toLowerCase();
-    if (lower === "working draft") return;
-    if (lower.startsWith("draft for:")) return;
-    if (lower.startsWith("what comes next")) return;
-    if (lower.includes("purple-bordered notes throughout")) return;
+    // ── Meta-commentary → extract as notes, skip as paragraphs ──
+    if (isMetaCommentary(text)) {
+      noteCounter++;
+      notes.push({
+        id: `imp-note-${now}-${noteCounter}`,
+        category: "task",
+        text: text,
+        tags: ["imported", "meta-commentary"],
+        linkedProjectId: null,
+        linkedSectionId: null,
+        linkedParagraphId: lastParaId,
+        inlineRange: null,
+        resolved: false,
+        createdAt: now,
+        updatedAt: now,
+        _needsSection: true,
+      });
+      return;
+    }
 
     if (headingMatch) {
       items.push({ type: "heading", level: parseInt(headingMatch[1]), text, index: i });
     } else {
       // Detect bold-only paragraphs as potential sub-headings (like "Kumashiro's Contributions")
-      const isBoldOnly = el.querySelector("strong") &&
-        el.textContent.trim() === el.querySelector("strong")?.textContent.trim() &&
+      const strongEl = el.querySelector("strong");
+      const isBoldOnly = strongEl &&
+        el.textContent.trim() === strongEl.textContent.trim() &&
         text.length < 100;
+
+      // But only treat as heading if it's not meta-commentary
+      if (isBoldOnly && isMetaCommentary(text)) {
+        // Bold meta-commentary (like "SECTION SUMMARY") → note, not heading
+        noteCounter++;
+        notes.push({
+          id: `imp-note-${now}-${noteCounter}`,
+          category: "task",
+          text: text,
+          tags: ["imported", "meta-commentary"],
+          linkedProjectId: null,
+          linkedSectionId: null,
+          linkedParagraphId: lastParaId,
+          inlineRange: null,
+          resolved: false,
+          createdAt: now,
+          updatedAt: now,
+          _needsSection: true,
+        });
+        return;
+      }
 
       if (!isBoldOnly) {
         lastParaId = `imp-${now}-${i}`; // track for note linking
@@ -101,55 +226,69 @@ export async function parseDocx(file) {
     items.shift();
   }
 
-  // Second pass: build section tree from headings
-  // Strategy: H2 and bold-only headings create child sections
-  // Everything else is paragraphs in the current section
+  // ── Second pass: build recursive section tree from headings ──
+  // Strategy: headings create sections at their appropriate nesting level
+  // H1 (after title) and H2 → top-level children
+  // H3 → children of current H2
+  // H4 → children of current H3
+  // Bold-only → treated as one level deeper than the current context
 
-  const rootParagraphs = []; // paragraphs before any subsection heading
-  const children = [];       // subsection objects
-  let currentChild = null;   // current subsection being built
-  let subChild = null;       // current sub-subsection (for H3+)
+  const rootParagraphs = [];
+  const children = [];
+  // Stack tracks the current nesting: [H2 section, H3 section, H4 section, ...]
+  const sectionStack = [];
+
+  function currentSection() {
+    return sectionStack.length > 0 ? sectionStack[sectionStack.length - 1] : null;
+  }
+
+  function makeSectionObj(item) {
+    return {
+      id: `sec-${now}-${item.index}`,
+      title: item.text,
+      spine: "",
+      status: "drafting",
+      children: [],
+      paragraphs: [],
+    };
+  }
 
   for (const item of items) {
-    if (item.type === "heading" && item.level <= 2) {
-      // H2 or H1 (after the title) → new top-level subsection
-      if (subChild && currentChild) {
-        currentChild.children.push(subChild);
-        subChild = null;
-      }
-      if (currentChild) children.push(currentChild);
-      currentChild = {
-        id: `sec-${now}-${item.index}`,
-        title: item.text,
-        spine: "",
-        status: "drafting",
-        children: [],
-        paragraphs: [],
-      };
-    } else if ((item.type === "heading" && item.level >= 3) || item.type === "bold-heading") {
-      // H3+ or bold-only paragraph → sub-subsection within current child
-      if (currentChild) {
-        if (subChild) {
-          currentChild.children.push(subChild);
-        }
-        subChild = {
-          id: `sec-${now}-${item.index}`,
-          title: item.text,
-          spine: "",
-          status: "drafting",
-          children: [],
-          paragraphs: [],
-        };
+    if (item.type === "heading") {
+      const level = item.level;
+      const newSection = makeSectionObj(item);
+
+      if (level <= 2) {
+        // Top-level subsection: flush the entire stack
+        while (sectionStack.length > 0) sectionStack.pop();
+        children.push(newSection);
+        sectionStack.push(newSection);
       } else {
-        // No parent subsection yet → create one
-        currentChild = {
-          id: `sec-${now}-${item.index}`,
-          title: item.text,
-          spine: "",
-          status: "drafting",
-          children: [],
-          paragraphs: [],
-        };
+        // Nested heading (H3, H4, H5, H6)
+        // Target depth in stack: level - 2 (H3 → depth 1, H4 → depth 2, etc.)
+        const targetDepth = level - 2;
+        // Pop stack back to parent level
+        while (sectionStack.length >= targetDepth + 1) sectionStack.pop();
+
+        const parent = currentSection();
+        if (parent) {
+          parent.children.push(newSection);
+        } else {
+          // No parent → treat as top-level
+          children.push(newSection);
+        }
+        sectionStack.push(newSection);
+      }
+    } else if (item.type === "bold-heading") {
+      // Bold-only paragraph → sub-section one level deeper than current
+      const newSection = makeSectionObj(item);
+      const parent = currentSection();
+      if (parent) {
+        parent.children.push(newSection);
+        sectionStack.push(newSection);
+      } else {
+        children.push(newSection);
+        sectionStack.push(newSection);
       }
     } else {
       // Regular paragraph
@@ -170,7 +309,8 @@ export async function parseDocx(file) {
       };
 
       // Track which section this paragraph belongs to
-      const ownerSectionId = subChild?.id || currentChild?.id || null;
+      const ownerSection = currentSection();
+      const ownerSectionId = ownerSection?.id || null;
 
       // Check for inline comment references
       const inlineCommentRefs = item.text.match(/\(Comment \d+\)/g);
@@ -195,36 +335,49 @@ export async function parseDocx(file) {
       }
 
       // Add to the deepest current section
-      if (subChild) {
-        subChild.paragraphs.push(para);
-      } else if (currentChild) {
-        currentChild.paragraphs.push(para);
+      if (ownerSection) {
+        ownerSection.paragraphs.push(para);
       } else {
         rootParagraphs.push(para);
       }
     }
   }
 
-  // Flush remaining
-  if (subChild && currentChild) currentChild.children.push(subChild);
-  if (currentChild) children.push(currentChild);
+  // ── Post-processing ───────────────────────────────────────────
 
-  // Assign first paragraphs as "setup" in each section
-  for (const sec of [{ paragraphs: rootParagraphs }, ...children]) {
-    if (sec.paragraphs.length > 0 && sec.paragraphs[0].spineRole === "claim") {
-      sec.paragraphs[0].spineRole = "setup";
+  // Assign first paragraph in each section as "setup"
+  function fixFirstParaRole(sections) {
+    for (const sec of sections) {
+      if (sec.paragraphs.length > 0 && sec.paragraphs[0].spineRole === "claim") {
+        sec.paragraphs[0].spineRole = "setup";
+      }
+      if (sec.children?.length > 0) fixFirstParaRole(sec.children);
     }
   }
+  if (rootParagraphs.length > 0 && rootParagraphs[0].spineRole === "claim") {
+    rootParagraphs[0].spineRole = "setup";
+  }
+  fixFirstParaRole(children);
+
+  // Remove empty leaf sections (no paragraphs AND no children)
+  function pruneEmpty(sections) {
+    return sections.filter((s) => {
+      s.children = pruneEmpty(s.children || []);
+      return s.paragraphs.length > 0 || s.children.length > 0;
+    });
+  }
+  const prunedChildren = pruneEmpty(children);
 
   // Build paragraph → section mapping for note linking
   const paraToSection = {};
-  for (const p of rootParagraphs) paraToSection[p.id] = null; // root level
-  for (const child of children) {
-    for (const p of child.paragraphs) paraToSection[p.id] = child.id;
-    for (const sub of child.children || []) {
-      for (const p of sub.paragraphs) paraToSection[p.id] = sub.id;
+  for (const p of rootParagraphs) paraToSection[p.id] = null;
+  function mapParas(sections) {
+    for (const sec of sections) {
+      for (const p of sec.paragraphs) paraToSection[p.id] = sec.id;
+      if (sec.children) mapParas(sec.children);
     }
   }
+  mapParas(prunedChildren);
 
   // Assign section IDs to notes that need them
   for (const note of notes) {
@@ -236,7 +389,7 @@ export async function parseDocx(file) {
     }
   }
 
-  return { title, paragraphs: rootParagraphs, children, notes };
+  return { title, paragraphs: rootParagraphs, children: prunedChildren, notes };
 }
 
 /**
@@ -244,10 +397,15 @@ export async function parseDocx(file) {
  */
 export function detectLinkedTerms(paragraphs, linkedTerms) {
   const termNames = Object.keys(linkedTerms);
+  // Build word-boundary regexes for accurate matching
+  const termRegexes = termNames.map((t) => ({
+    name: t,
+    regex: new RegExp(`\\b${t.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\b`, "i"),
+  }));
   return paragraphs.map((p) => {
-    const found = termNames.filter((t) =>
-      p.text.toLowerCase().includes(t.toLowerCase())
-    );
+    const found = termRegexes
+      .filter((tr) => tr.regex.test(p.text))
+      .map((tr) => tr.name);
     return { ...p, linkedTerms: found };
   });
 }

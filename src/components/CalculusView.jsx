@@ -189,7 +189,7 @@ function SectionBlock({ section, linkedTerms, onTermClick, onEditSection, projec
             {["Symbol", "Name", "Meaning"].map(h => (
               <div key={h} style={{
                 fontFamily: "'IBM Plex Mono', monospace",
-                fontSize: 9, letterSpacing: "0.1em", textTransform: "uppercase",
+                fontSize: 10, letterSpacing: "0.1em", textTransform: "uppercase",
                 color: P.tf, textAlign: h === "Symbol" ? "center" : "left",
               }}>
                 {h}
@@ -506,7 +506,7 @@ export default function CalculusView({ projects, linkedTerms, onSelectSection, o
         <div style={{
           position: "absolute", bottom: 16, left: 20,
           fontFamily: "'IBM Plex Mono', monospace",
-          fontSize: 9, letterSpacing: "0.1em", textTransform: "uppercase",
+          fontSize: 10, letterSpacing: "0.1em", textTransform: "uppercase",
           color: `${P.tf}60`,
           pointerEvents: "none",
           zIndex: 1,
@@ -542,7 +542,7 @@ export default function CalculusView({ projects, linkedTerms, onSelectSection, o
         <div style={{ padding: "48px 0 20px" }}>
           <div style={{
             fontFamily: "'IBM Plex Mono', monospace",
-            fontSize: 9, letterSpacing: "0.2em", textTransform: "uppercase",
+            fontSize: 10, letterSpacing: "0.2em", textTransform: "uppercase",
             color: AC, marginBottom: 12,
           }}>
             A Formal Notation System for Metacognitive Operations
@@ -576,7 +576,7 @@ export default function CalculusView({ projects, linkedTerms, onSelectSection, o
                 display: "flex", alignItems: "baseline", gap: 3,
               }}>
                 <span style={{ fontSize: 16, color: AC, fontStyle: "italic" }}>{sym}</span>
-                <span style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: 8, opacity: 0.6 }}>{name}</span>
+                <span style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: 10, opacity: 0.6 }}>{name}</span>
               </div>
             ))}
           </div>

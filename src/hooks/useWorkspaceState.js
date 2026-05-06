@@ -85,7 +85,9 @@ function loadCitationsSync() {
     const raw = localStorage.getItem(CITATIONS_KEY);
     if (raw) {
       const parsed = JSON.parse(raw);
-      if (Array.isArray(parsed)) return parsed;
+      // Use localStorage citations if they exist AND are at least as many as defaults
+      // (prevents stale empty/partial localStorage from overriding a fresh migration)
+      if (Array.isArray(parsed) && parsed.length >= DEFAULT_CITATIONS.length && parsed.length > 0) return parsed;
     }
   } catch (e) {
     console.warn("Failed to load citations from localStorage:", e);
@@ -219,8 +221,15 @@ export function flattenSections(parts) {
 
 // ── Hook ─────────────────────────────────────────────────────
 
+// ── UI state persistence (lightweight, no debounce) ──
+const UI_STATE_KEY = "tessera-ui-state";
+function loadUIState() {
+  try { const raw = localStorage.getItem(UI_STATE_KEY); return raw ? JSON.parse(raw) : {}; } catch { return {}; }
+}
+
 export default function useWorkspaceState() {
   const initial = useRef(loadStateSync());
+  const uiState = useRef(loadUIState());
   const [projects, setProjects] = useState(initial.current.projects);
   const [linkedTerms, setLinkedTerms] = useState(initial.current.linkedTerms);
   const [activeProjectId, setActiveProjectId] = useState("purpose-of-schools");
@@ -231,8 +240,8 @@ export default function useWorkspaceState() {
   const [showRightPanel, setShowRightPanel] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedPara, setSelectedPara] = useState(null);
-  const [view, setView] = useState("editor");
-  const [zenMode, setZenMode] = useState(false);
+  const [view, setView] = useState(uiState.current.view || "editor");
+  const [zenMode, setZenMode] = useState(uiState.current.zenMode || false);
   const [notes, setNotes] = useState(loadNotesSync);
   const [sources, setSources] = useState(loadSourcesSync);
   const [citations, setCitations] = useState(loadCitationsSync);
@@ -254,8 +263,13 @@ export default function useWorkspaceState() {
   const MAX_UNDO = 30;
 
   const pushUndo = useCallback(() => {
-    // Snapshot current projects state before a mutation
-    undoStackRef.current.push(JSON.parse(JSON.stringify(projectsRef.current)));
+    // Snapshot projects + citations + sources + notes before a mutation
+    undoStackRef.current.push({
+      projects: JSON.parse(JSON.stringify(projectsRef.current)),
+      citations: JSON.parse(JSON.stringify(citationsRef.current)),
+      sources: JSON.parse(JSON.stringify(sourcesRef.current)),
+      notes: JSON.parse(JSON.stringify(notesRef.current)),
+    });
     if (undoStackRef.current.length > MAX_UNDO) undoStackRef.current.shift();
     redoStackRef.current = []; // clear redo on new action
   }, []);
@@ -263,18 +277,34 @@ export default function useWorkspaceState() {
   const undo = useCallback(() => {
     if (undoStackRef.current.length === 0) return false;
     // Push current state to redo before restoring
-    redoStackRef.current.push(JSON.parse(JSON.stringify(projectsRef.current)));
+    redoStackRef.current.push({
+      projects: JSON.parse(JSON.stringify(projectsRef.current)),
+      citations: JSON.parse(JSON.stringify(citationsRef.current)),
+      sources: JSON.parse(JSON.stringify(sourcesRef.current)),
+      notes: JSON.parse(JSON.stringify(notesRef.current)),
+    });
     const prev = undoStackRef.current.pop();
-    setProjects(prev);
+    setProjects(prev.projects || prev); // backward compat: old stack entries were just projects
+    if (prev.citations) setCitations(prev.citations);
+    if (prev.sources) setSources(prev.sources);
+    if (prev.notes) setNotes(prev.notes);
     return true;
   }, []);
 
   const redo = useCallback(() => {
     if (redoStackRef.current.length === 0) return false;
     // Push current state to undo before restoring
-    undoStackRef.current.push(JSON.parse(JSON.stringify(projectsRef.current)));
+    undoStackRef.current.push({
+      projects: JSON.parse(JSON.stringify(projectsRef.current)),
+      citations: JSON.parse(JSON.stringify(citationsRef.current)),
+      sources: JSON.parse(JSON.stringify(sourcesRef.current)),
+      notes: JSON.parse(JSON.stringify(notesRef.current)),
+    });
     const next = redoStackRef.current.pop();
-    setProjects(next);
+    setProjects(next.projects || next); // backward compat
+    if (next.citations) setCitations(next.citations);
+    if (next.sources) setSources(next.sources);
+    if (next.notes) setNotes(next.notes);
     return true;
   }, []);
 
@@ -393,6 +423,11 @@ export default function useWorkspaceState() {
   useEffect(() => {
     try { localStorage.setItem("tessera-decisions", JSON.stringify(decisionLog)); } catch {}
   }, [decisionLog]);
+
+  // Persist UI state (view, zenMode) — no debounce needed, tiny payload
+  useEffect(() => {
+    try { localStorage.setItem(UI_STATE_KEY, JSON.stringify({ view, zenMode })); } catch {}
+  }, [view, zenMode]);
 
   // Flush save immediately on tab close / refresh / navigate away
   useEffect(() => {
@@ -813,7 +848,11 @@ export default function useWorkspaceState() {
         const bi = orderedParaIds.indexOf(b.paragraphId);
         if (ai !== bi) return ai - bi;
         // Same paragraph: sort by inlineRange.from
-        return (a.inlineRange?.from || 0) - (b.inlineRange?.from || 0);
+        // Same paragraph: sort by position, then by creation time as fallback
+        const af = a.inlineRange?.from ?? Infinity;
+        const bf = b.inlineRange?.from ?? Infinity;
+        if (af !== bf) return af - bf;
+        return (a.createdAt || 0) - (b.createdAt || 0);
       });
 
     projectCitations.forEach((c, i) => {

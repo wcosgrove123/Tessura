@@ -2,3 +2,19 @@ node_modules
 dist
 .DS_Store
 *.local
+~$*
+
+# Editor/IDE config
+.claude/
+.vscode/
+
+# Intermediate migration/debug artifacts
+docs/citation-migration-review.*
+docs/clean-sources.json
+docs/debug-citation-audit.html
+docs/import-qc-report.html
+src/data/migrated-notes.json
+src/data/migrated-sources.json
+src/data/who-section-import.json
+src/data/who-v3-notes.json
+who-content.html

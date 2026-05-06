@@ -31,7 +31,7 @@ export default function CausalChainRail({ activePartIndex, onNavigate }) {
       {/* Title */}
       <div style={{
         fontFamily: "'IBM Plex Mono', monospace",
-        fontSize: 9,
+        fontSize: 10,
         letterSpacing: "0.14em",
         textTransform: "uppercase",
         color: P.tf,
@@ -127,7 +127,7 @@ export default function CausalChainRail({ activePartIndex, onNavigate }) {
                 transition={gentleSpring}
                 style={{
                   fontFamily: "'IBM Plex Mono', monospace",
-                  fontSize: 9.5,
+                  fontSize: 10.5,
                   letterSpacing: "0.01em",
                   overflow: "hidden",
                   textOverflow: "ellipsis",
@@ -148,7 +148,7 @@ export default function CausalChainRail({ activePartIndex, onNavigate }) {
       <div style={{ flex: "1 1 auto" }}>
         <div style={{
           fontFamily: "'IBM Plex Mono', monospace",
-          fontSize: 9,
+          fontSize: 10,
           letterSpacing: "0.14em",
           textTransform: "uppercase",
           color: P.tf,

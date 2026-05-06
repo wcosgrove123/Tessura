@@ -35,14 +35,19 @@ export function renderTermLinks(text, linkedTerms, allTerms, onTermClick) {
   let result = [];
   let remaining = text;
   let key = 0;
-  for (const term of linkedTerms) {
-    const idx = remaining.toLowerCase().indexOf(term.toLowerCase());
-    if (idx !== -1) {
+  // Sort longer terms first so "cogniscience" matches before "science"
+  const sorted = [...linkedTerms].sort((a, b) => b.length - a.length);
+  for (const term of sorted) {
+    // Word-boundary match: term must not be inside a larger word
+    const regex = new RegExp(`\\b(${term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")})\\b`, "i");
+    const match = remaining.match(regex);
+    if (match) {
+      const idx = match.index;
       if (idx > 0) result.push(<span key={key++}>{remaining.slice(0, idx)}</span>);
       result.push(
-        <TermHighlight key={key++} term={term} termData={allTerms[term]} onClick={onTermClick} />
+        <TermHighlight key={key++} term={match[1]} termData={allTerms[term]} onClick={onTermClick} />
       );
-      remaining = remaining.slice(idx + term.length);
+      remaining = remaining.slice(idx + match[1].length);
     }
   }
   if (remaining) result.push(<span key={key++}>{remaining}</span>);

@@ -8,7 +8,7 @@ const SHAPE_STYLES = {
   diamond: { borderRadius: 4, transform: "rotate(45deg)" },
   circle: { borderRadius: "50%", minWidth: 100, minHeight: 100, display: "flex", alignItems: "center", justifyContent: "center" },
   ring: { borderRadius: "50%", minWidth: 140, minHeight: 140, display: "flex", alignItems: "center", justifyContent: "center", borderStyle: "dashed", borderWidth: 2 },
-  substrate: { borderRadius: 6, minWidth: 300, borderStyle: "dashed", borderWidth: 1.5, opacity: 0.7 },
+  substrate: { borderRadius: 6, minWidth: 400, borderStyle: "dashed", borderWidth: 2, opacity: 0.85 },
   intervention: { borderRadius: 4, borderWidth: 2.5, borderStyle: "solid" },
   hexagon: { borderRadius: 8, clipPath: "polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)", minWidth: 100, minHeight: 90 },
 };
@@ -79,14 +79,14 @@ export default function DiagramNode({ data, selected, id }) {
       <div
         onDoubleClick={handleDoubleClick}
         style={{
-          background: selected ? `${color}12` : P.bg,
-          border: `${selected ? 2 : 1.5}px solid ${selected ? color : `${color}60`}`,
+          background: selected ? `${color}12` : shape === "substrate" ? `${color}06` : `${color}08`,
+          border: `${selected ? 2 : 2}px solid ${selected ? color : `${color}60`}`,
           padding: isDiamond ? "16px" : shape === "circle" ? "16px" : "10px 16px",
           minWidth: shape === "circle" ? 100 : 100,
           maxWidth: isDiamond ? 140 : 200,
           boxShadow: selected
             ? `0 0 0 2px ${color}20, 0 4px 16px rgba(44,36,24,0.1)`
-            : "0 2px 8px rgba(44,36,24,0.06)",
+            : "0 1px 4px rgba(44,36,24,0.08)",
           transition: "all 0.2s ease",
           cursor: "grab",
           ...shapeStyle,

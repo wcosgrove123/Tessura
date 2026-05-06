@@ -48,7 +48,7 @@ function StaticDiagram({ diagram, height }) {
  * @param {boolean} readOnly - True in PrintPreview
  * @param {boolean} isOutline - True in Outline view (collapsed display)
  */
-export default function DiagramInline({ diagram, figureIndex, onEdit, onRemove, readOnly = false, isOutline = false }) {
+export default function DiagramInline({ diagram, figureIndex, onEdit, onRemove, onNavigate, sectionTitle, readOnly = false, isOutline = false }) {
   if (!diagram) return null;
 
   // Outline mode: collapsed single line
@@ -149,6 +149,24 @@ export default function DiagramInline({ diagram, figureIndex, onEdit, onRemove, 
           fontSize: 11, color: P.tm, lineHeight: 1.4,
         }}>
           {diagram.caption}
+        </div>
+      )}
+
+      {/* Section navigation link */}
+      {!readOnly && onNavigate && diagram.sectionId && (
+        <div style={{
+          padding: "0 12px 8px",
+          fontSize: 10, fontFamily: "'IBM Plex Mono', monospace",
+          color: P.tf, letterSpacing: 0.5,
+        }}>
+          <span
+            onClick={(e) => { e.stopPropagation(); onNavigate(diagram.projectId, diagram.sectionId, diagram.afterParagraphId); }}
+            style={{ cursor: "pointer", color: P.ac, transition: "color 0.15s", borderBottom: `1px solid transparent` }}
+            onMouseOver={(e) => { e.currentTarget.style.borderBottomColor = P.ac; }}
+            onMouseOut={(e) => { e.currentTarget.style.borderBottomColor = "transparent"; }}
+          >
+            {sectionTitle ? `Section: ${sectionTitle}` : "View in document"} →
+          </span>
         </div>
       )}
 

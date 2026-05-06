@@ -4,10 +4,316 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tessera — Scholarly Workspace</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📜</text></svg>" />
     <style>
       * { margin: 0; padding: 0; box-sizing: border-box; }
       body { overflow: hidden; }
+
+      /* Prevent mid-word breaks in editor content */
+      .ProseMirror { overflow-wrap: break-word; word-break: normal; cursor: text; }
+      .ProseMirror:focus { cursor: text; }
+
+      /* Flash highlight when jumping to a paragraph */
+      @keyframes paraFlash {
+        0% { box-shadow: 0 0 0 0 rgba(139, 69, 19, 0); }
+        15% { box-shadow: 0 0 0 3px rgba(139, 69, 19, 0.25); }
+        100% { box-shadow: 0 0 0 0 rgba(139, 69, 19, 0); }
+      }
+      .para-flash { animation: paraFlash 1.2s ease-out; }
+
+      /* Full Text view — Word-like pages */
+      .fulltext-page {
+        background: #FEFDFB;
+        box-shadow: 0 1px 4px rgba(44,36,24,0.06);
+        border: 1px solid rgba(44,36,24,0.06);
+        max-width: 680px;
+        margin: 32px auto;
+        padding: 80px 88px 96px;
+        min-height: 880px;
+        border-radius: 1px;
+      }
+      .fulltext-heading {
+        cursor: pointer;
+        user-select: none;
+        display: flex;
+        align-items: baseline;
+        gap: 4px;
+        padding: 2px 4px;
+        margin-left: -4px;
+        border-radius: 3px;
+        transition: background 0.15s;
+      }
+      .fulltext-heading:hover { background: rgba(139, 69, 19, 0.04); }
+      .fulltext-chevron {
+        flex-shrink: 0;
+        transition: transform 0.2s ease, opacity 0.15s;
+        opacity: 0;
+      }
+      .fulltext-heading:hover .fulltext-chevron { opacity: 0.4; }
+      .fulltext-collapsed .fulltext-chevron { transform: rotate(-90deg); opacity: 0.35; }
+      .fulltext-body {
+        overflow: hidden;
+        transition: max-height 0.35s ease, opacity 0.3s ease;
+      }
+      .fulltext-body.collapsed {
+        max-height: 0 !important;
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      /* Smooth scrolling for all scroll containers */
+      .smooth-scroll { scroll-behavior: smooth; }
+
+      /* Custom scrollbar — warm parchment aesthetic */
+      ::-webkit-scrollbar { width: 6px; height: 6px; }
+      ::-webkit-scrollbar-track { background: transparent; }
+      ::-webkit-scrollbar-thumb { background: #D4C9B8; border-radius: 3px; }
+      ::-webkit-scrollbar-thumb:hover { background: #B5A999; }
+
+      /* Keyframes */
       @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+      @keyframes fadeSlideIn {
+        from { opacity: 0; transform: translateY(-6px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      @keyframes modalBackdropIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+      @keyframes modalIn {
+        from { opacity: 0; transform: translate(-50%, -50%) scale(0.95); }
+        to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+      }
+      @keyframes subtlePulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.04); }
+      }
+
+      /* Print styles — when print preview is open */
+      @media print {
+        body, html { overflow: visible !important; height: auto !important; }
+        /* The print preview overlay sits at z-index 10000 inside #root.
+           We make it position:static so it flows into the print document,
+           and hide everything else via a class toggled on body. */
+        body.printing-preview > #root > div > *:not(#print-preview-root) { display: none !important; }
+        body.printing-preview #root > div { display: block !important; height: auto !important; overflow: visible !important; }
+        #print-preview-root {
+          position: static !important;
+          display: block !important;
+          background: #fff !important;
+          height: auto !important;
+          overflow: visible !important;
+        }
+        .print-toolbar { display: none !important; }
+        .print-nav-panel { display: none !important; }
+        .print-scroll-container {
+          overflow: visible !important;
+          margin-left: 0 !important;
+          height: auto !important;
+        }
+        .print-content-inner {
+          box-shadow: none !important;
+          max-width: none !important;
+          padding: 0 !important;
+          margin: 0 !important;
+          background: #fff !important;
+        }
+        @page { size: letter; margin: 1in 1in 1.2in 1in; }
+        @page { @bottom-center { content: counter(page); font-family: 'IBM Plex Mono', monospace; font-size: 9pt; color: #958978; } }
+        p { orphans: 3; widows: 3; }
+        h1, h2, h3, h4, h5, h6 { page-break-after: avoid; break-after: avoid; }
+        .print-cover { page-break-after: always; break-after: page; min-height: 0 !important; padding: 3in 0 !important; }
+        .print-toc { page-break-after: always; break-after: page; }
+        .print-part-break { page-break-before: always; break-before: page; }
+        .print-section-break { page-break-before: always; break-before: page; }
+      }
+
+      /* Panel resize handles */
+      .resize-handle > div { transition: background 0.2s, width 0.15s; }
+      .resize-handle:hover > div { background: #8B451340 !important; width: 3px !important; }
+
+      /* Focus ring for keyboard accessibility */
+      *:focus-visible {
+        outline: 2px solid #8B4513;
+        outline-offset: 2px;
+        border-radius: 3px;
+      }
+      button:focus-visible { outline-offset: 1px; }
+
+      /* ── Interactive element enhancements ──────────────── */
+
+      /* Universal button press feedback */
+      button:active:not(:disabled) {
+        transform: scale(0.97);
+      }
+
+      /* Sidebar section items — smooth active indicator */
+      .sidebar-section-item {
+        transition: background 0.18s ease, border-color 0.22s ease, box-shadow 0.18s ease;
+      }
+      .sidebar-section-item:hover {
+        box-shadow: inset 2px 0 0 0 rgba(139, 69, 19, 0.15);
+      }
+      .sidebar-section-item.active {
+        box-shadow: inset 2px 0 0 0 currentColor;
+      }
+
+      /* Paragraph block interaction states */
+      .para-block {
+        transition: background 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                    border-left-color 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        border-left: 2.5px solid transparent;
+      }
+      .para-block:hover:not(.para-selected) {
+        background: rgba(139, 69, 19, 0.018);
+      }
+      .para-block.para-selected {
+        border-left-color: rgba(139, 69, 19, 0.3);
+        background: rgba(139, 69, 19, 0.025);
+      }
+
+      /* Toolbar entrance animation */
+      .toolbar-enter {
+        animation: toolbarSlideIn 180ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      }
+      @keyframes toolbarSlideIn {
+        from { opacity: 0; transform: translateY(-4px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+
+      /* Citation superscript markers in non-selected view */
+      .cite-marker {
+        color: #8B4513; font-size: 0.7em; font-family: 'IBM Plex Mono', monospace;
+        font-weight: 600; cursor: pointer; padding: 0 1px;
+        opacity: 0.7; transition: opacity 0.15s ease;
+        vertical-align: super;
+      }
+      .cite-marker:hover { opacity: 1; }
+
+      /* Note count badge in paragraph gutter */
+      .para-note-badge {
+        position: absolute; font-family: 'IBM Plex Mono', monospace;
+        font-size: 8px; line-height: 1; color: #943D3D;
+        background: rgba(148,61,61,0.06); padding: 2px 4px; border-radius: 6px;
+        cursor: pointer; opacity: 0.45; transition: opacity 0.15s ease;
+      }
+      .para-note-badge:hover { opacity: 0.9; }
+
+      /* Action buttons (Add, Delete, Note, etc.) */
+      .action-btn {
+        transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
+      }
+      .action-btn:hover {
+        background: rgba(139, 69, 19, 0.04);
+      }
+      .action-btn:active {
+        transform: scale(0.97);
+      }
+      .action-btn-danger {
+        transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
+      }
+      .action-btn-danger:hover {
+        background: rgba(148, 61, 61, 0.06) !important;
+        border-color: #943D3D !important;
+      }
+      .action-btn-danger:active {
+        transform: scale(0.96);
+      }
+
+      /* Dashed "add" buttons (add paragraph, add subsection) */
+      .dashed-add-btn {
+        transition: color 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+      }
+      .dashed-add-btn:hover {
+        background: rgba(139, 69, 19, 0.03);
+      }
+      .dashed-add-btn:active {
+        transform: scale(0.99);
+      }
+
+      /* Toolbar format buttons */
+      .toolbar-btn {
+        transition: background 0.12s ease, color 0.12s ease, transform 0.08s ease;
+      }
+      .toolbar-btn:active {
+        transform: scale(0.93);
+      }
+
+      /* Text selection highlight — warm scholarly tone */
+      ::selection {
+        background: rgba(139, 69, 19, 0.15);
+        color: inherit;
+      }
+
+      /* Comment & citation inline marks — hover glow */
+      .inline-comment {
+        transition: background 0.15s ease, box-shadow 0.15s ease;
+      }
+      .inline-comment:hover {
+        box-shadow: 0 0 0 2px rgba(148, 61, 61, 0.12);
+      }
+      .inline-citation {
+        transition: background 0.12s ease, color 0.12s ease, box-shadow 0.12s ease;
+      }
+      .inline-citation:hover {
+        background: rgba(139, 69, 19, 0.12) !important;
+        box-shadow: 0 0 0 2px rgba(139, 69, 19, 0.08);
+      }
+
+      /* Outline view rows */
+      .outline-row {
+        transition: background 0.15s ease, transform 0.18s ease, box-shadow 0.15s ease;
+      }
+      .outline-row:hover {
+        box-shadow: inset 3px 0 0 0 rgba(139, 69, 19, 0.15);
+      }
+
+      /* Select dropdowns (Status, Role) */
+      select {
+        transition: border-color 0.15s ease, box-shadow 0.15s ease;
+      }
+      select:hover {
+        box-shadow: 0 0 0 1px rgba(139, 69, 19, 0.1);
+      }
+      select:focus {
+        box-shadow: 0 0 0 2px rgba(139, 69, 19, 0.15);
+      }
+
+      /* Popover / tooltip entrance */
+      @keyframes popoverIn {
+        from { opacity: 0; transform: translateY(-4px) scale(0.98); }
+        to { opacity: 1; transform: translateY(0) scale(1); }
+      }
+      .popover-enter {
+        animation: popoverIn 150ms cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+
+      /* Smooth chevron rotation for collapsible sections */
+      .chevron-toggle {
+        transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+      .chevron-toggle.open {
+        transform: rotate(90deg);
+      }
+
+      /* Note indicator dot pulse on hover */
+      .note-dot {
+        transition: opacity 0.2s ease, transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+      .note-dot:hover {
+        opacity: 1 !important;
+        transform: scale(1.6);
+      }
+
+      /* Reduced motion — respect OS preference */
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+          scroll-behavior: auto !important;
+        }
+      }
     </style>
   </head>
   <body>
