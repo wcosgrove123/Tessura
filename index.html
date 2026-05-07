@@ -193,6 +193,29 @@
         opacity: 1;
       }
 
+      /* Full Text view — single ProseMirror editor that owns a section's
+         paragraphs. Word-document feel: continuous body type, first-line
+         indent, no per-paragraph chrome. Caret + selection use the same
+         warm accent palette as the rest of the app. */
+      .fulltext-section-pm {
+        font-family: 'Spectral', serif;
+        font-size: 15.5px;
+        line-height: 1.8;
+        color: #2C2418;
+        outline: none;
+        caret-color: #8B4513;
+      }
+      .fulltext-section-pm > p {
+        margin: 0;
+        text-indent: 2em;
+      }
+      .fulltext-section-pm > p:first-child { text-indent: 0; }
+      .fulltext-section-pm > p.is-empty:first-child::before {
+        content: attr(data-placeholder);
+        float: left; height: 0;
+        color: #B8AC97; pointer-events: none; font-style: italic;
+      }
+
       /* View switcher — soft tab strip with underline-style active state */
       .view-tab {
         position: relative;

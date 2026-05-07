@@ -4,6 +4,7 @@ import { PALETTE as P, STATUS, SPINE_ROLES, STATUS_VALUES, SPINE_ROLE_VALUES } f
 import { NOTE_CATEGORIES } from "../data/notes.js";
 import { renderTermLinks } from "./TermHighlight.jsx";
 import ParagraphEditor from "./ParagraphEditor.jsx";
+import FullTextSectionEditor from "./FullTextSectionEditor.jsx";
 import CitationPopover from "./CitationPopover.jsx";
 import ConfirmModal from "./ConfirmModal.jsx";
 import DiagramInline from "./DiagramInline.jsx";
@@ -1075,85 +1076,55 @@ function FullTextSection({
       )}
 
       {/* Collapsible body */}
-      <div className={`fulltext-body ${isCollapsed ? "collapsed" : ""}`} style={{ maxHeight: isCollapsed ? 0 : "none" }}
-        onClick={(e) => { if (!e.target.closest('.para-block') && !e.target.closest('.dashed-add-btn')) onSelectPara(null); }}
-      >
-        {/* Paragraphs */}
-        {section.paragraphs?.map((para, i) => {
-          const isSel = selectedPara === para.id;
-          const paraNoteCt = notesByPara?.[para.id] || 0;
-          return (
-            <React.Fragment key={para.id}>
-            <div
-              data-para-id={para.id}
-              className={`para-block${isSel ? " para-selected" : ""}`}
-              onClick={() => onSelectPara(isSel ? null : para.id)}
-              style={{
-                position: "relative",
-                padding: "6px 14px",
-                marginBottom: 2,
-                borderRadius: 3,
-                cursor: "pointer",
-              }}
-            >
-              {/* Note badge */}
-              {paraNoteCt > 0 && !isSel && (
-                <span
-                  className="para-note-badge"
-                  title={`${paraNoteCt} note${paraNoteCt > 1 ? "s" : ""}`}
-                  style={{ right: -20, top: 6 }}
-                  onClick={(e) => { e.stopPropagation(); onSelectPara(para.id); if (onSetRightPanel) onSetRightPanel("notes"); if (onSetShowRightPanel) onSetShowRightPanel(true); }}
-                >
-                  {paraNoteCt}
-                </span>
-              )}
-
-              {isSel ? (
-                <div className="toolbar-enter" onClick={(e) => e.stopPropagation()}>
-                  <ParagraphEditor
-                    content={para.text}
-                    onChange={(text) => onUpdateText(projectId, section.id, para.id, text)}
-                    placeholder="Write..."
-                  />
-                  <div className="toolbar-enter para-chrome" style={{ display: "flex", gap: 4, marginTop: 6, flexWrap: "wrap", alignItems: "center" }}>
-                    <StatusSelect value={para.status} onChange={(s) => onUpdateMeta(projectId, section.id, para.id, { status: s })} />
-                    <RoleSelect value={para.spineRole} onChange={(r) => onUpdateMeta(projectId, section.id, para.id, { spineRole: r })} />
-                    <div style={{ flex: 1 }} />
-                    <button onClick={(e) => { e.stopPropagation(); onAddParagraph(projectId, section.id, para.id); }}
-                      title="Add paragraph below"
-                      className="action-btn"
-                      style={{ background: "none", border: `1px solid ${P.bd}`, borderRadius: 4, padding: "4px 8px", cursor: "pointer", color: P.tm, display: "flex", alignItems: "center", gap: 3, fontSize: 10, fontFamily: "'IBM Plex Mono', monospace" }}>
-                      <Plus size={10} /> Add
-                    </button>
-                    {section.paragraphs.length > 1 && (
-                      <button onClick={(e) => { e.stopPropagation(); setConfirmAction({ title: "Delete paragraph?", message: "This will remove the paragraph and its content.", danger: true, confirmLabel: "Delete", onConfirm: () => { onDeleteParagraph(projectId, section.id, para.id); setConfirmAction(null); } }); }}
-                        title="Delete paragraph"
-                        className="action-btn-danger"
-                        style={{ background: "none", border: `1px solid #E8B4B4`, borderRadius: 4, padding: "4px 8px", cursor: "pointer", color: "#943D3D", display: "flex", alignItems: "center" }}>
-                        <Trash2 size={10} />
-                      </button>
-                    )}
-                  </div>
-                </div>
-              ) : (
-                <div style={{
-                  fontSize: 15.5, lineHeight: 1.8, color: P.tx,
-                  fontFamily: "'Spectral', serif",
-                  textIndent: i > 0 ? "2em" : 0,
-                }}>
-                  {para.text
-                    ? renderTermLinks(para.text, para.linkedTerms, linkedTerms, onTermClick)
-                    : <span style={{ color: P.tf, fontStyle: "italic" }}>Empty paragraph</span>}
-                </div>
-              )}
-            </div>
-            {/* Inline diagrams after this paragraph */}
-            {sectionDiagrams.filter((d) => d.sectionId === section.id && d.afterParagraphId === para.id).map((diag, di) => (
-              <DiagramInline key={diag.id} diagram={diag} figureIndex={di + 1} onEdit={onEditDiagram} onRemove={onRemoveDiagram} sectionTitle={section.title} />
-            ))}
-          </React.Fragment>
-          );
-        })}
+      <div className={`fulltext-body ${isCollapsed ? "collapsed" : ""}`} style={{ maxHeight: isCollapsed ? 0 : "none" }}>
+        {/* Continuous Word-style editor. Split into chunks at every paragraph
+            that has an inline diagram after it, so diagrams stay anchored. */}
+        {(() => {
+          const paragraphs = section.paragraphs || [];
+          const chunks = [];
+          let buffer = [];
+          for (const para of paragraphs) {
+            buffer.push(para);
+            const diagsAfter = sectionDiagrams.filter(
+              (d) => d.sectionId === section.id && d.afterParagraphId === para.id
+            );
+            if (diagsAfter.length > 0) {
+              chunks.push({ kind: "paras", paras: buffer, key: buffer[0].id });
+              chunks.push({ kind: "diagrams", diagrams: diagsAfter, key: `d-after-${para.id}` });
+              buffer = [];
+            }
+          }
+          if (buffer.length > 0) {
+            chunks.push({ kind: "paras", paras: buffer, key: buffer[0]?.id || `chunk-${section.id}-tail` });
+          }
+          if (chunks.length === 0 && paragraphs.length === 0) {
+            chunks.push({ kind: "paras", paras: [], key: `chunk-${section.id}-empty` });
+          }
+          return chunks.map((chunk, idx) => {
+            if (chunk.kind === "diagrams") {
+              return chunk.diagrams.map((diag, di) => (
+                <DiagramInline
+                  key={diag.id}
+                  diagram={diag}
+                  figureIndex={di + 1}
+                  onEdit={onEditDiagram}
+                  onRemove={onRemoveDiagram}
+                  sectionTitle={section.title}
+                />
+              ));
+            }
+            return (
+              <FullTextSectionEditor
+                key={chunk.key}
+                paragraphs={chunk.paras}
+                placeholder={idx === 0 ? "Begin writing this section..." : "Continue..."}
+                onUpdateText={(paraId, text) => onUpdateText(projectId, section.id, paraId, text)}
+                onAddParagraph={(prevParaId, opts) => onAddParagraph(projectId, section.id, prevParaId, opts)}
+                onDeleteParagraph={(paraId) => onDeleteParagraph(projectId, section.id, paraId)}
+              />
+            );
+          });
+        })()}
 
         {/* Recurse into children */}
         {section.children?.map((child) => (

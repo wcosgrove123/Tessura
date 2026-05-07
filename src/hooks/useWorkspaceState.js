@@ -568,9 +568,20 @@ export default function useWorkspaceState() {
     );
   }, [pushUndo]);
 
-  const addParagraph = useCallback((projectId, sectionId, afterParaId) => {
+  const addParagraph = useCallback((projectId, sectionId, afterParaId, opts = {}) => {
     pushUndo();
-    const newPara = { id: `p-${Date.now()}`, text: "", status: "brainstorm", spineRole: "claim", linkedTerms: [] };
+    // Caller may pre-supply id/text so an external editor can pre-assign the
+    // paragraph identity before its own state update lands (e.g. the Full Text
+    // single-section editor that has to mark a freshly-split ProseMirror node
+    // with the same id we're about to insert here).
+    const newId = opts.id ?? `p-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
+    const newPara = {
+      id: newId,
+      text: opts.text ?? "",
+      status: opts.status ?? "brainstorm",
+      spineRole: opts.spineRole ?? "claim",
+      linkedTerms: [],
+    };
     setProjects((prev) =>
       prev.map((p) =>
         p.id !== projectId ? p : {
@@ -585,6 +596,7 @@ export default function useWorkspaceState() {
         }
       )
     );
+    return newId;
   }, [pushUndo]);
 
   const deleteParagraph = useCallback((projectId, sectionId, paraId) => {
