@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useCallback, useEffect } from "react";
-import { GitBranch, Link2, Plus, Trash2, Check, Edit3, FolderPlus, ChevronRight, MessageSquare, X, ChevronDown, ChevronUp, StickyNote, Unlink, RotateCcw, MousePointer, List, FileText, BookOpen } from "lucide-react";
+import { GitBranch, Link2, Plus, Trash2, Check, Edit3, FolderPlus, ChevronRight, MessageSquare, X, ChevronDown, ChevronUp, StickyNote, Unlink, RotateCcw, MousePointer, List, FileText, BookOpen, Newspaper, AlignLeft } from "lucide-react";
 import { PALETTE as P, STATUS, SPINE_ROLES, STATUS_VALUES, SPINE_ROLE_VALUES } from "../data/constants.js";
 import { NOTE_CATEGORIES } from "../data/notes.js";
 import { renderTermLinks } from "./TermHighlight.jsx";
@@ -1823,29 +1823,34 @@ export default function Editor({
           <span style={{ marginLeft: 8 }}>
             <StatusSelect value={section.status} onChange={(s) => onUpdateSection(project.id, section.id, { status: s })} />
           </span>
-              {/* Draft / Outline toggle */}
-              <div style={{ marginLeft: "auto", display: "flex", gap: 0, border: `1px solid ${P.bd}`, borderRadius: 4, overflow: "hidden" }}>
+              {/* View switcher */}
+              <div className="view-switcher" style={{ marginLeft: "auto", display: "flex", gap: 2 }}>
                 {[
-                  { key: "fulltext", icon: BookOpen, label: "Full Text" },
+                  { key: "fulltext", icon: Newspaper, label: "Full Text" },
                   { key: "draft", icon: FileText, label: "Draft" },
-                  { key: "expanded", icon: BookOpen, label: "Expanded" },
+                  { key: "expanded", icon: AlignLeft, label: "Expanded" },
                   { key: "outline", icon: List, label: "Outline" },
-                ].map(({ key, icon: Icon, label }) => (
-                  <button
-                    key={key}
-                    onClick={() => setEditorMode(key)}
-                    style={{
-                      display: "flex", alignItems: "center", gap: 3, padding: "3px 8px",
-                      fontSize: 10, fontFamily: "'IBM Plex Mono', monospace", letterSpacing: 1.5, textTransform: "uppercase",
-                      background: editorMode === key ? `${P.ac}15` : "transparent",
-                      color: editorMode === key ? P.ac : P.tf,
-                      border: "none", cursor: "pointer", transition: "all 0.15s",
-                      fontWeight: editorMode === key ? 600 : 400,
-                    }}
-                  >
-                    <Icon size={10} /> {label}
-                  </button>
-                ))}
+                ].map(({ key, icon: Icon, label }) => {
+                  const active = editorMode === key;
+                  return (
+                    <button
+                      key={key}
+                      onClick={() => setEditorMode(key)}
+                      title={label}
+                      className={`view-tab${active ? " is-active" : ""}`}
+                      style={{
+                        display: "flex", alignItems: "center", gap: 4, padding: "4px 8px",
+                        fontSize: 10, fontFamily: "'IBM Plex Mono', monospace", letterSpacing: 1.5, textTransform: "uppercase",
+                        background: "transparent",
+                        color: active ? P.ac : P.t3,
+                        border: "none", borderRadius: 3, cursor: "pointer",
+                        fontWeight: active ? 600 : 400,
+                      }}
+                    >
+                      <Icon size={11} /> {label}
+                    </button>
+                  );
+                })}
               </div>
         </div>
       )}

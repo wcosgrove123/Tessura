@@ -193,6 +193,20 @@
         opacity: 1;
       }
 
+      /* View switcher — soft tab strip with underline-style active state */
+      .view-tab {
+        position: relative;
+        transition: color 160ms ease, background 160ms ease;
+      }
+      .view-tab:hover { color: #6B5C4A !important; background: rgba(139, 69, 19, 0.05) !important; }
+      .view-tab.is-active::after {
+        content: "";
+        position: absolute;
+        left: 8px; right: 8px; bottom: -1px;
+        height: 2px; background: currentColor;
+        border-radius: 1px;
+      }
+
       /* Citation superscript markers in non-selected view */
       .cite-marker {
         color: #8B4513; font-size: 0.7em; font-family: 'IBM Plex Mono', monospace;
