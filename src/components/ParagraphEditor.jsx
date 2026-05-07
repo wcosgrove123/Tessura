@@ -389,7 +389,7 @@ export default function ParagraphEditor({
   return (
     <div ref={editorContainerRef} style={{ position: "relative" }}>
       {editor && (
-        <div style={{
+        <div className="para-chrome" style={{
           display: "flex", gap: 1, padding: "2px 4px", marginBottom: 4,
           background: P.sf, borderRadius: 3, border: `1px solid ${P.bd}`, width: "fit-content",
         }}>
@@ -424,9 +424,17 @@ export default function ParagraphEditor({
 
       {/* Floating action buttons near selection */}
       {hasSelection && selectionPos && !showCommentPopover && (
+        <div style={{
+          // Outer wrapper: anchor at selection-line top, then lift by 100% of
+          // its own height so the bottom edge sits above the line. Independent
+          // of font-size/line-height. Inner div carries the entrance animation
+          // so its transform doesn't override our positioning.
+          position: "absolute", left: selectionPos.x, top: selectionPos.y,
+          transform: "translateY(calc(-100% - 6px))",
+          zIndex: 40,
+        }}>
         <div className="popover-enter" style={{
-          position: "absolute", left: selectionPos.x, top: selectionPos.y - 34,
-          display: "flex", gap: 4, zIndex: 40,
+          display: "flex", gap: 4,
         }}>
           {onAddInlineNote && (
             <div
@@ -458,6 +466,7 @@ export default function ParagraphEditor({
               <BookOpen size={9} /> Cite
             </div>
           )}
+        </div>
         </div>
       )}
 

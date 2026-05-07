@@ -1115,7 +1115,7 @@ function FullTextSection({
                     onChange={(text) => onUpdateText(projectId, section.id, para.id, text)}
                     placeholder="Write..."
                   />
-                  <div className="toolbar-enter" style={{ display: "flex", gap: 4, marginTop: 6, flexWrap: "wrap", alignItems: "center" }}>
+                  <div className="toolbar-enter para-chrome" style={{ display: "flex", gap: 4, marginTop: 6, flexWrap: "wrap", alignItems: "center" }}>
                     <StatusSelect value={para.status} onChange={(s) => onUpdateMeta(projectId, section.id, para.id, { status: s })} />
                     <RoleSelect value={para.spineRole} onChange={(r) => onUpdateMeta(projectId, section.id, para.id, { spineRole: r })} />
                     <div style={{ flex: 1 }} />
@@ -1335,7 +1335,7 @@ function ExpandedSection({
                   onChange={(text) => onUpdateText(projectId, section.id, para.id, text)}
                   placeholder="Write..."
                 />
-                <div className="toolbar-enter" style={{ display: "flex", gap: 4, marginTop: 6, flexWrap: "wrap", alignItems: "center" }}>
+                <div className="toolbar-enter para-chrome" style={{ display: "flex", gap: 4, marginTop: 6, flexWrap: "wrap", alignItems: "center" }}>
                   <StatusSelect value={para.status} onChange={(s) => onUpdateMeta(projectId, section.id, para.id, { status: s })} />
                   <RoleSelect value={para.spineRole} onChange={(r) => onUpdateMeta(projectId, section.id, para.id, { spineRole: r })} />
                   <div style={{ flex: 1 }} />
@@ -2246,7 +2246,7 @@ export default function Editor({
                         )}
 
                         {isSel && (
-                          <div className="toolbar-enter" style={{ display: "flex", gap: 4, marginTop: 8, flexWrap: "wrap", alignItems: "center" }}>
+                          <div className="toolbar-enter para-chrome" style={{ display: "flex", gap: 4, marginTop: 8, flexWrap: "wrap", alignItems: "center" }}>
                             <StatusSelect value={para.status} onChange={(s) => onUpdateMeta(project.id, section.id, para.id, { status: s })} />
                             <RoleSelect value={para.spineRole} onChange={(r) => onUpdateMeta(project.id, section.id, para.id, { spineRole: r })} />
                             {para.linkedTerms?.map((t) => (
