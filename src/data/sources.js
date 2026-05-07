@@ -153,8 +153,11 @@ export function migrateBibNotesToSources(notes) {
     });
 }
 
-// Load the hand-curated sources from the migration
-import MIGRATED_SOURCES from "./migrated-sources.json";
+// Load the hand-curated sources from the migration. The file is generated
+// locally (see scripts/load-clean-sources.cjs) and gitignored, so use Vite's
+// glob import to fall back to an empty list when it isn't present (e.g. CI).
+const migratedSourcesModules = import.meta.glob("./migrated-sources.json", { eager: true });
+const MIGRATED_SOURCES = migratedSourcesModules["./migrated-sources.json"]?.default ?? [];
 
 // Strip internal tracking fields (_footnotes, _inlineCitations, etc.)
 export const DEFAULT_SOURCES = MIGRATED_SOURCES.map((s) => {
